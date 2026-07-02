@@ -251,17 +251,94 @@ a.iq:hover{opacity:.72}
   max-width:var(--maxw);margin:0 auto;padding:0 24px;
   --pc:#ef4444;--pcl:#ff8f80;--pcd:#5c0f0f;--pg:rgba(239,68,68,.45);--ac:#ff6b5e;--dirx:1}
 .planetwrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:56vh}
-.planet{width:min(42vh,390px);aspect-ratio:1;border-radius:50%;position:relative;
-  background:radial-gradient(circle at 33% 30%,var(--pcl),var(--pc) 52%,var(--pcd) 90%);
-  box-shadow:inset -40px -32px 84px rgba(0,0,0,.55),inset 8px 10px 34px rgba(255,255,255,.25),
-    0 0 90px -12px var(--pg),0 0 220px -40px var(--pg);
+.planet{width:calc(min(33vh,300px)*var(--pszf,1));aspect-ratio:1;border-radius:50%;position:relative;
   transition:transform .5s cubic-bezier(.22,.85,.25,1),opacity .28s ease}
-.planet::before{content:'';position:absolute;inset:0;border-radius:50%;
-  background:repeating-linear-gradient(104deg,transparent 0 30px,rgba(255,255,255,.06) 30px 40px,transparent 40px 78px,rgba(0,0,0,.16) 78px 96px);
-  background-size:250% 100%;mix-blend-mode:overlay;animation:bands 30s linear infinite}
-@keyframes bands{to{background-position:250% 0}}
-.planet::after{content:'';position:absolute;inset:-4%;border-radius:50%;
-  background:radial-gradient(circle,transparent 60%,var(--pg) 86%,transparent 100%);opacity:.85}
+.planet i{position:absolute;inset:0;border-radius:50%;pointer-events:none}
+
+/* 🔴 적색 거성 — 끓는 플라즈마 표면 + 맥동 코로나 */
+.planet[data-t=rgiant]{
+  background:radial-gradient(circle at 36% 34%,#fff3d8 0%,#ffb054 13%,#f4693c 34%,#c72e1d 62%,#5e0d08 92%);
+  box-shadow:inset -22px -18px 60px rgba(90,10,5,.8),0 0 60px -8px rgba(255,120,60,.7),0 0 170px -24px rgba(239,68,68,.55)}
+.planet[data-t=rgiant] .pl1{
+  background:radial-gradient(30% 24% at 62% 38%,rgba(255,190,120,.5),transparent 70%),
+    radial-gradient(22% 18% at 30% 60%,rgba(255,140,80,.45),transparent 70%),
+    radial-gradient(26% 20% at 52% 74%,rgba(200,60,30,.6),transparent 70%);
+  filter:blur(6px);animation:churn 8s ease-in-out infinite alternate}
+@keyframes churn{to{transform:rotate(16deg) scale(1.07)}}
+.planet[data-t=rgiant]::after{content:'';position:absolute;inset:-13%;border-radius:50%;
+  background:radial-gradient(circle,transparent 52%,rgba(255,110,50,.3) 68%,transparent 82%);
+  animation:corona 4s ease-in-out infinite}
+@keyframes corona{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+
+/* 🟢 오로라 행성 — 흐르는 극광 + 극지 발광 */
+.planet[data-t=aurora]{
+  background:radial-gradient(circle at 34% 30%,#d8ffe9 0%,#59d98c 26%,#17945c 55%,#053a2b 90%);
+  box-shadow:inset -26px -22px 70px rgba(2,30,20,.85),inset 8px 10px 30px rgba(255,255,255,.22),
+    0 0 70px -12px rgba(52,211,123,.5),0 0 180px -40px rgba(52,211,123,.35)}
+.planet[data-t=aurora] .pl1{
+  background:linear-gradient(115deg,transparent 18%,rgba(130,255,195,.3) 32%,transparent 44%,rgba(90,225,255,.22) 58%,transparent 72%);
+  background-size:300% 100%;animation:aflow 7s linear infinite;mix-blend-mode:screen;filter:blur(2px)}
+@keyframes aflow{to{background-position:-300% 0}}
+.planet[data-t=aurora] .pl2{
+  background:radial-gradient(60% 26% at 50% 5%,rgba(160,255,225,.55),transparent 70%);
+  filter:blur(4px);animation:apulse 5s ease-in-out infinite}
+@keyframes apulse{0%,100%{opacity:.5}50%{opacity:1}}
+.planet[data-t=aurora]::after{content:'';position:absolute;inset:-4%;border-radius:50%;
+  background:radial-gradient(circle,transparent 62%,rgba(52,211,123,.35) 86%,transparent 100%)}
+
+/* 🔵 얼음 거성 — 해왕성풍 폭풍 밴드 + 다크 스팟 */
+.planet[data-t=ice]{
+  background:radial-gradient(circle at 34% 30%,#cfe6ff 0%,#5f9dfc 30%,#2653d8 60%,#0a1550 92%);
+  box-shadow:inset -28px -24px 74px rgba(3,8,40,.85),inset 8px 10px 30px rgba(255,255,255,.25),
+    0 0 70px -12px rgba(96,165,250,.55),0 0 190px -40px rgba(59,130,246,.4)}
+.planet[data-t=ice] .pl1{
+  background:repeating-linear-gradient(96deg,transparent 0 34px,rgba(255,255,255,.06) 34px 44px,transparent 44px 88px,rgba(3,10,50,.28) 88px 106px);
+  background-size:240% 100%;animation:aflow 24s linear infinite;mix-blend-mode:overlay}
+.planet[data-t=ice] .pl2{
+  background:radial-gradient(17% 11% at 60% 58%,rgba(4,10,45,.8),transparent 75%),
+    radial-gradient(9% 6% at 66% 54%,rgba(230,242,255,.5),transparent 80%);filter:blur(1px)}
+.planet[data-t=ice]::after{content:'';position:absolute;inset:-3.5%;border-radius:50%;
+  background:radial-gradient(circle,transparent 62%,rgba(120,180,255,.32) 88%,transparent 100%)}
+
+/* ⚫ 블랙홀 — 사건의 지평선 + 광자 링 + 강착원반 */
+.planet[data-t=bhole]{--pszf:.84;
+  background:radial-gradient(circle,#000 0 56%,#050508 70%,#0b0d16 100%);
+  box-shadow:0 0 0 1.5px rgba(255,190,130,.3),0 0 46px -6px rgba(255,150,60,.35),0 0 140px -24px rgba(170,180,230,.28)}
+.planet[data-t=bhole]::before{content:'';position:absolute;inset:-2.5%;border-radius:50%;
+  background:conic-gradient(from 40deg,rgba(255,200,140,.85),rgba(255,245,225,.35),rgba(255,160,80,.85),rgba(255,220,180,.4),rgba(255,200,140,.85));
+  -webkit-mask:radial-gradient(circle,transparent 0 92%,#000 94% 100%);
+  mask:radial-gradient(circle,transparent 0 92%,#000 94% 100%);
+  filter:blur(1px);animation:bspin 9s linear infinite}
+@keyframes bspin{to{transform:rotate(360deg)}}
+.planet[data-t=bhole] .pl1{inset:auto;left:50%;top:50%;width:215%;height:60%;
+  transform:translate(-50%,-50%) rotate(-16deg);border-radius:50%;
+  background:radial-gradient(closest-side,transparent 56%,rgba(255,170,90,.5) 66%,rgba(255,225,190,.85) 70%,rgba(255,140,60,.4) 77%,transparent 85%);
+  filter:blur(4px);animation:diskpulse 5s ease-in-out infinite}
+@keyframes diskpulse{0%,100%{opacity:.75}50%{opacity:1}}
+.planet[data-t=bhole] .pl2{inset:-8%;
+  background:radial-gradient(50% 32% at 50% 0%,rgba(200,210,255,.22),transparent 70%);filter:blur(3px)}
+.planet[data-t=bhole]::after{content:'';position:absolute;inset:-16%;border-radius:50%;
+  background:radial-gradient(circle,transparent 55%,rgba(255,160,80,.12) 70%,transparent 84%)}
+
+/* ⚪ 백색왜성 — 강렬한 코어 블룸 + 회절 스파이크 + 무지개빛 셔머 */
+.planet[data-t=wdwarf]{--pszf:.72;
+  background:radial-gradient(circle at 42% 40%,#ffffff 0%,#f2f5ff 34%,#c7d3ff 62%,#8fa3e8 100%);
+  box-shadow:0 0 50px -4px rgba(235,240,255,.95),0 0 140px -18px rgba(190,205,255,.8),0 0 280px -40px rgba(150,170,255,.55)}
+.planet[data-t=wdwarf]::before{content:'';position:absolute;inset:-40%;border-radius:50%;
+  background:repeating-radial-gradient(circle,transparent 0 26%,rgba(200,215,255,.13) 27% 28.5%,transparent 30% 41%);
+  animation:halo 8s ease-in-out infinite}
+@keyframes halo{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.06);opacity:1}}
+.planet[data-t=wdwarf]::after{content:'';position:absolute;inset:-12%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.45) 0%,transparent 62%);
+  animation:corona 3.2s ease-in-out infinite}
+.planet[data-t=wdwarf] .pl1{inset:-34%;border-radius:0;
+  background:linear-gradient(0deg,transparent 49%,rgba(255,255,255,.55) 49.85% 50.15%,transparent 51%),
+    linear-gradient(90deg,transparent 49%,rgba(255,255,255,.55) 49.85% 50.15%,transparent 51%);
+  filter:blur(1.5px);animation:spikes 6s ease-in-out infinite}
+@keyframes spikes{0%,100%{opacity:.5;transform:rotate(0) scale(1)}50%{opacity:.95;transform:rotate(3deg) scale(1.05)}}
+.planet[data-t=wdwarf] .pl2{
+  background:conic-gradient(from 20deg,rgba(255,190,220,.14),rgba(180,220,255,.16),rgba(200,255,230,.12),rgba(255,190,220,.14));
+  mix-blend-mode:screen;animation:apulse 5s ease-in-out infinite}
 .bstage.out .planet{transform:translateX(calc(var(--dirx)*140px)) scale(.94);opacity:0}
 .bstage.enter .planet{transition:none;transform:translateX(calc(var(--dirx)*-140px)) scale(.94);opacity:0}
 .binfo{position:relative;z-index:2}
@@ -294,12 +371,12 @@ a.iq:hover{opacity:.72}
 @media(max-width:880px){
   .bstage{grid-template-columns:1fr;align-content:center;gap:4px;padding-top:54px}
   .planetwrap{min-height:32vh}
-  .planet{width:min(28vh,230px)}
+  .planet{width:calc(min(25vh,200px)*var(--pszf,1))}
   .bi-ident{min-height:0}
   .bnav{bottom:16px}
   .bhint{display:none}
 }
-@media (prefers-reduced-motion: reduce){.planet::before{animation:none}.bhint{animation:none}}
+@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.bhint{animation:none}}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -406,7 +483,7 @@ a.iq:hover{opacity:.72}
   <div class="showcase" id="showcase">
     <div class="bstage" id="bstage">
       <div class="planetwrap">
-        <div class="planet" id="planet"></div>
+        <div class="planet" id="planet" data-t="rgiant"><i class="pl1"></i><i class="pl2"></i></div>
       </div>
       <div class="binfo">
         <div class="bi-step bi-el" style="--d:0" id="biStep">01 / 05</div>
@@ -582,23 +659,23 @@ const BUDDY=[
   {name:'Spiral Buddy Red',sub:'수학과 AI의 본질',ident:'선형대수부터 Transformer·Diffusion까지, 증명으로 따라가는 AI.',
    chips:['수학','ML','DL','RL','LLM','CV'],motto:"Prove, don't memorize",scale:'7 layers · 48 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-red/releases',lab:'https://iq-ai-lab.github.io',labName:'IQ AI Lab',
-   pc:'#ef4444',pcl:'#ff8f80',pcd:'#5c0f0f',pg:'rgba(239,68,68,.45)',ac:'#ff6b5e'},
+   pc:'#ef4444',pcl:'#ff8f80',pcd:'#5c0f0f',pg:'rgba(239,68,68,.45)',ac:'#ff6b5e',t:'rgiant'},
   {name:'Spiral Buddy Green',sub:'세상을 읽는 판단력',ident:'돈·사람·제도·역사를 메커니즘 → 반례 → 판단 규칙으로 증류하는 실천지.',
    chips:['돈','사람','제도','역사','전략'],motto:"Distill, don't collect",scale:'6 layers · 31 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-green/releases',lab:'https://iq-phronesis-lab.github.io',labName:'IQ Phronesis Lab',
-   pc:'#22c55e',pcl:'#7ff0a8',pcd:'#0b3d22',pg:'rgba(34,197,94,.42)',ac:'#34d97b'},
+   pc:'#22c55e',pcl:'#7ff0a8',pcd:'#0b3d22',pg:'rgba(34,197,94,.42)',ac:'#34d97b',t:'aurora'},
   {name:'Spiral Buddy Blue',sub:'만드는 힘, 풀스택',ident:'문서 너머 — 내부 동작 원리까지 파고드는 풀스택 개발.',
    chips:['Frontend','Backend','Android','iOS','DB','인프라'],motto:"Beyond the docs",scale:'9 domains · 86 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-blue/releases',lab:'https://iq-dev-lab.github.io',labName:'IQ Dev Lab',
-   pc:'#3b82f6',pcl:'#8ab8ff',pcd:'#14265c',pg:'rgba(59,130,246,.45)',ac:'#60a5fa'},
+   pc:'#3b82f6',pcl:'#8ab8ff',pcd:'#14265c',pg:'rgba(59,130,246,.45)',ac:'#60a5fa',t:'ice'},
   {name:'Spiral Buddy Black',sub:'우주를 바닥부터',ident:'제1원리에서 직접 유도해 우주까지 재구성하는 물리.',
    chips:['고전','양자','상대성','우주론','양자중력'],motto:"Derive, don't accept",scale:'7 layers · 36 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-black/releases',lab:'https://iq-physis-lab.github.io',labName:'IQ Physis Lab',
-   pc:'#232838',pcl:'#59637e',pcd:'#04050a',pg:'rgba(174,182,207,.32)',ac:'#aeb6cf'},
+   pc:'#232838',pcl:'#59637e',pcd:'#04050a',pg:'rgba(174,182,207,.32)',ac:'#aeb6cf',t:'bhole'},
   {name:'Spiral Buddy White',sub:'마음의 안쪽',ident:"물질에서 마음을 쌓아 올리고, 끝내 남는 '경험'을 정직하게 마주하는.",
    chips:['뇌','인지','의식','자아','자유의지'],motto:"Explain it, don't explain it away",scale:'7 layers · 31 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-white/releases',lab:'https://iq-psyche-lab.github.io',labName:'IQ Psyche Lab',
-   pc:'#dfe5f7',pcl:'#ffffff',pcd:'#8b94b8',pg:'rgba(235,240,255,.5)',ac:'#eef2ff'}
+   pc:'#dfe5f7',pcl:'#ffffff',pcd:'#8b94b8',pg:'rgba(235,240,255,.5)',ac:'#eef2ff',t:'wdwarf'}
 ];
 const showcase=document.getElementById('showcase'),bstage=document.getElementById('bstage');
 if(showcase&&bstage){
@@ -608,6 +685,7 @@ if(showcase&&bstage){
   function applyBuddy(i){
     const b=BUDDY[i];
     for(const[k,v]of Object.entries({'--pc':b.pc,'--pcl':b.pcl,'--pcd':b.pcd,'--pg':b.pg,'--ac':b.ac}))bstage.style.setProperty(k,v);
+    document.getElementById('planet').dataset.t=b.t;
     $('biStep').textContent=`0${i+1} / 05`;
     $('biName').textContent=b.name;
     $('biSub').textContent=b.sub;
