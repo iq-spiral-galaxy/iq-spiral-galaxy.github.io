@@ -245,34 +245,29 @@ a.iq:hover{opacity:.72}
 }
 
 /* ---------- buddy planet showcase ---------- */
-.showcase{height:520vh;position:relative}
+.showcase{height:300vh;position:relative}
 .bstage{position:sticky;top:0;height:100vh;overflow:hidden;
   display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;
   max-width:var(--maxw);margin:0 auto;padding:0 24px;
-  --pc:#ef4444;--pcl:#ff8f80;--pcd:#5c0f0f;--pg:rgba(239,68,68,.45);--ac:#ff6b5e}
-.bghost{position:absolute;left:-1%;top:5%;font-family:'Space Grotesk',sans-serif;font-weight:700;
-  font-size:min(26vw,300px);line-height:1;color:transparent;
-  -webkit-text-stroke:1.5px rgba(165,170,220,.13);user-select:none;pointer-events:none;
-  transition:opacity .35s}
+  --pc:#ef4444;--pcl:#ff8f80;--pcd:#5c0f0f;--pg:rgba(239,68,68,.45);--ac:#ff6b5e;--dirx:1}
 .planetwrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:56vh}
 .planet{width:min(42vh,390px);aspect-ratio:1;border-radius:50%;position:relative;
   background:radial-gradient(circle at 33% 30%,var(--pcl),var(--pc) 52%,var(--pcd) 90%);
   box-shadow:inset -40px -32px 84px rgba(0,0,0,.55),inset 8px 10px 34px rgba(255,255,255,.25),
     0 0 90px -12px var(--pg),0 0 220px -40px var(--pg);
-  transition:transform .75s cubic-bezier(.16,.8,.24,1),opacity .4s ease}
+  transition:transform .5s cubic-bezier(.22,.85,.25,1),opacity .28s ease}
 .planet::before{content:'';position:absolute;inset:0;border-radius:50%;
   background:repeating-linear-gradient(104deg,transparent 0 30px,rgba(255,255,255,.06) 30px 40px,transparent 40px 78px,rgba(0,0,0,.16) 78px 96px);
   background-size:250% 100%;mix-blend-mode:overlay;animation:bands 30s linear infinite}
 @keyframes bands{to{background-position:250% 0}}
 .planet::after{content:'';position:absolute;inset:-4%;border-radius:50%;
   background:radial-gradient(circle,transparent 60%,var(--pg) 86%,transparent 100%);opacity:.85}
-.pring{position:absolute;width:min(64vh,600px);aspect-ratio:2.5;
-  border:1px solid rgba(190,196,235,.15);border-radius:50%;transform:rotate(-14deg);pointer-events:none}
-.bstage.switching .planet{transform:scale(.7) rotate(-6deg);opacity:0}
-.bstage.switching .bghost{opacity:0}
+.bstage.out .planet{transform:translateX(calc(var(--dirx)*140px)) scale(.94);opacity:0}
+.bstage.enter .planet{transition:none;transform:translateX(calc(var(--dirx)*-140px)) scale(.94);opacity:0}
 .binfo{position:relative;z-index:2}
-.bi-el{transition:opacity .3s ease,transform .3s ease;transition-delay:calc(var(--d,0)*70ms)}
-.bstage.switching .bi-el{opacity:0;transform:translateY(16px);transition-delay:0ms}
+.bi-el{transition:opacity .24s ease,transform .3s cubic-bezier(.22,.85,.25,1);transition-delay:calc(var(--d,0)*40ms)}
+.bstage.out .bi-el{opacity:0;transform:translateX(calc(var(--dirx)*28px));transition-delay:0ms}
+.bstage.enter .bi-el{transition:none;opacity:0;transform:translateX(calc(var(--dirx)*-28px))}
 .bi-step{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.3em;color:var(--ac);font-weight:600;margin-bottom:14px}
 .bi-name{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
 .bi-sub{color:var(--muted);font-size:15px;margin:6px 0 18px}
@@ -300,8 +295,6 @@ a.iq:hover{opacity:.72}
   .bstage{grid-template-columns:1fr;align-content:center;gap:4px;padding-top:54px}
   .planetwrap{min-height:32vh}
   .planet{width:min(28vh,230px)}
-  .pring{width:min(44vh,370px)}
-  .bghost{font-size:40vw;top:2%}
   .bi-ident{min-height:0}
   .bnav{bottom:16px}
   .bhint{display:none}
@@ -412,9 +405,7 @@ a.iq:hover{opacity:.72}
 
   <div class="showcase" id="showcase">
     <div class="bstage" id="bstage">
-      <div class="bghost" id="bghost">01</div>
       <div class="planetwrap">
-        <div class="pring"></div>
         <div class="planet" id="planet"></div>
       </div>
       <div class="binfo">
@@ -618,7 +609,6 @@ if(showcase&&bstage){
     const b=BUDDY[i];
     for(const[k,v]of Object.entries({'--pc':b.pc,'--pcl':b.pcl,'--pcd':b.pcd,'--pg':b.pg,'--ac':b.ac}))bstage.style.setProperty(k,v);
     $('biStep').textContent=`0${i+1} / 05`;
-    $('bghost').textContent=`0${i+1}`;
     $('biName').textContent=b.name;
     $('biSub').textContent=b.sub;
     $('biIdent').textContent=b.ident;
@@ -632,12 +622,21 @@ if(showcase&&bstage){
   }
   function setBuddy(i,instant){
     if(i===bIdx)return;
+    const dir=i>bIdx?1:-1;
     bIdx=i;
     if(instant){applyBuddy(i);return;}
+    bstage.style.setProperty('--dirx',dir);
     document.dispatchEvent(new Event('sg:warp'));
-    bstage.classList.add('switching');
+    bstage.classList.remove('enter');
+    bstage.classList.add('out');                       // 현재 행성: 진행 방향으로 슬라이드 아웃
     clearTimeout(swT);
-    swT=setTimeout(()=>{applyBuddy(i);void bstage.offsetWidth;bstage.classList.remove('switching');},330);
+    swT=setTimeout(()=>{
+      applyBuddy(i);
+      bstage.classList.add('enter');                   // 새 행성: 반대편에 즉시 배치
+      bstage.classList.remove('out');
+      void bstage.offsetWidth;
+      bstage.classList.remove('enter');                // → 중앙으로 스르륵 글라이드
+    },220);
   }
   function scTop(){return showcase.getBoundingClientRect().top+scrollY;}
   function updShowcase(){
