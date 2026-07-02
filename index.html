@@ -255,20 +255,14 @@ a.iq:hover{opacity:.72}
   transition:transform .5s cubic-bezier(.22,.85,.25,1),opacity .28s ease}
 .planet i{position:absolute;inset:0;border-radius:50%;pointer-events:none}
 
-/* 🔴 적색 거성 — 끓는 플라즈마 표면 + 맥동 코로나 */
+/* 🔴 적색 거성 — 매끈한 발광 항성 + 숨쉬는 글로우 */
 .planet[data-t=rgiant]{
-  background:radial-gradient(circle at 36% 34%,#fff3d8 0%,#ffb054 13%,#f4693c 34%,#c72e1d 62%,#5e0d08 92%);
-  box-shadow:inset -22px -18px 60px rgba(90,10,5,.8),0 0 60px -8px rgba(255,120,60,.7),0 0 170px -24px rgba(239,68,68,.55)}
-.planet[data-t=rgiant] .pl1{
-  background:radial-gradient(30% 24% at 62% 38%,rgba(255,190,120,.5),transparent 70%),
-    radial-gradient(22% 18% at 30% 60%,rgba(255,140,80,.45),transparent 70%),
-    radial-gradient(26% 20% at 52% 74%,rgba(200,60,30,.6),transparent 70%);
-  filter:blur(6px);animation:churn 8s ease-in-out infinite alternate}
-@keyframes churn{to{transform:rotate(16deg) scale(1.07)}}
-.planet[data-t=rgiant]::after{content:'';position:absolute;inset:-13%;border-radius:50%;
-  background:radial-gradient(circle,transparent 52%,rgba(255,110,50,.3) 68%,transparent 82%);
-  animation:corona 4s ease-in-out infinite}
-@keyframes corona{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+  background:radial-gradient(circle at 38% 36%,#fff6e0 0%,#ffc164 16%,#f97a3f 42%,#d43a20 68%,#7a1508 100%);
+  box-shadow:inset -18px -16px 60px rgba(120,20,8,.5),0 0 70px -10px rgba(255,130,60,.7),0 0 200px -32px rgba(239,80,50,.5)}
+.planet[data-t=rgiant]::after{content:'';position:absolute;inset:-12%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,150,80,.24) 26%,transparent 66%);
+  animation:corona 5s ease-in-out infinite}
+@keyframes corona{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
 
 /* 🟢 오로라 행성 — 흐르는 극광 + 극지 발광 */
 .planet[data-t=aurora]{
@@ -300,45 +294,31 @@ a.iq:hover{opacity:.72}
 .planet[data-t=ice]::after{content:'';position:absolute;inset:-3.5%;border-radius:50%;
   background:radial-gradient(circle,transparent 62%,rgba(120,180,255,.32) 88%,transparent 100%)}
 
-/* ⚫ 블랙홀 — 사건의 지평선 + 광자 링 + 강착원반 */
-.planet[data-t=bhole]{--pszf:.84;
-  background:radial-gradient(circle,#000 0 56%,#050508 70%,#0b0d16 100%);
-  box-shadow:0 0 0 1.5px rgba(255,190,130,.3),0 0 46px -6px rgba(255,150,60,.35),0 0 140px -24px rgba(170,180,230,.28)}
-.planet[data-t=bhole]::before{content:'';position:absolute;inset:-2.5%;border-radius:50%;
-  background:conic-gradient(from 40deg,rgba(255,200,140,.85),rgba(255,245,225,.35),rgba(255,160,80,.85),rgba(255,220,180,.4),rgba(255,200,140,.85));
-  -webkit-mask:radial-gradient(circle,transparent 0 92%,#000 94% 100%);
-  mask:radial-gradient(circle,transparent 0 92%,#000 94% 100%);
-  filter:blur(1px);animation:bspin 9s linear infinite}
+/* ⚫ 블랙홀 — 순흑의 사건의 지평선 + 주변 시공간 왜곡 */
+.planet[data-t=bhole]{--pszf:.8;
+  background:radial-gradient(circle,#000 0 58%,#04050a 74%,#0a0c14 100%);
+  box-shadow:0 0 0 1px rgba(205,214,245,.22),0 0 50px -8px rgba(170,182,220,.3),0 0 150px -30px rgba(150,160,210,.22)}
+.planet[data-t=bhole]::before{content:'';position:absolute;inset:-1.5%;border-radius:50%;
+  background:radial-gradient(circle,transparent 0 92.5%,rgba(222,230,255,.45) 96%,transparent 100%);
+  filter:blur(.6px)}
+.planet[data-t=bhole]::after{content:'';position:absolute;inset:-46%;border-radius:50%;
+  background:repeating-radial-gradient(circle,transparent 0 33%,rgba(190,200,240,.11) 34% 34.9%,transparent 36.5% 45%);
+  -webkit-mask:radial-gradient(circle,transparent 30%,#000 43%,transparent 80%);
+  mask:radial-gradient(circle,transparent 30%,#000 43%,transparent 80%);
+  animation:lensing 9s ease-in-out infinite}
+@keyframes lensing{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.05);opacity:1}}
+.planet[data-t=bhole] .pl1{inset:-32%;
+  background:conic-gradient(from 0deg,transparent,rgba(190,200,240,.09) 10%,transparent 28%,transparent 55%,rgba(190,200,240,.07) 66%,transparent 82%);
+  filter:blur(2px);animation:bspin 18s linear infinite}
 @keyframes bspin{to{transform:rotate(360deg)}}
-.planet[data-t=bhole] .pl1{inset:auto;left:50%;top:50%;width:215%;height:60%;
-  transform:translate(-50%,-50%) rotate(-16deg);border-radius:50%;
-  background:radial-gradient(closest-side,transparent 56%,rgba(255,170,90,.5) 66%,rgba(255,225,190,.85) 70%,rgba(255,140,60,.4) 77%,transparent 85%);
-  filter:blur(4px);animation:diskpulse 5s ease-in-out infinite}
-@keyframes diskpulse{0%,100%{opacity:.75}50%{opacity:1}}
-.planet[data-t=bhole] .pl2{inset:-8%;
-  background:radial-gradient(50% 32% at 50% 0%,rgba(200,210,255,.22),transparent 70%);filter:blur(3px)}
-.planet[data-t=bhole]::after{content:'';position:absolute;inset:-16%;border-radius:50%;
-  background:radial-gradient(circle,transparent 55%,rgba(255,160,80,.12) 70%,transparent 84%)}
 
-/* ⚪ 백색왜성 — 강렬한 코어 블룸 + 회절 스파이크 + 무지개빛 셔머 */
+/* ⚪ 백색왜성 — 깨끗한 순백의 발광 구 */
 .planet[data-t=wdwarf]{--pszf:.72;
-  background:radial-gradient(circle at 42% 40%,#ffffff 0%,#f2f5ff 34%,#c7d3ff 62%,#8fa3e8 100%);
-  box-shadow:0 0 50px -4px rgba(235,240,255,.95),0 0 140px -18px rgba(190,205,255,.8),0 0 280px -40px rgba(150,170,255,.55)}
-.planet[data-t=wdwarf]::before{content:'';position:absolute;inset:-40%;border-radius:50%;
-  background:repeating-radial-gradient(circle,transparent 0 26%,rgba(200,215,255,.13) 27% 28.5%,transparent 30% 41%);
-  animation:halo 8s ease-in-out infinite}
-@keyframes halo{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.06);opacity:1}}
-.planet[data-t=wdwarf]::after{content:'';position:absolute;inset:-12%;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.45) 0%,transparent 62%);
-  animation:corona 3.2s ease-in-out infinite}
-.planet[data-t=wdwarf] .pl1{inset:-34%;border-radius:0;
-  background:linear-gradient(0deg,transparent 49%,rgba(255,255,255,.55) 49.85% 50.15%,transparent 51%),
-    linear-gradient(90deg,transparent 49%,rgba(255,255,255,.55) 49.85% 50.15%,transparent 51%);
-  filter:blur(1.5px);animation:spikes 6s ease-in-out infinite}
-@keyframes spikes{0%,100%{opacity:.5;transform:rotate(0) scale(1)}50%{opacity:.95;transform:rotate(3deg) scale(1.05)}}
-.planet[data-t=wdwarf] .pl2{
-  background:conic-gradient(from 20deg,rgba(255,190,220,.14),rgba(180,220,255,.16),rgba(200,255,230,.12),rgba(255,190,220,.14));
-  mix-blend-mode:screen;animation:apulse 5s ease-in-out infinite}
+  background:radial-gradient(circle at 40% 38%,#ffffff 0%,#fdfdff 46%,#e7ecff 76%,#c3cdf4 100%);
+  box-shadow:0 0 60px -6px rgba(242,246,255,.95),0 0 150px -20px rgba(208,218,255,.7),0 0 300px -50px rgba(175,190,255,.45)}
+.planet[data-t=wdwarf]::after{content:'';position:absolute;inset:-14%;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.32) 22%,transparent 64%);
+  animation:corona 4s ease-in-out infinite}
 .bstage.out .planet{transform:translateX(calc(var(--dirx)*140px)) scale(.94);opacity:0}
 .bstage.enter .planet{transition:none;transform:translateX(calc(var(--dirx)*-140px)) scale(.94);opacity:0}
 .binfo{position:relative;z-index:2}
