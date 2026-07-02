@@ -111,9 +111,9 @@ h2.title{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-weight:700;f
 .center{text-align:center}
 .center .lede,.lede.center{margin-left:auto;margin-right:auto}
 
-/* reveal */
-.reveal{opacity:0;transform:translateY(26px);transition:.8s cubic-bezier(.2,.7,.2,1)}
-.reveal.in{opacity:1;transform:none}
+/* reveal — materialize out of the void */
+.reveal{opacity:0;transform:translateY(26px);filter:blur(9px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none;filter:blur(0)}
 
 /* ---------- concept ---------- */
 .concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:54px}
@@ -243,6 +243,70 @@ a.iq:hover{opacity:.72}
   .constellation svg{animation:cfloat 8s ease-in-out infinite}
   @keyframes cfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(1.2deg)}}
 }
+
+/* ---------- buddy planet showcase ---------- */
+.showcase{height:520vh;position:relative}
+.bstage{position:sticky;top:0;height:100vh;overflow:hidden;
+  display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;
+  max-width:var(--maxw);margin:0 auto;padding:0 24px;
+  --pc:#ef4444;--pcl:#ff8f80;--pcd:#5c0f0f;--pg:rgba(239,68,68,.45);--ac:#ff6b5e}
+.bghost{position:absolute;left:-1%;top:5%;font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:min(26vw,300px);line-height:1;color:transparent;
+  -webkit-text-stroke:1.5px rgba(165,170,220,.13);user-select:none;pointer-events:none;
+  transition:opacity .35s}
+.planetwrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:56vh}
+.planet{width:min(42vh,390px);aspect-ratio:1;border-radius:50%;position:relative;
+  background:radial-gradient(circle at 33% 30%,var(--pcl),var(--pc) 52%,var(--pcd) 90%);
+  box-shadow:inset -40px -32px 84px rgba(0,0,0,.55),inset 8px 10px 34px rgba(255,255,255,.25),
+    0 0 90px -12px var(--pg),0 0 220px -40px var(--pg);
+  transition:transform .75s cubic-bezier(.16,.8,.24,1),opacity .4s ease}
+.planet::before{content:'';position:absolute;inset:0;border-radius:50%;
+  background:repeating-linear-gradient(104deg,transparent 0 30px,rgba(255,255,255,.06) 30px 40px,transparent 40px 78px,rgba(0,0,0,.16) 78px 96px);
+  background-size:250% 100%;mix-blend-mode:overlay;animation:bands 30s linear infinite}
+@keyframes bands{to{background-position:250% 0}}
+.planet::after{content:'';position:absolute;inset:-4%;border-radius:50%;
+  background:radial-gradient(circle,transparent 60%,var(--pg) 86%,transparent 100%);opacity:.85}
+.pring{position:absolute;width:min(64vh,600px);aspect-ratio:2.5;
+  border:1px solid rgba(190,196,235,.15);border-radius:50%;transform:rotate(-14deg);pointer-events:none}
+.bstage.switching .planet{transform:scale(.7) rotate(-6deg);opacity:0}
+.bstage.switching .bghost{opacity:0}
+.binfo{position:relative;z-index:2}
+.bi-el{transition:opacity .3s ease,transform .3s ease;transition-delay:calc(var(--d,0)*70ms)}
+.bstage.switching .bi-el{opacity:0;transform:translateY(16px);transition-delay:0ms}
+.bi-step{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.3em;color:var(--ac);font-weight:600;margin-bottom:14px}
+.bi-name{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
+.bi-sub{color:var(--muted);font-size:15px;margin:6px 0 18px}
+.bi-ident{color:#c9cdec;font-size:16.5px;max-width:430px;min-height:56px}
+.bi-chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 22px}
+.bi-meta{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px;margin-bottom:22px;max-width:430px}
+.bi-motto{color:var(--ac);font-style:italic;font-family:'Space Grotesk',sans-serif;font-size:14.5px}
+.bi-scale{font-family:'Space Grotesk',sans-serif;color:var(--faint);font-size:12.5px;letter-spacing:.04em}
+.bi-links{display:flex;gap:12px}
+.bi-app,.bi-lab{padding:11px 22px;border-radius:12px;font-size:14px;transition:.25s;border:1px solid}
+.bi-app{border-color:color-mix(in srgb,var(--ac) 55%,transparent);color:#fff;background:color-mix(in srgb,var(--ac) 14%,transparent)}
+.bi-app:hover{background:color-mix(in srgb,var(--ac) 26%,transparent);transform:translateY(-2px)}
+.bi-lab{border-color:var(--line);color:var(--muted)}
+.bi-lab:hover{color:var(--ink);border-color:var(--muted)}
+.bnav{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;gap:13px;align-items:center;z-index:3}
+.barrow{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(12,14,30,.6);
+  color:var(--muted);cursor:pointer;font-size:15px;font-family:inherit;transition:.25s;backdrop-filter:blur(6px)}
+.barrow:hover{color:#fff;border-color:var(--violet)}
+.bdot{width:10px;height:10px;border-radius:50%;cursor:pointer;opacity:.38;transition:.25s}
+.bdot.on{opacity:1;transform:scale(1.4);box-shadow:0 0 10px var(--ac)}
+.bhint{position:absolute;bottom:38px;right:26px;color:var(--faint);font-size:11px;letter-spacing:.22em;
+  animation:bob 2.4s ease-in-out infinite;z-index:3;transition:opacity .3s}
+.bstage.last .bhint{opacity:0}
+@media(max-width:880px){
+  .bstage{grid-template-columns:1fr;align-content:center;gap:4px;padding-top:54px}
+  .planetwrap{min-height:32vh}
+  .planet{width:min(28vh,230px)}
+  .pring{width:min(44vh,370px)}
+  .bghost{font-size:40vw;top:2%}
+  .bi-ident{min-height:0}
+  .bnav{bottom:16px}
+  .bhint{display:none}
+}
+@media (prefers-reduced-motion: reduce){.planet::before{animation:none}.bhint{animation:none}}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -336,71 +400,45 @@ a.iq:hover{opacity:.72}
   </div>
 </section>
 
-<!-- ================= BUDDIES ================= -->
+<!-- ================= BUDDIES · PLANET SHOWCASE ================= -->
 <section class="block" id="buddies">
   <div class="wrap">
     <div class="reveal center">
       <div class="kicker">The Five Buddies</div>
-      <h2 class="title">다섯 빛깔, 다섯 영역</h2>
-      <p class="lede">각 버디는 하나의 연구소를 나선형 학습 세션으로 바꾸는 데스크톱 앱입니다.<br>같은 나선 엔진을 공유하고, 한 머신에서 함께 쓸 수 있습니다.</p>
+      <h2 class="title">다섯 빛깔, 다섯 행성</h2>
+      <p class="lede">각 버디는 하나의 연구소를 나선형 학습 세션으로 바꾸는 데스크톱 앱입니다.<br>스크롤을 내리면 다섯 행성이 차례로 나타납니다.</p>
     </div>
+  </div>
 
-    <div class="buddies">
-      <!-- RED -->
-      <article class="bcard reveal" data-k="red" style="--c:var(--red)">
-        <div class="bhead"><span class="orb"></span><div class="bname">Spiral Buddy Red<small>수학과 AI의 본질</small></div></div>
-        <p class="bident">선형대수부터 Transformer·Diffusion까지, 증명으로 따라가는 AI.</p>
-        <div class="chips"><span class="chip">수학</span><span class="chip">ML</span><span class="chip">DL</span><span class="chip">RL</span><span class="chip">LLM</span><span class="chip">CV</span></div>
-        <div class="bmeta"><span class="motto">Prove, don't memorize</span><span class="scale">7 layers · 48 repos</span></div>
-        <div class="blinks">
-          <a class="blink app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-red/releases" target="_blank" rel="noopener">앱 ↗</a>
-          <a class="blink lab" href="https://iq-ai-lab.github.io" target="_blank" rel="noopener">IQ AI Lab</a>
+  <div class="showcase" id="showcase">
+    <div class="bstage" id="bstage">
+      <div class="bghost" id="bghost">01</div>
+      <div class="planetwrap">
+        <div class="pring"></div>
+        <div class="planet" id="planet"></div>
+      </div>
+      <div class="binfo">
+        <div class="bi-step bi-el" style="--d:0" id="biStep">01 / 05</div>
+        <h3 class="bi-name bi-el" style="--d:1" id="biName"></h3>
+        <div class="bi-sub bi-el" style="--d:2" id="biSub"></div>
+        <p class="bi-ident bi-el" style="--d:3" id="biIdent"></p>
+        <div class="bi-chips bi-el" style="--d:4" id="biChips"></div>
+        <div class="bi-meta bi-el" style="--d:5"><span class="bi-motto" id="biMotto"></span><span class="bi-scale" id="biScale"></span></div>
+        <div class="bi-links bi-el" style="--d:6">
+          <a class="bi-app" id="biApp" target="_blank" rel="noopener">앱 다운로드 ↗</a>
+          <a class="bi-lab" id="biLab" target="_blank" rel="noopener"></a>
         </div>
-      </article>
-      <!-- GREEN -->
-      <article class="bcard reveal" data-k="green" style="--c:var(--green)">
-        <div class="bhead"><span class="orb"></span><div class="bname">Spiral Buddy Green<small>세상을 읽는 판단력</small></div></div>
-        <p class="bident">돈·사람·제도·역사를 메커니즘 → 반례 → 판단 규칙으로 증류하는 실천지.</p>
-        <div class="chips"><span class="chip">돈</span><span class="chip">사람</span><span class="chip">제도</span><span class="chip">역사</span><span class="chip">전략</span></div>
-        <div class="bmeta"><span class="motto">Distill, don't collect</span><span class="scale">6 layers · 31 repos</span></div>
-        <div class="blinks">
-          <a class="blink app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-green/releases" target="_blank" rel="noopener">앱 ↗</a>
-          <a class="blink lab" href="https://iq-phronesis-lab.github.io" target="_blank" rel="noopener">IQ Phronesis Lab</a>
-        </div>
-      </article>
-      <!-- BLUE -->
-      <article class="bcard reveal" data-k="blue" style="--c:var(--blue)">
-        <div class="bhead"><span class="orb"></span><div class="bname">Spiral Buddy Blue<small>만드는 힘, 풀스택</small></div></div>
-        <p class="bident">문서 너머 — 내부 동작 원리까지 파고드는 풀스택 개발.</p>
-        <div class="chips"><span class="chip">Frontend</span><span class="chip">Backend</span><span class="chip">Android</span><span class="chip">iOS</span><span class="chip">DB</span><span class="chip">인프라</span></div>
-        <div class="bmeta"><span class="motto">Beyond the docs</span><span class="scale">9 domains · 86 repos</span></div>
-        <div class="blinks">
-          <a class="blink app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-blue/releases" target="_blank" rel="noopener">앱 ↗</a>
-          <a class="blink lab" href="https://iq-dev-lab.github.io" target="_blank" rel="noopener">IQ Dev Lab</a>
-        </div>
-      </article>
-      <!-- BLACK -->
-      <article class="bcard reveal" data-k="black" style="--c:var(--black)">
-        <div class="bhead"><span class="orb"></span><div class="bname">Spiral Buddy Black<small>우주를 바닥부터</small></div></div>
-        <p class="bident">제1원리에서 직접 유도해 우주까지 재구성하는 물리.</p>
-        <div class="chips"><span class="chip">고전</span><span class="chip">양자</span><span class="chip">상대성</span><span class="chip">우주론</span><span class="chip">양자중력</span></div>
-        <div class="bmeta"><span class="motto">Derive, don't accept</span><span class="scale">7 layers · 36 repos</span></div>
-        <div class="blinks">
-          <a class="blink app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-black/releases" target="_blank" rel="noopener">앱 ↗</a>
-          <a class="blink lab" href="https://iq-physis-lab.github.io" target="_blank" rel="noopener">IQ Physis Lab</a>
-        </div>
-      </article>
-      <!-- WHITE -->
-      <article class="bcard reveal" data-k="white" style="--c:var(--white)">
-        <div class="bhead"><span class="orb"></span><div class="bname">Spiral Buddy White<small>마음의 안쪽</small></div></div>
-        <p class="bident">물질에서 마음을 쌓아 올리고, 끝내 남는 '경험'을 정직하게 마주하는.</p>
-        <div class="chips"><span class="chip">뇌</span><span class="chip">인지</span><span class="chip">의식</span><span class="chip">자아</span><span class="chip">자유의지</span></div>
-        <div class="bmeta"><span class="motto">Explain it, don't explain it away</span><span class="scale">7 layers · 31 repos</span></div>
-        <div class="blinks">
-          <a class="blink app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-white/releases" target="_blank" rel="noopener">앱 ↗</a>
-          <a class="blink lab" href="https://iq-psyche-lab.github.io" target="_blank" rel="noopener">IQ Psyche Lab</a>
-        </div>
-      </article>
+      </div>
+      <div class="bnav">
+        <button class="barrow" data-dir="-1" aria-label="이전 버디">←</button>
+        <span class="bdot" data-i="0" style="background:#ef4444;--ac:#ef4444"></span>
+        <span class="bdot" data-i="1" style="background:#22c55e;--ac:#22c55e"></span>
+        <span class="bdot" data-i="2" style="background:#3b82f6;--ac:#3b82f6"></span>
+        <span class="bdot" data-i="3" style="background:#14161f;box-shadow:inset 0 0 0 1px #aeb6cf;--ac:#aeb6cf"></span>
+        <span class="bdot" data-i="4" style="background:#f7f9ff;--ac:#f7f9ff"></span>
+        <button class="barrow" data-dir="1" aria-label="다음 버디">→</button>
+      </div>
+      <div class="bhint">SCROLL — 다음 행성</div>
     </div>
   </div>
 </section>
@@ -539,7 +577,7 @@ addEventListener('scroll',updProg,{passive:true});updProg();
 
 // ---------- nav dots ----------
 const dotLinks=[...document.querySelectorAll('#dots a')];
-const dotIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)dotLinks.forEach(d=>d.classList.toggle('on',d.getAttribute('href')==='#'+e.target.id));});},{rootMargin:'-45% 0px -45% 0px'});
+const dotIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){dotLinks.forEach(d=>d.classList.toggle('on',d.getAttribute('href')==='#'+e.target.id));document.dispatchEvent(new Event('sg:warp'));}});},{rootMargin:'-45% 0px -45% 0px'});
 dotLinks.forEach(d=>{const t=document.querySelector(d.getAttribute('href'));if(t)dotIO.observe(t);});
 
 // ---------- hero stat count-up ----------
@@ -548,9 +586,79 @@ document.querySelectorAll('[data-count]').forEach(el=>{
   (function tick(t){const k=Math.min(1,(t-t0)/dur);el.textContent=Math.round(target*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(tick);})(t0);
 });
 
+// ---------- buddy planet showcase ----------
+const BUDDY=[
+  {name:'Spiral Buddy Red',sub:'수학과 AI의 본질',ident:'선형대수부터 Transformer·Diffusion까지, 증명으로 따라가는 AI.',
+   chips:['수학','ML','DL','RL','LLM','CV'],motto:"Prove, don't memorize",scale:'7 layers · 48 repos',
+   app:'https://github.com/iq-spiral-galaxy/spiral-buddy-red/releases',lab:'https://iq-ai-lab.github.io',labName:'IQ AI Lab',
+   pc:'#ef4444',pcl:'#ff8f80',pcd:'#5c0f0f',pg:'rgba(239,68,68,.45)',ac:'#ff6b5e'},
+  {name:'Spiral Buddy Green',sub:'세상을 읽는 판단력',ident:'돈·사람·제도·역사를 메커니즘 → 반례 → 판단 규칙으로 증류하는 실천지.',
+   chips:['돈','사람','제도','역사','전략'],motto:"Distill, don't collect",scale:'6 layers · 31 repos',
+   app:'https://github.com/iq-spiral-galaxy/spiral-buddy-green/releases',lab:'https://iq-phronesis-lab.github.io',labName:'IQ Phronesis Lab',
+   pc:'#22c55e',pcl:'#7ff0a8',pcd:'#0b3d22',pg:'rgba(34,197,94,.42)',ac:'#34d97b'},
+  {name:'Spiral Buddy Blue',sub:'만드는 힘, 풀스택',ident:'문서 너머 — 내부 동작 원리까지 파고드는 풀스택 개발.',
+   chips:['Frontend','Backend','Android','iOS','DB','인프라'],motto:"Beyond the docs",scale:'9 domains · 86 repos',
+   app:'https://github.com/iq-spiral-galaxy/spiral-buddy-blue/releases',lab:'https://iq-dev-lab.github.io',labName:'IQ Dev Lab',
+   pc:'#3b82f6',pcl:'#8ab8ff',pcd:'#14265c',pg:'rgba(59,130,246,.45)',ac:'#60a5fa'},
+  {name:'Spiral Buddy Black',sub:'우주를 바닥부터',ident:'제1원리에서 직접 유도해 우주까지 재구성하는 물리.',
+   chips:['고전','양자','상대성','우주론','양자중력'],motto:"Derive, don't accept",scale:'7 layers · 36 repos',
+   app:'https://github.com/iq-spiral-galaxy/spiral-buddy-black/releases',lab:'https://iq-physis-lab.github.io',labName:'IQ Physis Lab',
+   pc:'#232838',pcl:'#59637e',pcd:'#04050a',pg:'rgba(174,182,207,.32)',ac:'#aeb6cf'},
+  {name:'Spiral Buddy White',sub:'마음의 안쪽',ident:"물질에서 마음을 쌓아 올리고, 끝내 남는 '경험'을 정직하게 마주하는.",
+   chips:['뇌','인지','의식','자아','자유의지'],motto:"Explain it, don't explain it away",scale:'7 layers · 31 repos',
+   app:'https://github.com/iq-spiral-galaxy/spiral-buddy-white/releases',lab:'https://iq-psyche-lab.github.io',labName:'IQ Psyche Lab',
+   pc:'#dfe5f7',pcl:'#ffffff',pcd:'#8b94b8',pg:'rgba(235,240,255,.5)',ac:'#eef2ff'}
+];
+const showcase=document.getElementById('showcase'),bstage=document.getElementById('bstage');
+if(showcase&&bstage){
+  const $=id=>document.getElementById(id);
+  const bdots=[...bstage.querySelectorAll('.bdot')];
+  let bIdx=-1,swT=null;
+  function applyBuddy(i){
+    const b=BUDDY[i];
+    for(const[k,v]of Object.entries({'--pc':b.pc,'--pcl':b.pcl,'--pcd':b.pcd,'--pg':b.pg,'--ac':b.ac}))bstage.style.setProperty(k,v);
+    $('biStep').textContent=`0${i+1} / 05`;
+    $('bghost').textContent=`0${i+1}`;
+    $('biName').textContent=b.name;
+    $('biSub').textContent=b.sub;
+    $('biIdent').textContent=b.ident;
+    $('biChips').innerHTML=b.chips.map(c=>`<span class="chip">${c}</span>`).join('');
+    $('biMotto').textContent=b.motto;
+    $('biScale').textContent=b.scale;
+    $('biApp').href=b.app;
+    const lab=$('biLab');lab.href=b.lab;lab.textContent=b.labName;
+    bdots.forEach((d,j)=>d.classList.toggle('on',j===i));
+    bstage.classList.toggle('last',i===4);
+  }
+  function setBuddy(i,instant){
+    if(i===bIdx)return;
+    bIdx=i;
+    if(instant){applyBuddy(i);return;}
+    document.dispatchEvent(new Event('sg:warp'));
+    bstage.classList.add('switching');
+    clearTimeout(swT);
+    swT=setTimeout(()=>{applyBuddy(i);void bstage.offsetWidth;bstage.classList.remove('switching');},330);
+  }
+  function scTop(){return showcase.getBoundingClientRect().top+scrollY;}
+  function updShowcase(){
+    const range=showcase.offsetHeight-innerHeight;
+    const p=Math.min(.999,Math.max(0,(scrollY-scTop())/range));
+    setBuddy(Math.min(4,Math.floor(p*5)));
+  }
+  function goBuddy(i){
+    i=Math.max(0,Math.min(4,i));
+    const range=showcase.offsetHeight-innerHeight;
+    window.scrollTo({top:Math.round(scTop()+range*((i+.5)/5)),behavior:'smooth'});
+  }
+  bstage.querySelectorAll('.barrow').forEach(b=>b.addEventListener('click',()=>goBuddy(bIdx+ +b.dataset.dir)));
+  bdots.forEach(d=>d.addEventListener('click',()=>goBuddy(+d.dataset.i)));
+  addEventListener('scroll',updShowcase,{passive:true});
+  setBuddy(0,true);updShowcase();
+}
+
 // ---------- 3D tilt cards ----------
 if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-  document.querySelectorAll('.bcard,.cstep,.s3').forEach(card=>{
+  document.querySelectorAll('.cstep,.s3').forEach(card=>{
     card.addEventListener('pointermove',e=>{
       const r=card.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
       card.style.setProperty('--gx',px*100+'%');card.style.setProperty('--gy',py*100+'%');
@@ -658,8 +766,9 @@ if(renderer){
   ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
 
   // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0;
+  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0;
   if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
+  document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
   function onScroll(){
     scrollP=Math.min(1,scrollY/(innerHeight*.85));
     cv.style.opacity=(1-scrollP*.62).toFixed(3);
@@ -688,7 +797,13 @@ if(renderer){
   const clock=new THREE.Clock();
   let queued=false;
   function queueRender(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;place();renderer.render(scene,camera);});}
-  function loop(){uTime.value=clock.getElapsedTime();place();renderer.render(scene,camera);requestAnimationFrame(loop);}
+  function loop(){
+    swirl+=warp*.045;warp*=.94;                                  // section-change warp pulse
+    uTime.value=clock.getElapsedTime()+swirl;
+    const fov=55+warp*5;
+    if(Math.abs(camera.fov-fov)>.05){camera.fov=fov;camera.updateProjectionMatrix();}
+    place();renderer.render(scene,camera);requestAnimationFrame(loop);
+  }
   resize();onScroll();
   if(reduce)queueRender();else requestAnimationFrame(loop);
 }
