@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
 <style>
 :root{
   --bg:#05060e; --bg2:#0a0c1c; --panel:rgba(18,20,40,.55);
@@ -73,7 +74,7 @@ nav.scrolled{background:rgba(7,8,18,.7);backdrop-filter:blur(14px);border-bottom
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-#galaxy{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+#galaxy{position:fixed;inset:0;width:100%;height:100vh;z-index:0;pointer-events:none;will-change:opacity}
 .hero-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(ellipse 60% 55% at 50% 48%, transparent 30%, rgba(5,6,14,.55) 78%, var(--bg) 100%)}
 .hero-in{position:relative;z-index:2;padding:120px 24px 80px}
@@ -129,7 +130,8 @@ h2.title{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-weight:700;f
 .buddies{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:22px;margin-top:56px}
 .bcard{
   position:relative;background:var(--panel);border:1px solid var(--line);border-radius:20px;
-  padding:28px 26px 26px;backdrop-filter:blur(10px);overflow:hidden;transition:.3s;
+  padding:28px 26px 26px;backdrop-filter:blur(10px);overflow:hidden;
+  transition:transform .18s ease-out,border-color .3s,box-shadow .3s;
 }
 .bcard::before{content:'';position:absolute;inset:0;pointer-events:none;border-radius:20px;padding:1px;opacity:.0;transition:.3s;
   background:linear-gradient(140deg,var(--c),transparent 60%);
@@ -215,6 +217,32 @@ footer a:hover{color:var(--ink)}
 .iq{font-weight:700;font-size:16px;background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 a.iq{transition:opacity .2s}
 a.iq:hover{opacity:.72}
+
+/* ---------- interactive layer (progress · dots · tilt glare) ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,var(--pink,#ec4899),var(--violet),var(--cyan));
+  box-shadow:0 0 12px rgba(168,85,247,.85)}
+#dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:55;
+  display:flex;flex-direction:column;gap:14px}
+#dots a{width:9px;height:9px;border-radius:50%;background:rgba(160,165,210,.32);
+  transition:.25s;display:block;position:relative}
+#dots a:hover{background:rgba(200,205,240,.7)}
+#dots a.on{background:var(--violet);box-shadow:0 0 10px rgba(168,85,247,.95);transform:scale(1.4)}
+#dots a::after{content:attr(data-label);position:absolute;right:20px;top:50%;
+  transform:translateY(-50%) translateX(6px);font-size:11px;color:var(--muted);white-space:nowrap;
+  background:rgba(10,12,28,.9);border:1px solid var(--line);padding:3px 10px;border-radius:8px;
+  opacity:0;pointer-events:none;transition:.2s}
+#dots a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+@media(max-width:760px){#dots{display:none}}
+.cstep,.s3{position:relative;overflow:hidden;transition:transform .18s ease-out,border-color .3s}
+.bcard::after,.cstep::after,.s3::after{content:'';position:absolute;inset:0;border-radius:inherit;
+  pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.09),transparent 46%)}
+.bcard:hover::after,.cstep:hover::after,.s3:hover::after{opacity:1}
+@media (prefers-reduced-motion: no-preference){
+  .constellation svg{animation:cfloat 8s ease-in-out infinite}
+  @keyframes cfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(1.2deg)}}
+}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -246,6 +274,16 @@ a.iq:hover{opacity:.72}
   </div>
 </nav>
 
+<div id="progress"></div>
+<div id="dots">
+  <a href="#top" data-label="홈"></a>
+  <a href="#concept" data-label="학습법"></a>
+  <a href="#buddies" data-label="다섯 버디"></a>
+  <a href="#how" data-label="나선 사이클"></a>
+  <a href="#combine" data-label="지식 결합"></a>
+  <a href="#start" data-label="시작하기"></a>
+</div>
+
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
   <canvas id="galaxy"></canvas>
@@ -260,9 +298,9 @@ a.iq:hover{opacity:.72}
       <a class="btn btn-ghost" href="#concept">학습법 보기</a>
     </div>
     <div class="hero-stats">
-      <div><b>5</b><span>SPIRAL BUDDIES</span></div>
-      <div><b>232</b><span>DEEP-DIVE REPOS</span></div>
-      <div><b>5</b><span>KNOWLEDGE LABS</span></div>
+      <div><b data-count="5">0</b><span>SPIRAL BUDDIES</span></div>
+      <div><b data-count="232">0</b><span>DEEP-DIVE REPOS</span></div>
+      <div><b data-count="5">0</b><span>KNOWLEDGE LABS</span></div>
       <div><b>∞</b><span>SPIRAL DEPTH</span></div>
     </div>
   </div>
@@ -494,80 +532,166 @@ addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passi
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i%4,3)*60)+'ms';io.observe(el);});
 
-// ---------- spiral galaxy canvas ----------
-(function(){
-  const cv=document.getElementById('galaxy'), ctx=cv.getContext('2d');
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let W,H,cx,cy,DPR,dust=[],buddies=[],rot=0;
-  const PAL=['#c4b5fd','#a78bfa','#818cf8','#7dd3fc','#f0abfc','#e9d5ff'];
+// ---------- scroll progress bar ----------
+const prog=document.getElementById('progress');
+function updProg(){const h=document.documentElement;prog.style.width=Math.min(100,scrollY/(h.scrollHeight-innerHeight)*100)+'%';}
+addEventListener('scroll',updProg,{passive:true});updProg();
+
+// ---------- nav dots ----------
+const dotLinks=[...document.querySelectorAll('#dots a')];
+const dotIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)dotLinks.forEach(d=>d.classList.toggle('on',d.getAttribute('href')==='#'+e.target.id));});},{rootMargin:'-45% 0px -45% 0px'});
+dotLinks.forEach(d=>{const t=document.querySelector(d.getAttribute('href'));if(t)dotIO.observe(t);});
+
+// ---------- hero stat count-up ----------
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const target=+el.dataset.count,dur=1600,t0=performance.now();
+  (function tick(t){const k=Math.min(1,(t-t0)/dur);el.textContent=Math.round(target*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(tick);})(t0);
+});
+
+// ---------- 3D tilt cards ----------
+if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.bcard,.cstep,.s3').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+      card.style.setProperty('--gx',px*100+'%');card.style.setProperty('--gy',py*100+'%');
+      card.style.transform=`perspective(900px) translateY(-5px) rotateX(${((py-.5)*-7).toFixed(2)}deg) rotateY(${((px-.5)*9).toFixed(2)}deg)`;
+    });
+    card.addEventListener('pointerleave',()=>{card.style.transform='';});
+  });
+}
+</script>
+
+<script type="module">
+// ---------- 3D spiral galaxy (Three.js) ----------
+import * as THREE from 'three';
+
+const cv=document.getElementById('galaxy');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse=matchMedia('(pointer:coarse)').matches;
+let renderer=null;
+try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true,powerPreference:'high-performance',preserveDrawingBuffer:true});}
+catch(e){cv.remove();}
+
+if(renderer){
+  renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,200);
+  const galaxy=new THREE.Group();
+  galaxy.rotation.x=-.08;
+  scene.add(galaxy);
+
+  // --- star dust: 3 spiral arms, differential rotation in the shader ---
+  const ARMS=3,R=16,WIND=4.2;
+  const COUNT=coarse||innerWidth<760?4500:11000;
+  const pos=new Float32Array(COUNT*3),col=new Float32Array(COUNT*3);
+  const aSize=new Float32Array(COUNT),aSpeed=new Float32Array(COUNT),
+        aPhase=new Float32Array(COUNT),aAlpha=new Float32Array(COUNT);
+  const inner=new THREE.Color('#fff3e8'),mid=new THREE.Color('#c4b5fd'),
+        edge=new THREE.Color('#38bdf8'),pink=new THREE.Color('#f0abfc');
+  for(let i=0;i<COUNT;i++){
+    const t=Math.pow(Math.random(),.55),r=t*R,arm=i%ARMS;
+    const spread=(Math.random()-.5)*(1.35-t)*.85;
+    const ang=arm*(Math.PI*2/ARMS)+t*WIND+spread;
+    pos[i*3]=Math.cos(ang)*r;
+    pos[i*3+1]=(Math.random()-.5)*(1.7*Math.exp(-r*.3)+.14);   // central bulge
+    pos[i*3+2]=Math.sin(ang)*r;
+    const c=inner.clone().lerp(mid,Math.min(1,t*1.7)).lerp(edge,Math.max(0,t-.45)*1.5);
+    if(Math.random()<.08)c.lerp(pink,.8);
+    col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;
+    aSize[i]=(Math.random()*1.1+.35)*(t<.12?1.7:1);
+    aSpeed[i]=.32/(r*.34+.55);                                  // inner spins faster
+    aPhase[i]=Math.random()*Math.PI*2;
+    aAlpha[i]=.22+.5*(1-t);
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('aColor',new THREE.BufferAttribute(col,3));
+  geo.setAttribute('aSize',new THREE.BufferAttribute(aSize,1));
+  geo.setAttribute('aSpeed',new THREE.BufferAttribute(aSpeed,1));
+  geo.setAttribute('aPhase',new THREE.BufferAttribute(aPhase,1));
+  geo.setAttribute('aAlpha',new THREE.BufferAttribute(aAlpha,1));
+  const uTime={value:reduce?25:0};
+  const uScale={value:Math.min(2,devicePixelRatio||1)*(innerHeight/860)};
+  const mat=new THREE.ShaderMaterial({
+    transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+    uniforms:{uTime,uScale},
+    vertexShader:`
+      attribute vec3 aColor;attribute float aSize,aSpeed,aPhase,aAlpha;
+      uniform float uTime,uScale;varying vec3 vC;varying float vA;
+      void main(){
+        float a=uTime*aSpeed,c=cos(a),s=sin(a);
+        vec3 p=vec3(position.x*c-position.z*s,position.y,position.x*s+position.z*c);
+        vec4 mv=modelViewMatrix*vec4(p,1.);
+        gl_PointSize=aSize*uScale*(46./-mv.z);
+        vC=aColor;vA=aAlpha*(.72+.28*sin(uTime*1.6+aPhase));
+        gl_Position=projectionMatrix*mv;
+      }`,
+    fragmentShader:`
+      varying vec3 vC;varying float vA;
+      void main(){
+        float d=length(gl_PointCoord-.5);
+        if(d>.5)discard;
+        gl_FragColor=vec4(vC,pow(1.-d*2.,2.2)*vA);
+      }`
+  });
+  galaxy.add(new THREE.Points(geo,mat));
+
+  // --- glow sprites: galactic core + the five buddies ---
+  function glowTex(rgba){
+    const c=document.createElement('canvas');c.width=c.height=128;
+    const g=c.getContext('2d'),gr=g.createRadialGradient(64,64,0,64,64,64);
+    gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.28,rgba);gr.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=gr;g.fillRect(0,0,128,128);
+    return new THREE.CanvasTexture(c);
+  }
+  function sprite(rgba,scale){
+    const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(rgba),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));
+    s.scale.setScalar(scale);galaxy.add(s);return s;
+  }
+  sprite('rgba(190,165,255,.42)',4.2);                          // core
   const BUD=[
-    {c:'#ef4444',r:.30,a:0.0,s:1.0},
-    {c:'#22c55e',r:.46,a:1.3,s:.78},
-    {c:'#3b82f6',r:.62,a:2.7,s:.60},
-    {c:'#0b0d18',ring:'#aeb6cf',r:.80,a:4.1,s:.46},
-    {c:'#ffffff',r:.94,a:5.4,s:.38,glow:'#cdd6ff'}
-  ];
+    {rgba:'rgba(239,68,68,.92)', f:.30,a0:0.0,s:1.00},
+    {rgba:'rgba(34,197,94,.92)', f:.46,a0:1.3,s:.78},
+    {rgba:'rgba(59,130,246,.92)',f:.62,a0:2.7,s:.60},
+    {rgba:'rgba(174,182,207,.9)',f:.80,a0:4.1,s:.46},
+    {rgba:'rgba(255,255,255,.95)',f:.94,a0:5.4,s:.38}
+  ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
+
+  // --- interaction state: mouse parallax + scroll-driven camera ---
+  let tx=0,ty=0,mx=0,my=0,scrollP=0;
+  if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
+  function onScroll(){
+    scrollP=Math.min(1,scrollY/(innerHeight*.85));
+    cv.style.opacity=(1-scrollP*.62).toFixed(3);
+    if(reduce)queueRender();
+  }
+  addEventListener('scroll',onScroll,{passive:true});
+
+  function place(){
+    const t=uTime.value;
+    for(const b of BUD){
+      const a=b.a0+t*.34*b.s;
+      b.sp.position.set(Math.cos(a)*b.r,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*b.r);
+    }
+    mx+=(tx-mx)*.045;my+=(ty-my)*.045;
+    camera.position.set(mx*1.6,7.2+scrollP*5-my*.9,15.5+scrollP*2);
+    camera.lookAt(0,2.5,0);
+  }
   function resize(){
-    DPR=Math.min(2,devicePixelRatio||1);
-    const r=cv.getBoundingClientRect(); W=r.width; H=r.height;
-    cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
-    cx=W/2; cy=H*0.46;
-    build();
-  }
-  function build(){
-    const R=Math.min(W,H)*0.46;
-    const N=Math.round(Math.min(2000, (W*H)/900));
-    const ARMS=3, WIND=3.4;
-    dust=[];
-    for(let i=0;i<N;i++){
-      const arm=i%ARMS;
-      const t=Math.pow(Math.random(),0.62);              // 0..1 radius factor
-      const spread=(Math.random()-0.5)*(0.5*(1.05-t));   // arms tighter outward
-      const ang=arm*(2*Math.PI/ARMS)+t*WIND+spread;
-      const rr=t*R + (Math.random()*8-4);
-      dust.push({ang, rr, t, sz:Math.random()*1.3+0.3, col:PAL[(Math.random()*PAL.length)|0], tw:Math.random()*6.28, sp:0.6+0.6*(1-t)});
-    }
-    buddies=BUD.map(b=>({...b, rr:b.r*R}));
-  }
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    // soft core + nebula
-    let g=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.5);
-    g.addColorStop(0,'rgba(190,170,255,.30)'); g.addColorStop(.18,'rgba(140,120,230,.16)');
-    g.addColorStop(.5,'rgba(80,70,160,.06)'); g.addColorStop(1,'rgba(5,6,14,0)');
-    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-
-    ctx.globalCompositeOperation='lighter';
-    for(const d of dust){
-      const a=d.ang + rot*d.sp;
-      const x=cx+Math.cos(a)*d.rr, y=cy+Math.sin(a)*d.rr*0.46;   // ellipse tilt
-      const tw=0.55+0.45*Math.sin(d.tw+rot*4*d.sp);
-      ctx.globalAlpha=(0.18+0.6*(1-d.t))*tw;
-      ctx.fillStyle=d.col;
-      ctx.beginPath(); ctx.arc(x,y,d.sz,0,6.283); ctx.fill();
-    }
-
-    // buddy stars
-    for(const b of buddies){
-      const a=b.a + rot*1.5*b.s;
-      const x=cx+Math.cos(a)*b.rr, y=cy+Math.sin(a)*b.rr*0.46;
-      ctx.globalAlpha=1;
-      const gg=ctx.createRadialGradient(x,y,0,x,y,16);
-      gg.addColorStop(0,(b.glow||b.ring||b.c)); gg.addColorStop(0.5,b.c+'88'); gg.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=gg; ctx.beginPath(); ctx.arc(x,y,16,0,6.283); ctx.fill();
-      ctx.globalCompositeOperation='source-over';
-      ctx.fillStyle=b.c; ctx.beginPath(); ctx.arc(x,y,4.2,0,6.283); ctx.fill();
-      if(b.ring){ ctx.strokeStyle=b.ring; ctx.lineWidth=1.3; ctx.beginPath(); ctx.arc(x,y,4.6,0,6.283); ctx.stroke(); }
-      ctx.globalCompositeOperation='lighter';
-    }
-    ctx.globalCompositeOperation='source-over'; ctx.globalAlpha=1;
-
-    rot += reduce?0:0.0016;
-    requestAnimationFrame(frame);
+    renderer.setSize(innerWidth,innerHeight,false);
+    camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+    uScale.value=Math.min(2,devicePixelRatio||1)*(innerHeight/860);
+    if(reduce)queueRender();
   }
   addEventListener('resize',resize,{passive:true});
-  resize(); requestAnimationFrame(frame);
-})();
+
+  const clock=new THREE.Clock();
+  let queued=false;
+  function queueRender(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;place();renderer.render(scene,camera);});}
+  function loop(){uTime.value=clock.getElapsedTime();place();renderer.render(scene,camera);requestAnimationFrame(loop);}
+  resize();onScroll();
+  if(reduce)queueRender();else requestAnimationFrame(loop);
+}
 </script>
 </body>
 </html>
