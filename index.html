@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spiral Galaxy — 나선형 학습 은하</title>
-<meta name="description" content="나선형 학습 은하. 다섯 개의 AI 행성에서 핵심 지식을 빠르고 넓게 익히고, 결합해 문제를 푸는 사람으로 성장합니다.">
+<meta name="description" content="AI 버디와 함께하는 나선형 학습. 다섯 빛깔의 버디로 핵심 지식을 빠르고 넓게 익히고, 결합해 문제를 푸는 사람으로 성장합니다.">
 <meta property="og:title" content="Spiral Galaxy">
-<meta property="og:description" content="AI × 나선형 학습 — 빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.">
+<meta property="og:description" content="AI 버디 × 나선형 학습 — 빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23ffffff'/%3E%3Cpath d='M16 16C19 12 25.5 12 27 17.5 28.4 23 24 29.5 16.5 28.2' stroke='%23a855f7' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M16 16C13 20 6.5 20 5 14.5 3.6 9 8 2.5 15.5 3.8' stroke='%23ec4899' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -250,18 +250,18 @@ a.iq:hover{opacity:.72}
   display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;
   max-width:var(--maxw);margin:0 auto;padding:0 24px;
   --pc:#ef4444;--pcl:#ff8f80;--pcd:#5c0f0f;--pg:rgba(239,68,68,.45);--ac:#ff6b5e;--dirx:1}
-.planetwrap{position:relative;min-height:56vh;perspective:1100px}
+.planetwrap{position:relative;min-height:56vh}
 .planet{width:calc(min(33vh,300px)*var(--pszf,1));aspect-ratio:1;border-radius:50%;
   position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%) translateX(var(--cx,0px)) scale(var(--cs,1)) rotateY(var(--cr,0deg));
+  transform:translate(-50%,-50%) translateY(var(--cy,0px)) scale(var(--cs,1));
   transition:transform 1s cubic-bezier(.3,.85,.3,1),opacity .7s ease,filter .7s ease}
 .planet i{position:absolute;inset:0;border-radius:50%;pointer-events:none}
 /* orbital deck offsets — active center, neighbors recede beside/behind */
-.planet.o0{--cx:0px;--cs:1;--cr:0deg;opacity:1;filter:none;z-index:5}
-.planet.o1{--cx:min(30vh,280px);--cs:.7;--cr:-16deg;opacity:.42;filter:blur(2.5px) brightness(.6) saturate(.85);z-index:4}
-.planet.o-1{--cx:calc(min(30vh,280px)*-1);--cs:.7;--cr:16deg;opacity:.42;filter:blur(2.5px) brightness(.6) saturate(.85);z-index:3}
-.planet.o2{--cx:min(47vh,440px);--cs:.48;--cr:-22deg;opacity:.14;filter:blur(5px) brightness(.45);z-index:2}
-.planet.o-2{--cx:calc(min(47vh,440px)*-1);--cs:.48;--cr:22deg;opacity:.14;filter:blur(5px) brightness(.45);z-index:1}
+.planet.o0{--cy:0px;--cs:1;opacity:1;filter:none;z-index:5}
+.planet.o1{--cy:min(28vh,260px);--cs:.66;opacity:.4;filter:blur(2.5px) brightness(.58);z-index:4}
+.planet.o-1{--cy:calc(min(28vh,260px)*-1);--cs:.66;opacity:.4;filter:blur(2.5px) brightness(.58);z-index:3}
+.planet.o2{--cy:min(46vh,430px);--cs:.44;opacity:.12;filter:blur(5px) brightness(.42);z-index:2}
+.planet.o-2{--cy:calc(min(46vh,430px)*-1);--cs:.44;opacity:.12;filter:blur(5px) brightness(.42);z-index:1}
 
 
 /* 🔴 적색 거성 — 매끈한 발광 항성 + 숨쉬는 글로우 */
@@ -330,8 +330,8 @@ a.iq:hover{opacity:.72}
   animation:corona 4s ease-in-out infinite}
 .binfo{position:relative;z-index:6}
 .bi-el{transition:opacity .24s ease,transform .3s cubic-bezier(.22,.85,.25,1);transition-delay:calc(var(--d,0)*40ms)}
-.bstage.out .bi-el{opacity:0;transform:translateX(calc(var(--dirx)*28px));transition-delay:0ms}
-.bstage.enter .bi-el{transition:none;opacity:0;transform:translateX(calc(var(--dirx)*-28px))}
+.bstage.out .bi-el{opacity:0;transform:translateY(calc(var(--dirx)*-30px));transition-delay:0ms}
+.bstage.enter .bi-el{transition:none;opacity:0;transform:translateY(calc(var(--dirx)*30px))}
 .bi-step{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.3em;color:var(--ac);font-weight:600;margin-bottom:14px}
 .bi-name{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
 .bi-sub{color:var(--muted);font-size:15px;margin:6px 0 18px}
@@ -359,10 +359,10 @@ a.iq:hover{opacity:.72}
   .bstage{grid-template-columns:1fr;align-content:center;gap:4px;padding-top:54px}
   .planetwrap{min-height:32vh}
   .planet{width:calc(min(25vh,200px)*var(--pszf,1))}
-  .planet.o1{--cx:min(21vh,150px)}
-  .planet.o-1{--cx:calc(min(21vh,150px)*-1)}
-  .planet.o2{--cx:min(33vh,240px)}
-  .planet.o-2{--cx:calc(min(33vh,240px)*-1)}
+  .planet.o1{--cy:min(19vh,140px)}
+  .planet.o-1{--cy:calc(min(19vh,140px)*-1)}
+  .planet.o2{--cy:min(31vh,230px)}
+  .planet.o-2{--cy:calc(min(31vh,230px)*-1)}
   .bi-ident{min-height:0}
   .bnav{bottom:16px}
   .bhint{display:none}
@@ -392,7 +392,7 @@ a.iq:hover{opacity:.72}
   </a>
   <div class="navlinks">
     <a href="#concept">학습법</a>
-    <a href="#buddies">다섯 행성</a>
+    <a href="#buddies">다섯 버디</a>
     <a href="#combine">지식 결합</a>
     <a href="#start">시작하기</a>
     <a class="nav-gh" href="https://github.com/iq-spiral-galaxy" target="_blank" rel="noopener">GitHub ↗</a>
@@ -403,7 +403,7 @@ a.iq:hover{opacity:.72}
 <div id="dots">
   <a href="#top" data-label="홈"></a>
   <a href="#concept" data-label="학습법"></a>
-  <a href="#buddies" data-label="다섯 행성"></a>
+  <a href="#buddies" data-label="다섯 버디"></a>
   <a href="#how" data-label="나선 사이클"></a>
   <a href="#combine" data-label="지식 결합"></a>
   <a href="#start" data-label="시작하기"></a>
@@ -416,14 +416,14 @@ a.iq:hover{opacity:.72}
   <div class="hero-in">
     <div class="eyebrow">AI × 나선형 학습 은하</div>
     <h1>흩어진 지식이 모여<br><span class="glow">하나의 은하</span>가 된다</h1>
-    <p class="lead">다섯 개의 AI 행성에서 나선형으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
-    <p class="sub">다섯 빛깔의 행성 · 232개 딥다이브</p>
+    <p class="lead">AI 버디와 나선형으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
+    <p class="sub">다섯 빛깔의 버디 · 232개 딥다이브</p>
     <div class="cta">
-      <a class="btn btn-primary" href="#buddies">다섯 행성 만나기</a>
+      <a class="btn btn-primary" href="#buddies">다섯 버디 만나기</a>
       <a class="btn btn-ghost" href="#concept">학습법 보기</a>
     </div>
     <div class="hero-stats">
-      <div><b data-count="5">0</b><span>AI PLANETS</span></div>
+      <div><b data-count="5">0</b><span>SPIRAL BUDDIES</span></div>
       <div><b data-count="232">0</b><span>DEEP-DIVE REPOS</span></div>
       <div><b data-count="5">0</b><span>KNOWLEDGE LABS</span></div>
       <div><b>∞</b><span>SPIRAL DEPTH</span></div>
@@ -449,7 +449,7 @@ a.iq:hover{opacity:.72}
       <div class="cstep reveal">
         <div class="n">02 — SPIRAL</div>
         <h3>나선으로 깊게</h3>
-        <p>한 번 배우고 끝내지 않습니다. 같은 개념을 시간을 두고 다시 만나되, 만날 때마다 한 단계씩 깊이 들어갑니다(depth 1→2→3). 지난 학습을 기억하는 AI가 매번 더 깊은 질문을 던집니다.</p>
+        <p>한 번 배우고 끝내지 않습니다. 같은 개념을 시간을 두고 다시 만나되, 만날 때마다 한 단계씩 깊이 들어갑니다(depth 1→2→3). 지난 학습을 기억하는 AI 버디가 매번 더 깊은 질문을 던집니다.</p>
       </div>
       <div class="cstep reveal">
         <div class="n">03 — COMBINE</div>
@@ -465,9 +465,9 @@ a.iq:hover{opacity:.72}
 <section class="block" id="buddies">
   <div class="wrap">
     <div class="reveal center">
-      <div class="kicker">The Five Planets</div>
+      <div class="kicker">The Five Buddies</div>
       <h2 class="title">다섯 빛깔, 다섯 행성</h2>
-      <p class="lede">각 행성은 하나의 연구소를 나선형 학습 세션으로 바꾸는 데스크톱 앱입니다.<br>스크롤을 내리면 다섯 행성이 차례로 나타납니다.</p>
+      <p class="lede">각 버디는 하나의 연구소를 나선형 학습 세션으로 바꾸는 데스크톱 앱입니다.<br>스크롤을 내리면 다섯 행성이 차례로 나타납니다.</p>
     </div>
   </div>
 
@@ -493,13 +493,13 @@ a.iq:hover{opacity:.72}
         </div>
       </div>
       <div class="bnav">
-        <button class="barrow" data-dir="-1" aria-label="이전 행성">←</button>
+        <button class="barrow" data-dir="-1" aria-label="이전 버디">←</button>
         <span class="bdot" data-i="0" style="background:#ef4444;--ac:#ef4444"></span>
         <span class="bdot" data-i="1" style="background:#22c55e;--ac:#22c55e"></span>
         <span class="bdot" data-i="2" style="background:#3b82f6;--ac:#3b82f6"></span>
         <span class="bdot" data-i="3" style="background:#14161f;box-shadow:inset 0 0 0 1px #aeb6cf;--ac:#aeb6cf"></span>
         <span class="bdot" data-i="4" style="background:#f7f9ff;--ac:#f7f9ff"></span>
-        <button class="barrow" data-dir="1" aria-label="다음 행성">→</button>
+        <button class="barrow" data-dir="1" aria-label="다음 버디">→</button>
       </div>
       <div class="bhint">SCROLL — 다음 행성</div>
     </div>
@@ -512,13 +512,13 @@ a.iq:hover{opacity:.72}
     <div class="reveal center">
       <div class="kicker">How the Spiral Works</div>
       <h2 class="title">되감을수록 깊어지는 한 사이클</h2>
-      <p class="lede">책은 한 번 읽으면 거기서 끝이지만, 나선형 학습은 끝이 다음의 시작입니다.<br>오늘 남긴 노트를 다음 세션의 AI가 기억한 채 시작하기 때문에, 배울수록 대화가 깊어집니다.</p>
+      <p class="lede">책은 한 번 읽으면 거기서 끝이지만, 나선형 학습은 끝이 다음의 시작입니다.<br>오늘 남긴 노트를 다음 세션의 버디가 기억한 채 시작하기 때문에, 배울수록 대화가 깊어집니다.</p>
     </div>
     <div class="loop">
       <div class="lstep reveal"><div class="ico">🗺️</div><div class="ln">STEP 01</div><h4>로드맵·챕터 선택</h4><p>다섯 영역 232개 딥다이브 로드맵에서, 오늘 공부할 챕터 하나를 고릅니다.</p></div>
-      <div class="lstep reveal"><div class="ico">💬</div><div class="ln">STEP 02</div><h4>AI와 Socratic 대화</h4><p>AI는 정답을 바로 알려주지 않습니다. 질문을 던져 스스로 답을 찾게 하고, 막히면 힌트로 이끕니다.</p></div>
+      <div class="lstep reveal"><div class="ico">💬</div><div class="ln">STEP 02</div><h4>버디와 Socratic 대화</h4><p>버디는 정답을 바로 알려주지 않습니다. 질문을 던져 스스로 답을 찾게 하고, 막히면 힌트로 이끕니다.</p></div>
       <div class="lstep reveal"><div class="ico">📝</div><div class="ln">STEP 03</div><h4>8섹션 구조 노트</h4><p>세션을 마치면 대화 전체가 핵심 개념·예제·헷갈렸던 지점 등 8개 섹션으로 자동 정리되어 노트로 남습니다.</p></div>
-      <div class="lstep reveal"><div class="ico">🔁</div><div class="ln">STEP 04</div><h4>노트를 기억한 채 되감기</h4><p>같은 챕터로 돌아오면 AI가 지난 노트를 읽고 시작합니다. 그래서 복습은 단순 반복이 아니라, 한 단계 더 깊은 대화가 됩니다.</p></div>
+      <div class="lstep reveal"><div class="ico">🔁</div><div class="ln">STEP 04</div><h4>노트를 기억한 채 되감기</h4><p>같은 챕터로 돌아오면 버디가 지난 노트를 읽고 시작합니다. 그래서 복습은 단순 반복이 아니라, 한 단계 더 깊은 대화가 됩니다.</p></div>
     </div>
     <div class="depths">
       <div class="depth reveal"><b>d1</b><span>직관·정의 — 큰 그림과 핵심 개념 세우기</span></div>
@@ -534,7 +534,7 @@ a.iq:hover{opacity:.72}
     <div class="reveal center">
       <div class="kicker">Knowledge Combination</div>
       <h2 class="title">진짜 힘은 그 사이에서 나온다</h2>
-      <p class="lede">각 행성은 한 영역을 깊게 다룹니다. 하지만 다섯 빛깔이 한 사람 안에서 만날 때,<br>비로소 문제를 푸는 명석함이 됩니다.</p>
+      <p class="lede">각 버디는 한 영역을 깊게 다룹니다. 하지만 다섯 빛깔이 한 사람 안에서 만날 때,<br>비로소 문제를 푸는 명석함이 됩니다.</p>
     </div>
     <div class="syn">
       <div class="syn-list">
@@ -583,14 +583,14 @@ a.iq:hover{opacity:.72}
     <div class="reveal">
       <div class="kicker">Get Started</div>
       <h2 class="title">30초면, 첫 나선을 시작합니다</h2>
-      <p class="lede center">행성을 골라 한 줄 명령으로 설치 → API 키와 보관함 폴더 설정 → 바로 학습.<br>macOS · Windows · Linux 모두 지원합니다.</p>
+      <p class="lede center">버디를 골라 한 줄 명령으로 설치 → API 키와 보관함 폴더 설정 → 바로 학습.<br>macOS · Windows · Linux 모두 지원합니다.</p>
     </div>
     <div class="steps3">
-      <div class="s3 reveal"><div class="num">1</div><h4>행성 고르기</h4><p>다섯 빛깔 중 끌리는 것부터.<br>나중에 더 설치해 함께 쓸 수 있습니다.</p></div>
+      <div class="s3 reveal"><div class="num">1</div><h4>버디 고르기</h4><p>다섯 빛깔 중 끌리는 것부터.<br>나중에 더 설치해 함께 쓸 수 있습니다.</p></div>
       <div class="s3 reveal"><div class="num">2</div><h4>한 줄 설치</h4><p>레포의 OS별 명령을 붙여넣으면<br>다운로드·설치·실행까지 한 번에.</p></div>
-      <div class="s3 reveal"><div class="num">3</div><h4>나선 시작</h4><p>챕터를 골라 AI와 대화하고,<br>노트로 남기며 되감습니다.</p></div>
+      <div class="s3 reveal"><div class="num">3</div><h4>나선 시작</h4><p>챕터를 골라 버디와 대화하고,<br>노트로 남기며 되감습니다.</p></div>
     </div>
-    <div class="reveal"><span class="codepill"><span class="c">$</span> 각 행성 레포 → <b>30초 설치</b> 섹션의 명령을 복사 → 붙여넣기</span></div>
+    <div class="reveal"><span class="codepill"><span class="c">$</span> 각 버디 레포 → <b>30초 설치</b> 섹션의 명령을 복사 → 붙여넣기</span></div>
   </div>
 </section>
 
@@ -600,15 +600,15 @@ a.iq:hover{opacity:.72}
     <div class="fcols">
       <div class="fbrand">
         <b><svg class="fmark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="fg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#a855f7" stop-opacity=".42"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient><linearGradient id="fa" x1="4" y1="5" x2="28" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ec4899"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><radialGradient id="fc" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e9ddff"/><stop offset="1" stop-color="#a855f7"/></radialGradient></defs><circle cx="16" cy="16" r="13" fill="url(#fg)"/><path d="M16 16C19 12 25.5 12 27 17.5 28.4 23 24 29.5 16.5 28.2" stroke="url(#fa)" stroke-width="2.5" stroke-linecap="round"/><path d="M16 16C13 20 6.5 20 5 14.5 3.6 9 8 2.5 15.5 3.8" stroke="url(#fa)" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="3.5" fill="url(#fc)"/></svg>Spiral Galaxy</b>
-        <p>다섯 AI 행성과 함께하는 나선형 학습 은하. 빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.</p>
+        <p>AI 버디와 함께하는 나선형 학습 은하. 빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.</p>
       </div>
       <div>
-        <h5>Planets</h5>
-        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-red" target="_blank" rel="noopener"><i class="fdot" style="background:#ef4444"></i>Spiral Red</a>
-        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-green" target="_blank" rel="noopener"><i class="fdot" style="background:#22c55e"></i>Spiral Green</a>
-        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-blue" target="_blank" rel="noopener"><i class="fdot" style="background:#3b82f6"></i>Spiral Blue</a>
-        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-black" target="_blank" rel="noopener"><i class="fdot" style="background:#11131f;box-shadow:inset 0 0 0 1px #aeb6cf"></i>Spiral Black</a>
-        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-white" target="_blank" rel="noopener"><i class="fdot" style="background:#f7f9ff"></i>Spiral White</a>
+        <h5>Buddies</h5>
+        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-red" target="_blank" rel="noopener"><i class="fdot" style="background:#ef4444"></i>Spiral Buddy Red</a>
+        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-green" target="_blank" rel="noopener"><i class="fdot" style="background:#22c55e"></i>Spiral Buddy Green</a>
+        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-blue" target="_blank" rel="noopener"><i class="fdot" style="background:#3b82f6"></i>Spiral Buddy Blue</a>
+        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-black" target="_blank" rel="noopener"><i class="fdot" style="background:#11131f;box-shadow:inset 0 0 0 1px #aeb6cf"></i>Spiral Buddy Black</a>
+        <a href="https://github.com/iq-spiral-galaxy/spiral-buddy-white" target="_blank" rel="noopener"><i class="fdot" style="background:#f7f9ff"></i>Spiral Buddy White</a>
       </div>
       <div>
         <h5>Knowledge Labs</h5>
@@ -651,23 +651,23 @@ document.querySelectorAll('[data-count]').forEach(el=>{
 
 // ---------- buddy planet showcase ----------
 const BUDDY=[
-  {name:'Spiral Red',sub:'수학과 AI의 본질',ident:'AI를 이루는 수학적 구조를 100% 이해한다.',
+  {name:'Spiral Buddy Red',sub:'수학과 AI의 본질',ident:'AI를 이루는 수학적 구조를 100% 이해한다.',
    chips:['수학','ML','DL','RL','LLM','CV'],motto:"Prove, don't memorize",scale:'7 layers · 48 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-red/releases',lab:'https://iq-ai-lab.github.io',labName:'IQ AI Lab',
    pc:'#ef4444',pcl:'#ff8f80',pcd:'#5c0f0f',pg:'rgba(239,68,68,.45)',ac:'#ff6b5e',t:'rgiant'},
-  {name:'Spiral Green',sub:'세상을 읽는 판단력',ident:'돈·사람·세상이 움직이는 원리를 배워 판단력을 기른다.',
+  {name:'Spiral Buddy Green',sub:'세상을 읽는 판단력',ident:'돈·사람·세상이 움직이는 원리를 배워 판단력을 기른다.',
    chips:['돈','사람','제도','역사','전략'],motto:"Distill, don't collect",scale:'6 layers · 31 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-green/releases',lab:'https://iq-phronesis-lab.github.io',labName:'IQ Phronesis Lab',
    pc:'#22c55e',pcl:'#7ff0a8',pcd:'#0b3d22',pg:'rgba(34,197,94,.42)',ac:'#34d97b',t:'aurora'},
-  {name:'Spiral Blue',sub:'만드는 힘, 풀스택',ident:'기술을 쓰는 법을 넘어, 내부 동작 원리까지 이해한다.',
+  {name:'Spiral Buddy Blue',sub:'만드는 힘, 풀스택',ident:'기술을 쓰는 법을 넘어, 내부 동작 원리까지 이해한다.',
    chips:['Frontend','Backend','Android','iOS','DB','인프라'],motto:"Beyond the docs",scale:'9 domains · 86 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-blue/releases',lab:'https://iq-dev-lab.github.io',labName:'IQ Dev Lab',
    pc:'#3b82f6',pcl:'#8ab8ff',pcd:'#14265c',pg:'rgba(59,130,246,.45)',ac:'#60a5fa',t:'ice'},
-  {name:'Spiral Black',sub:'우주를 바닥부터',ident:'가장 근본적인 법칙에서 출발해 우주를 이해한다.',
+  {name:'Spiral Buddy Black',sub:'우주를 바닥부터',ident:'가장 근본적인 법칙에서 출발해 우주를 이해한다.',
    chips:['고전','양자','상대성','우주론','양자중력'],motto:"Derive, don't accept",scale:'7 layers · 36 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-black/releases',lab:'https://iq-physis-lab.github.io',labName:'IQ Physis Lab',
    pc:'#232838',pcl:'#59637e',pcd:'#04050a',pg:'rgba(174,182,207,.32)',ac:'#aeb6cf',t:'bhole'},
-  {name:'Spiral White',sub:'마음의 안쪽',ident:'뉴런에서 의식까지, 마음이 어떻게 생겨나는지 이해한다.',
+  {name:'Spiral Buddy White',sub:'마음의 안쪽',ident:'뉴런에서 의식까지, 마음이 어떻게 생겨나는지 이해한다.',
    chips:['뇌','인지','의식','자아','자유의지'],motto:"Explain it, don't explain it away",scale:'7 layers · 31 repos',
    app:'https://github.com/iq-spiral-galaxy/spiral-buddy-white/releases',lab:'https://iq-psyche-lab.github.io',labName:'IQ Psyche Lab',
    pc:'#dfe5f7',pcl:'#ffffff',pcd:'#8b94b8',pg:'rgba(235,240,255,.5)',ac:'#eef2ff',t:'wdwarf'}
@@ -703,7 +703,7 @@ if(showcase&&bstage){
   function sendPan(){
     const r=showcase.getBoundingClientRect();
     const vis=Math.max(0,Math.min(1,Math.min((innerHeight-r.top)/(innerHeight*.7),r.bottom/(innerHeight*.7))));
-    document.dispatchEvent(new CustomEvent('sg:pan',{detail:{x:(bIdx-2)*2.4*vis}}));
+    document.dispatchEvent(new CustomEvent('sg:pan',{detail:{y:bIdx*1.3*vis,vis}}));
   }
   function setBuddy(i,instant){
     if(i===bIdx)return;
@@ -852,10 +852,10 @@ if(renderer){
   ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
 
   // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0;
+  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,dy=0,dyT=0,rotV=0;
   if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
   document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
-  document.addEventListener('sg:pan',e=>{bxT=e.detail.x;if(reduce){bx=bxT;queueRender();}});
+  document.addEventListener('sg:pan',e=>{dyT=e.detail.y;rotV=e.detail.vis;if(reduce){dy=dyT;queueRender();}});
   function onScroll(){
     scrollP=Math.min(1,scrollY/(innerHeight*.85));
     cv.style.opacity=(1-scrollP*.62).toFixed(3);
@@ -870,9 +870,9 @@ if(renderer){
       b.sp.position.set(Math.cos(a)*b.r,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*b.r);
     }
     mx+=(tx-mx)*.045;my+=(ty-my)*.045;
-    bx+=(bxT-bx)*.035;                                 // 은하 속 행성 좌표로 느린 카메라 팬
-    camera.position.set(mx*1.6+bx,7.2+scrollP*5-my*.9,15.5+scrollP*2);
-    camera.lookAt(bx*.55,2.5,0);
+    dy+=(dyT-dy)*.03;                                  // 다음 행성으로 하강 — 별들이 위로 흘러간다
+    camera.position.set(mx*1.6,7.2+scrollP*5-my*.9-dy,15.5+scrollP*2);
+    camera.lookAt(0,2.5-dy*.85,0);
   }
   function resize(){
     renderer.setSize(innerWidth,innerHeight,false);
@@ -886,7 +886,7 @@ if(renderer){
   let queued=false;
   function queueRender(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;place();renderer.render(scene,camera);});}
   function loop(){
-    swirl+=warp*.045;warp*=.94;                                  // section-change warp pulse
+    swirl+=warp*.045+rotV*.004;warp*=.94;                        // 워프 펄스 + 쇼케이스에서 은하 회전 가속
     uTime.value=clock.getElapsedTime()+swirl;
     const fov=55+warp*5;
     if(Math.abs(camera.fov-fov)>.05){camera.fov=fov;camera.updateProjectionMatrix();}
