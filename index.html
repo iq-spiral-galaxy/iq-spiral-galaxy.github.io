@@ -254,7 +254,7 @@ a.iq:hover{opacity:.72}
 .planet{width:calc(min(33vh,300px)*var(--pszf,1));aspect-ratio:1;border-radius:50%;
   position:absolute;left:50%;top:50%;
   transform:translate(-50%,-50%) translateX(var(--cx,0px)) scale(var(--cs,1)) rotateY(var(--cr,0deg));
-  transition:transform .9s cubic-bezier(.3,1.3,.35,1),opacity .6s ease,filter .6s ease}
+  transition:transform 1s cubic-bezier(.3,.85,.3,1),opacity .7s ease,filter .7s ease}
 .planet i{position:absolute;inset:0;border-radius:50%;pointer-events:none}
 /* orbital deck offsets — active center, neighbors recede beside/behind */
 .planet.o0{--cx:0px;--cs:1;--cr:0deg;opacity:1;filter:none;z-index:5}
@@ -262,23 +262,7 @@ a.iq:hover{opacity:.72}
 .planet.o-1{--cx:calc(min(30vh,280px)*-1);--cs:.7;--cr:16deg;opacity:.42;filter:blur(2.5px) brightness(.6) saturate(.85);z-index:3}
 .planet.o2{--cx:min(47vh,440px);--cs:.48;--cr:-22deg;opacity:.14;filter:blur(5px) brightness(.45);z-index:2}
 .planet.o-2{--cx:calc(min(47vh,440px)*-1);--cs:.48;--cr:22deg;opacity:.14;filter:blur(5px) brightness(.45);z-index:1}
-/* travel — 행성을 지나쳐 다음 행성으로 비행하는 전환 */
-.flare{position:absolute;left:50%;top:50%;width:130%;aspect-ratio:1;border-radius:50%;
-  transform:translate(-50%,-50%);pointer-events:none;opacity:0;z-index:4;
-  background:radial-gradient(circle,rgba(255,255,255,.85) 0%,rgba(195,175,255,.5) 20%,rgba(125,115,235,.2) 44%,transparent 66%);
-  filter:blur(8px)}
-.bstage.travel .flare{animation:flare .7s ease-out}
-@keyframes flare{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}32%{opacity:.9}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(2)}}
-.planet.fly-out{animation:flyout .55s cubic-bezier(.5,.08,.75,.4) forwards;z-index:6}
-@keyframes flyout{to{transform:translate(-50%,-50%) translateX(calc(var(--dirx,1)*-14vw)) scale(2.8);
-  opacity:0;filter:blur(18px) brightness(1.3)}}
-.planet.fly-in{animation:flyin .8s cubic-bezier(.17,.84,.3,1.02);z-index:5}
-@keyframes flyin{0%{transform:translate(-50%,-50%) translateX(calc(var(--dirx,1)*8vw)) translateY(-2vh) scale(.1);
-  opacity:0;filter:blur(12px)}55%{opacity:1;filter:blur(1px)}}
-.planet.reappear{transition:none;opacity:0}
-.bstage.travel .planet.o1,.bstage.travel .planet.o-1{opacity:.14}
-.bstage.travel .planet.o2,.bstage.travel .planet.o-2{opacity:.05}
+
 
 /* 🔴 적색 거성 — 매끈한 발광 항성 + 숨쉬는 글로우 */
 .planet[data-t=rgiant]{
@@ -383,7 +367,7 @@ a.iq:hover{opacity:.72}
   .bnav{bottom:16px}
   .bhint{display:none}
 }
-@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.planet{transition:none}.bstage.travel .flare,.planet.fly-out,.planet.fly-in{animation:none!important}.bhint{animation:none}}
+@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.planet{transition:none}.bhint{animation:none}}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -490,7 +474,6 @@ a.iq:hover{opacity:.72}
   <div class="showcase" id="showcase">
     <div class="bstage" id="bstage">
       <div class="planetwrap">
-        <div class="flare"></div>
         <div class="planet o0" data-t="rgiant"><i class="pl1"></i><i class="pl2"></i></div>
         <div class="planet o1" data-t="aurora"><i class="pl1"></i><i class="pl2"></i></div>
         <div class="planet o2" data-t="ice"><i class="pl1"></i><i class="pl2"></i></div>
@@ -694,7 +677,7 @@ if(showcase&&bstage){
   const $=id=>document.getElementById(id);
   const bdots=[...bstage.querySelectorAll('.bdot')];
   const planets=[...bstage.querySelectorAll('.planet')];
-  let bIdx=-1,swT=null,swT2=null,swT3=null;
+  let bIdx=-1,swT=null;
   function updateRing(i){
     planets.forEach((p,j)=>{
       const o=Math.max(-2,Math.min(2,j-i));
@@ -717,42 +700,36 @@ if(showcase&&bstage){
     bdots.forEach((d,j)=>d.classList.toggle('on',j===i));
     bstage.classList.toggle('last',i===4);
   }
+  function sendPan(){
+    const r=showcase.getBoundingClientRect();
+    const vis=Math.max(0,Math.min(1,Math.min((innerHeight-r.top)/(innerHeight*.7),r.bottom/(innerHeight*.7))));
+    document.dispatchEvent(new CustomEvent('sg:pan',{detail:{x:(bIdx-2)*2.4*vis}}));
+  }
   function setBuddy(i,instant){
     if(i===bIdx)return;
-    const dir=i>bIdx?1:-1,prevI=bIdx;
+    const dir=i>bIdx?1:-1;
     bIdx=i;
-    if(instant){updateRing(i);applyBuddy(i);return;}
+    updateRing(i);                                     // 행성 덱: 새 자리로 조용히 글라이드
+    sendPan();                                         // 배경 은하: 이 버디의 좌표로 카메라 이동
+    if(instant){applyBuddy(i);return;}
     bstage.style.setProperty('--dirx',dir);
-    document.dispatchEvent(new CustomEvent('sg:warp',{detail:{strong:true}}));
-    bstage.classList.remove('travel');void bstage.offsetWidth;
-    bstage.classList.add('travel');                    // 플레어 점화 + 이웃 행성 딤
-    planets.forEach(p=>p.classList.remove('fly-out','fly-in','reappear'));
-    const out=planets[prevI],inn=planets[i];
-    if(out)out.classList.add('fly-out');               // 현재 행성: 카메라를 지나쳐 커지며 소멸
     bstage.classList.remove('enter');
     bstage.classList.add('out');
-    clearTimeout(swT);clearTimeout(swT2);clearTimeout(swT3);
+    clearTimeout(swT);
     swT=setTimeout(()=>{
-      updateRing(i);                                   // 플레어 정점에서 덱 재배치
-      if(inn)inn.classList.add('fly-in');              // 새 행성: 먼 곳에서 날아와 착륙
       applyBuddy(i);
       bstage.classList.add('enter');
       bstage.classList.remove('out');
       void bstage.offsetWidth;
       bstage.classList.remove('enter');
-    },260);
-    swT2=setTimeout(()=>{
-      if(inn)inn.classList.remove('fly-in');
-      if(out){out.classList.add('reappear');out.classList.remove('fly-out');
-        void out.offsetWidth;out.classList.remove('reappear');}   // 떠나온 행성: 옆자리에 페이드-인
-    },1080);
-    swT3=setTimeout(()=>bstage.classList.remove('travel'),1150);
+    },220);
   }
   function scTop(){return showcase.getBoundingClientRect().top+scrollY;}
   function updShowcase(){
     const range=showcase.offsetHeight-innerHeight;
     const p=Math.min(.999,Math.max(0,(scrollY-scTop())/range));
     setBuddy(Math.min(4,Math.floor(p*5)));
+    sendPan();
   }
   function goBuddy(i){
     i=Math.max(0,Math.min(4,i));
@@ -875,9 +852,10 @@ if(renderer){
   ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
 
   // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0;
+  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0;
   if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
-  document.addEventListener('sg:warp',e=>{if(!reduce)warp=Math.min(2.2,warp+((e.detail&&e.detail.strong)?1.9:1));});
+  document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
+  document.addEventListener('sg:pan',e=>{bxT=e.detail.x;if(reduce){bx=bxT;queueRender();}});
   function onScroll(){
     scrollP=Math.min(1,scrollY/(innerHeight*.85));
     cv.style.opacity=(1-scrollP*.62).toFixed(3);
@@ -892,8 +870,9 @@ if(renderer){
       b.sp.position.set(Math.cos(a)*b.r,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*b.r);
     }
     mx+=(tx-mx)*.045;my+=(ty-my)*.045;
-    camera.position.set(mx*1.6,7.2+scrollP*5-my*.9,15.5+scrollP*2);
-    camera.lookAt(0,2.5,0);
+    bx+=(bxT-bx)*.035;                                 // 은하 속 버디 좌표로 느린 카메라 팬
+    camera.position.set(mx*1.6+bx,7.2+scrollP*5-my*.9,15.5+scrollP*2);
+    camera.lookAt(bx*.55,2.5,0);
   }
   function resize(){
     renderer.setSize(innerWidth,innerHeight,false);
