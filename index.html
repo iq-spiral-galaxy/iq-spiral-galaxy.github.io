@@ -250,18 +250,18 @@ a.iq:hover{opacity:.72}
   display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;
   max-width:var(--maxw);margin:0 auto;padding:0 24px;
   --pc:#ef4444;--pcl:#ff8f80;--pcd:#5c0f0f;--pg:rgba(239,68,68,.45);--ac:#ff6b5e;--dirx:1}
-.planetwrap{position:relative;min-height:56vh}
+.planetwrap{position:relative;min-height:56vh;perspective:1100px}
 .planet{width:calc(min(33vh,300px)*var(--pszf,1));aspect-ratio:1;border-radius:50%;
   position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%) translateY(var(--cy,0px)) scale(var(--cs,1));
+  transform:translate(-50%,-50%) translateX(var(--cx,0px)) scale(var(--cs,1)) rotateY(var(--cr,0deg));
   transition:transform 1s cubic-bezier(.3,.85,.3,1),opacity .7s ease,filter .7s ease}
 .planet i{position:absolute;inset:0;border-radius:50%;pointer-events:none}
 /* orbital deck offsets — active center, neighbors recede beside/behind */
-.planet.o0{--cy:0px;--cs:1;opacity:1;filter:none;z-index:5}
-.planet.o1{--cy:min(28vh,260px);--cs:.66;opacity:.4;filter:blur(2.5px) brightness(.58);z-index:4}
-.planet.o-1{--cy:calc(min(28vh,260px)*-1);--cs:.66;opacity:.4;filter:blur(2.5px) brightness(.58);z-index:3}
-.planet.o2{--cy:min(46vh,430px);--cs:.44;opacity:.12;filter:blur(5px) brightness(.42);z-index:2}
-.planet.o-2{--cy:calc(min(46vh,430px)*-1);--cs:.44;opacity:.12;filter:blur(5px) brightness(.42);z-index:1}
+.planet.o0{--cx:0px;--cs:1;--cr:0deg;opacity:1;filter:none;z-index:5}
+.planet.o1{--cx:min(30vh,280px);--cs:.7;--cr:-16deg;opacity:.42;filter:blur(2.5px) brightness(.6) saturate(.85);z-index:4}
+.planet.o-1{--cx:calc(min(30vh,280px)*-1);--cs:.7;--cr:16deg;opacity:.42;filter:blur(2.5px) brightness(.6) saturate(.85);z-index:3}
+.planet.o2{--cx:min(47vh,440px);--cs:.48;--cr:-22deg;opacity:.14;filter:blur(5px) brightness(.45);z-index:2}
+.planet.o-2{--cx:calc(min(47vh,440px)*-1);--cs:.48;--cr:22deg;opacity:.14;filter:blur(5px) brightness(.45);z-index:1}
 
 
 /* 🔴 적색 거성 — 매끈한 발광 항성 + 숨쉬는 글로우 */
@@ -330,8 +330,8 @@ a.iq:hover{opacity:.72}
   animation:corona 4s ease-in-out infinite}
 .binfo{position:relative;z-index:6}
 .bi-el{transition:opacity .24s ease,transform .3s cubic-bezier(.22,.85,.25,1);transition-delay:calc(var(--d,0)*40ms)}
-.bstage.out .bi-el{opacity:0;transform:translateY(calc(var(--dirx)*-30px));transition-delay:0ms}
-.bstage.enter .bi-el{transition:none;opacity:0;transform:translateY(calc(var(--dirx)*30px))}
+.bstage.out .bi-el{opacity:0;transform:translateX(calc(var(--dirx)*28px));transition-delay:0ms}
+.bstage.enter .bi-el{transition:none;opacity:0;transform:translateX(calc(var(--dirx)*-28px))}
 .bi-step{font-family:'Space Grotesk',sans-serif;font-size:13px;letter-spacing:.3em;color:var(--ac);font-weight:600;margin-bottom:14px}
 .bi-name{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
 .bi-sub{color:var(--muted);font-size:15px;margin:6px 0 18px}
@@ -359,10 +359,10 @@ a.iq:hover{opacity:.72}
   .bstage{grid-template-columns:1fr;align-content:center;gap:4px;padding-top:54px}
   .planetwrap{min-height:32vh}
   .planet{width:calc(min(25vh,200px)*var(--pszf,1))}
-  .planet.o1{--cy:min(19vh,140px)}
-  .planet.o-1{--cy:calc(min(19vh,140px)*-1)}
-  .planet.o2{--cy:min(31vh,230px)}
-  .planet.o-2{--cy:calc(min(31vh,230px)*-1)}
+  .planet.o1{--cx:min(21vh,150px)}
+  .planet.o-1{--cx:calc(min(21vh,150px)*-1)}
+  .planet.o2{--cx:min(33vh,240px)}
+  .planet.o-2{--cx:calc(min(33vh,240px)*-1)}
   .bi-ident{min-height:0}
   .bnav{bottom:16px}
   .bhint{display:none}
@@ -703,7 +703,7 @@ if(showcase&&bstage){
   function sendPan(){
     const r=showcase.getBoundingClientRect();
     const vis=Math.max(0,Math.min(1,Math.min((innerHeight-r.top)/(innerHeight*.7),r.bottom/(innerHeight*.7))));
-    document.dispatchEvent(new CustomEvent('sg:pan',{detail:{y:bIdx*1.3*vis,vis}}));
+    document.dispatchEvent(new CustomEvent('sg:pan',{detail:{x:(bIdx-2)*2.4*vis,vis}}));
   }
   function setBuddy(i,instant){
     if(i===bIdx)return;
@@ -852,10 +852,10 @@ if(renderer){
   ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
 
   // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,dy=0,dyT=0,rotV=0;
+  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0,rotV=0;
   if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
   document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
-  document.addEventListener('sg:pan',e=>{dyT=e.detail.y;rotV=e.detail.vis;if(reduce){dy=dyT;queueRender();}});
+  document.addEventListener('sg:pan',e=>{bxT=e.detail.x;rotV=e.detail.vis;if(reduce){bx=bxT;queueRender();}});
   function onScroll(){
     scrollP=Math.min(1,scrollY/(innerHeight*.85));
     cv.style.opacity=(1-scrollP*.62).toFixed(3);
@@ -870,9 +870,9 @@ if(renderer){
       b.sp.position.set(Math.cos(a)*b.r,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*b.r);
     }
     mx+=(tx-mx)*.045;my+=(ty-my)*.045;
-    dy+=(dyT-dy)*.03;                                  // 다음 행성으로 하강 — 별들이 위로 흘러간다
-    camera.position.set(mx*1.6,7.2+scrollP*5-my*.9-dy,15.5+scrollP*2);
-    camera.lookAt(0,2.5-dy*.85,0);
+    bx+=(bxT-bx)*.035;                                 // 은하 속 행성 좌표로 느린 카메라 팬
+    camera.position.set(mx*1.6+bx,7.2+scrollP*5-my*.9,15.5+scrollP*2);
+    camera.lookAt(bx*.55,2.5,0);
   }
   function resize(){
     renderer.setSize(innerWidth,innerHeight,false);
