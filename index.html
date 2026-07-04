@@ -18,7 +18,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js">
 <style>
 :root{
   --bg:#05060e; --bg2:#0a0c1c; --panel:rgba(18,20,40,.55);
@@ -166,8 +168,17 @@ h2.title{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-weight:700;f
 .blink.lab:hover{border-color:var(--muted);color:var(--ink)}
 
 /* ---------- how / spiral loop ---------- */
-.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:54px;position:relative}
-@media(max-width:880px){.loop{grid-template-columns:1fr}}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:64px;position:relative}
+/* 나선 사이클 경로 — 섹션 진입 시 점선이 그려지고 불꽃이 한 번 순회 */
+.loop::before{content:'';position:absolute;left:1.5%;right:1.5%;top:-20px;height:2px;
+  background:repeating-linear-gradient(90deg,rgba(168,85,247,.55) 0 9px,transparent 9px 18px);
+  transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.25,.8,.3,1) .35s;opacity:.55}
+.loop.in::before{transform:scaleX(1)}
+.loop::after{content:'';position:absolute;top:-24px;left:1.5%;width:10px;height:10px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 14px var(--cyan);opacity:0}
+.loop.in::after{animation:sparktravel 1.55s cubic-bezier(.35,.6,.45,1) .4s forwards}
+@keyframes sparktravel{0%{opacity:0;left:1.5%}12%{opacity:1}88%{opacity:1}100%{left:96%;opacity:0}}
+@media(max-width:880px){.loop{grid-template-columns:1fr}.loop::before,.loop::after{display:none}}
 .lstep{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 22px;backdrop-filter:blur(8px);position:relative}
 .lstep .ico{font-size:26px}
 .lstep .ln{font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--violet);letter-spacing:.12em;margin:10px 0 6px}
@@ -383,7 +394,7 @@ a.iq:hover{opacity:.72}
 .barrow{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(12,14,30,.6);
   color:var(--muted);cursor:pointer;font-size:15px;font-family:inherit;transition:.25s;backdrop-filter:blur(6px)}
 .barrow:hover{color:#fff;border-color:var(--violet)}
-.bdot{width:10px;height:10px;border-radius:50%;cursor:pointer;opacity:.38;transition:.25s}
+.bdot{width:10px;height:10px;border-radius:50%;cursor:pointer;opacity:.38;transition:.25s;border:none;padding:0}
 .bdot.on{opacity:1;transform:scale(1.4);box-shadow:0 0 10px var(--ac)}
 .bhint{position:absolute;bottom:38px;right:26px;color:var(--faint);font-size:11px;letter-spacing:.22em;
   animation:bob 2.4s ease-in-out infinite;z-index:3;transition:opacity .3s}
@@ -433,18 +444,18 @@ a.iq:hover{opacity:.72}
 </nav>
 
 <div id="progress"></div>
-<div id="dots">
-  <a href="#top" data-label="홈"></a>
-  <a href="#concept" data-label="학습법"></a>
-  <a href="#buddies" data-label="다섯 버디"></a>
-  <a href="#how" data-label="나선 사이클"></a>
-  <a href="#combine" data-label="지식 결합"></a>
-  <a href="#start" data-label="시작하기"></a>
+<div id="dots" role="navigation" aria-label="섹션 이동">
+  <a href="#top" data-label="홈" aria-label="홈"></a>
+  <a href="#concept" data-label="학습법" aria-label="학습법"></a>
+  <a href="#buddies" data-label="다섯 버디" aria-label="다섯 버디"></a>
+  <a href="#how" data-label="나선 사이클" aria-label="나선 사이클"></a>
+  <a href="#combine" data-label="지식 결합" aria-label="지식 결합"></a>
+  <a href="#start" data-label="시작하기" aria-label="시작하기"></a>
 </div>
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
-  <canvas id="galaxy"></canvas>
+  <canvas id="galaxy" aria-hidden="true"></canvas>
   <div class="hero-veil"></div>
   <div class="hero-in">
     <div class="eyebrow">AI × 나선형 학습 은하</div>
@@ -527,11 +538,11 @@ a.iq:hover{opacity:.72}
       </div>
       <div class="bnav">
         <button class="barrow" data-dir="-1" aria-label="이전 버디">←</button>
-        <span class="bdot" data-i="0" style="background:#ef4444;--ac:#ef4444"></span>
-        <span class="bdot" data-i="1" style="background:#22c55e;--ac:#22c55e"></span>
-        <span class="bdot" data-i="2" style="background:#3b82f6;--ac:#3b82f6"></span>
-        <span class="bdot" data-i="3" style="background:#14161f;box-shadow:inset 0 0 0 1px #aeb6cf;--ac:#aeb6cf"></span>
-        <span class="bdot" data-i="4" style="background:#f7f9ff;--ac:#f7f9ff"></span>
+        <button type="button" class="bdot" aria-label="Spiral Buddy Red" data-i="0" style="background:#ef4444;--ac:#ef4444"></button>
+        <button type="button" class="bdot" aria-label="Spiral Buddy Green" data-i="1" style="background:#22c55e;--ac:#22c55e"></button>
+        <button type="button" class="bdot" aria-label="Spiral Buddy Blue" data-i="2" style="background:#3b82f6;--ac:#3b82f6"></button>
+        <button type="button" class="bdot" aria-label="Spiral Buddy Black" data-i="3" style="background:#14161f;box-shadow:inset 0 0 0 1px #aeb6cf;--ac:#aeb6cf"></button>
+        <button type="button" class="bdot" aria-label="Spiral Buddy White" data-i="4" style="background:#f7f9ff;--ac:#f7f9ff"></button>
         <button class="barrow" data-dir="1" aria-label="다음 버디">→</button>
       </div>
       <div class="bhint">SCROLL — 다음 행성</div>
@@ -547,7 +558,7 @@ a.iq:hover{opacity:.72}
       <h2 class="title">되감을수록 깊어지는 한 사이클</h2>
       <p class="lede">책은 한 번 읽으면 거기서 끝이지만, 나선형 학습은 끝이 다음의 시작입니다.<br>오늘 남긴 노트를 다음 세션의 버디가 기억한 채 시작하기 때문에, 배울수록 대화가 깊어집니다.</p>
     </div>
-    <div class="loop">
+    <div class="loop reveal">
       <div class="lstep reveal"><div class="ico">🗺️</div><div class="ln">STEP 01</div><h4>로드맵·챕터 선택</h4><p>다섯 영역 232개 딥다이브 로드맵에서, 오늘 공부할 챕터 하나를 고릅니다.</p></div>
       <div class="lstep reveal"><div class="ico">💬</div><div class="ln">STEP 02</div><h4>버디와 Socratic 대화</h4><p>버디는 정답을 바로 알려주지 않습니다. 질문을 던져 스스로 답을 찾게 하고, 막히면 힌트로 이끕니다.</p></div>
       <div class="lstep reveal"><div class="ico">📝</div><div class="ln">STEP 03</div><h4>8섹션 구조 노트</h4><p>세션을 마치면 대화 전체가 핵심 개념·예제·헷갈렸던 지점 등 8개 섹션으로 자동 정리되어 노트로 남습니다.</p></div>
