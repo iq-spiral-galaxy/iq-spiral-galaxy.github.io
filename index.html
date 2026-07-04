@@ -269,6 +269,11 @@ a.iq:hover{opacity:.72}
   @keyframes cfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(1.2deg)}}
 }
 
+/* constellation — 3D 성도 평면 (기울기 + 마우스 패럴랙스) */
+.constellation{transform-style:preserve-3d}
+.constellation.in{transform:perspective(950px) rotateX(13deg);
+  transition:opacity .9s cubic-bezier(.2,.7,.2,1),filter .9s cubic-bezier(.2,.7,.2,1),transform .3s ease-out}
+
 /* constellation — 연결선 드로잉 등장 + 문장 호버 연동 */
 .constellation:not(.in) .cline,.constellation:not(.in) .cnode,.constellation:not(.in) .ccenter{opacity:0}
 .constellation.in .cline{animation:linein .7s ease backwards}
@@ -500,17 +505,17 @@ a.iq:hover{opacity:.72}
       <div class="cstep reveal">
         <div class="n">01 — BROAD</div>
         <h3>빠르고 넓게</h3>
-        <p>처음부터 한 우물만 파지 않습니다.<br>수학·개발·물리·마음·세상의 핵심을 먼저 익혀, 지식의 전체 지도를 그립니다.</p>
+        <p>처음부터 한 우물만 파지 않습니다.<br>수학·개발·물리·마음·세상의 핵심을 먼저 익혀,<br>지식의 전체 지도를 그립니다.</p>
       </div>
       <div class="cstep reveal">
         <div class="n">02 — SPIRAL</div>
         <h3>나선으로 깊게</h3>
-        <p>같은 개념을 다시 만날 때마다 한 단계씩 깊이 들어갑니다(depth 1→2→3).<br>지난 학습을 기억하는 버디가 매번 더 깊은 질문을 던집니다.</p>
+        <p>같은 개념을 다시 만날 때마다<br>한 단계씩 깊이 들어갑니다(depth 1→2→3).<br>지난 학습을 기억하는 버디가<br>매번 더 깊은 질문을 던집니다.</p>
       </div>
       <div class="cstep reveal">
         <div class="n">03 — COMBINE</div>
         <h3>결합해 풀기</h3>
-        <p>따로 배운 지식은 흩어진 점일 뿐입니다.<br>영역을 넘나들며 점을 연결할 때, 새로운 문제를 푸는 힘이 생깁니다.</p>
+        <p>따로 배운 지식은 흩어진 점일 뿐입니다.<br>영역을 넘나들며 점을 연결할 때,<br>새로운 문제를 푸는 힘이 생깁니다.</p>
       </div>
     </div>
     <div class="pull reveal">한 분야의 전문가를 넘어,<br><em>지식과 지식 사이에서 답을 만드는 사람.</em></div>
@@ -818,6 +823,14 @@ if(cons){
       cons.querySelectorAll('.hl').forEach(e=>{e.classList.remove('hl');e.style.stroke='';});
     });
   });
+  if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    cons.addEventListener('pointermove',e=>{
+      const r=cons.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+      cons.style.transform=`perspective(950px) rotateX(${(13-py*11).toFixed(2)}deg) rotateY(${(px*13).toFixed(2)}deg)`;
+    });
+    cons.addEventListener('pointerleave',()=>{cons.style.transform='';});
+  }
 }
 
 // ---------- 지식 결합 섹션: 배경 버디 별 수렴 ----------
