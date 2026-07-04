@@ -180,7 +180,11 @@ h2.title{font-family:'Bricolage Grotesque','IBM Plex Sans KR',sans-serif;font-we
 @keyframes sparktravel{0%{opacity:0;left:1.5%}12%{opacity:1}88%{opacity:1}100%{left:96%;opacity:0}}
 @media(max-width:880px){.loop{grid-template-columns:1fr}.loop::before,.loop::after{display:none}}
 .lstep{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 22px;backdrop-filter:blur(8px);position:relative}
-.lstep .ico{font-size:26px}
+.lstep .ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--ic,#a855f7) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--ic,#a855f7) 32%,transparent);
+  box-shadow:0 0 20px -8px var(--ic,#a855f7)}
+.lstep .ico img{display:block}
 .lstep .ln{font-family:'Bricolage Grotesque',sans-serif;font-size:12px;color:var(--violet);letter-spacing:.12em;margin:10px 0 6px}
 .lstep h4{font-size:16px;font-weight:600;margin-bottom:8px}
 .lstep p{font-size:13.5px;color:var(--muted)}
@@ -560,10 +564,10 @@ a.iq:hover{opacity:.72}
       <p class="lede">책은 한 번 읽으면 거기서 끝이지만, 나선형 학습은 끝이 다음의 시작입니다.<br>오늘 남긴 노트를 다음 세션의 버디가 기억한 채 시작하기 때문에, 배울수록 대화가 깊어집니다.</p>
     </div>
     <div class="loop reveal">
-      <div class="lstep reveal"><div class="ico">🗺️</div><div class="ln">STEP 01</div><h4>로드맵·챕터 선택</h4><p>다섯 영역 232개 딥다이브 로드맵에서, 오늘 공부할 챕터 하나를 고릅니다.</p></div>
-      <div class="lstep reveal"><div class="ico">💬</div><div class="ln">STEP 02</div><h4>버디와 Socratic 대화</h4><p>버디는 정답을 바로 알려주지 않습니다. 질문을 던져 스스로 답을 찾게 하고, 막히면 힌트로 이끕니다.</p></div>
-      <div class="lstep reveal"><div class="ico">📝</div><div class="ln">STEP 03</div><h4>8섹션 구조 노트</h4><p>세션을 마치면 대화 전체가 핵심 개념·예제·헷갈렸던 지점 등 8개 섹션으로 자동 정리되어 노트로 남습니다.</p></div>
-      <div class="lstep reveal"><div class="ico">🔁</div><div class="ln">STEP 04</div><h4>노트를 기억한 채 되감기</h4><p>같은 챕터로 돌아오면 버디가 지난 노트를 읽고 시작합니다. 그래서 복습은 단순 반복이 아니라, 한 단계 더 깊은 대화가 됩니다.</p></div>
+      <div class="lstep reveal"><div class="ico" style="--ic:#a855f7"><img src="https://api.iconify.design/lucide/map.svg?color=%23a855f7" alt="" width="21" height="21"></div><div class="ln">STEP 01</div><h4>로드맵·챕터 선택</h4><p>다섯 영역 232개 딥다이브 로드맵에서, 오늘 공부할 챕터 하나를 고릅니다.</p></div>
+      <div class="lstep reveal"><div class="ico" style="--ic:#8b7cf6"><img src="https://api.iconify.design/lucide/message-circle.svg?color=%238b7cf6" alt="" width="21" height="21"></div><div class="ln">STEP 02</div><h4>버디와 Socratic 대화</h4><p>버디는 정답을 바로 알려주지 않습니다. 질문을 던져 스스로 답을 찾게 하고, 막히면 힌트로 이끕니다.</p></div>
+      <div class="lstep reveal"><div class="ico" style="--ic:#6493f4"><img src="https://api.iconify.design/lucide/notebook-pen.svg?color=%236493f4" alt="" width="21" height="21"></div><div class="ln">STEP 03</div><h4>8섹션 구조 노트</h4><p>세션을 마치면 대화 전체가 핵심 개념·예제·헷갈렸던 지점 등 8개 섹션으로 자동 정리되어 노트로 남습니다.</p></div>
+      <div class="lstep reveal"><div class="ico" style="--ic:#38bdf8"><img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2338bdf8" alt="" width="21" height="21"></div><div class="ln">STEP 04</div><h4>노트를 기억한 채 되감기</h4><p>같은 챕터로 돌아오면 버디가 지난 노트를 읽고 시작합니다. 그래서 복습은 단순 반복이 아니라, 한 단계 더 깊은 대화가 됩니다.</p></div>
     </div>
     <div class="depths">
       <div class="depth reveal"><b>d1</b><span>직관·정의 — 큰 그림과 핵심 개념 세우기</span></div>
