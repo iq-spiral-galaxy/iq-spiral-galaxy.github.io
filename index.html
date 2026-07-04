@@ -254,11 +254,11 @@ a.iq:hover{opacity:.72}
   opacity:0;pointer-events:none;transition:.2s}
 #dots a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
 @media(max-width:760px){#dots{display:none}}
-.cstep,.s3{position:relative;overflow:hidden;transition:transform .18s ease-out,border-color .3s}
-.bcard::after,.cstep::after,.s3::after{content:'';position:absolute;inset:0;border-radius:inherit;
+.cstep,.s3,.lstep{position:relative;overflow:hidden;transition:transform .18s ease-out,border-color .3s}
+.cstep::after,.s3::after,.lstep::after{content:'';position:absolute;inset:0;border-radius:inherit;
   pointer-events:none;opacity:0;transition:opacity .3s;
   background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.09),transparent 46%)}
-.bcard:hover::after,.cstep:hover::after,.s3:hover::after{opacity:1}
+.cstep:hover::after,.s3:hover::after,.lstep:hover::after{opacity:1}
 @media (prefers-reduced-motion: no-preference){
   .constellation svg{animation:cfloat 8s ease-in-out infinite}
   @keyframes cfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(1.2deg)}}
@@ -816,7 +816,7 @@ if(combineSec){
 
 // ---------- 3D tilt cards ----------
 if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-  document.querySelectorAll('.cstep,.s3').forEach(card=>{
+  document.querySelectorAll('.cstep,.s3,.lstep').forEach(card=>{
     card.addEventListener('pointermove',e=>{
       const r=card.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
       card.style.setProperty('--gx',px*100+'%');card.style.setProperty('--gy',py*100+'%');
