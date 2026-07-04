@@ -178,7 +178,10 @@ h2.title{font-family:'Space Grotesk','Noto Sans KR',sans-serif;font-weight:700;f
 .syn-list{display:flex;flex-direction:column;gap:16px}
 .syn-item{display:flex;gap:14px;align-items:flex-start}
 .syn-item .dot{width:10px;height:10px;border-radius:50%;margin-top:8px;flex:none;box-shadow:0 0 12px var(--c);background:var(--c)}
-.syn-item p{font-size:15px;color:#cace}
+.syn-item p{font-size:15px;color:#c8cce8}
+.syn-item{transition:opacity .25s ease}
+.syn-list:hover .syn-item:not(:hover){opacity:.4}
+.syn-item:hover .dot{box-shadow:0 0 16px var(--c),0 0 34px var(--c)}
 .syn-item b{color:var(--ink);font-weight:600}
 .constellation{position:relative;aspect-ratio:1;max-width:430px;margin:0 auto;width:100%}
 .constellation svg{width:100%;height:100%;overflow:visible}
@@ -243,6 +246,30 @@ a.iq:hover{opacity:.72}
   .constellation svg{animation:cfloat 8s ease-in-out infinite}
   @keyframes cfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(1.2deg)}}
 }
+
+/* constellation — 연결선 드로잉 등장 + 문장 호버 연동 */
+.constellation:not(.in) .cline,.constellation:not(.in) .cnode,.constellation:not(.in) .ccenter{opacity:0}
+.constellation.in .cline{animation:linein .7s ease backwards}
+.constellation.in .cnode{animation:nodein .55s cubic-bezier(.3,1.5,.4,1) backwards;transform-box:fill-box;transform-origin:center}
+.constellation.in .ccenter{animation:linein .8s ease .95s backwards}
+@keyframes linein{from{opacity:0}}
+@keyframes nodein{from{opacity:0;transform:scale(.2)}}
+.constellation.in .cline:nth-of-type(1){animation-delay:.1s}
+.constellation.in .cline:nth-of-type(2){animation-delay:.24s}
+.constellation.in .cline:nth-of-type(3){animation-delay:.38s}
+.constellation.in .cline:nth-of-type(4){animation-delay:.52s}
+.constellation.in .cline:nth-of-type(5){animation-delay:.66s}
+.constellation.in .cnode:nth-of-type(1){animation-delay:.2s}
+.constellation.in .cnode:nth-of-type(2){animation-delay:.34s}
+.constellation.in .cnode:nth-of-type(3){animation-delay:.48s}
+.constellation.in .cnode:nth-of-type(4){animation-delay:.62s}
+.constellation.in .cnode:nth-of-type(5){animation-delay:.76s}
+.cline,.cnode{transition:opacity .25s ease,transform .25s ease}
+.constellation[data-hl] .cline:not(.hl){opacity:.12}
+.constellation[data-hl] .cnode:not(.hl){opacity:.22}
+.cnode.hl{transform:scale(1.3);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 12px currentColor)}
+.constellation[data-hl] .ccenter>circle:nth-of-type(1){animation:youpulse 1.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes youpulse{50%{transform:scale(1.09)}}
 
 /* ---------- buddy planet showcase ---------- */
 .showcase{height:300vh;position:relative}
@@ -367,7 +394,7 @@ a.iq:hover{opacity:.72}
   .bnav{bottom:16px}
   .bhint{display:none}
 }
-@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.planet{transition:none}.bhint{animation:none}}
+@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.planet{transition:none}.bhint{animation:none}.constellation .cline,.constellation .cnode,.constellation .ccenter{animation:none!important;opacity:1!important}}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -538,27 +565,27 @@ a.iq:hover{opacity:.72}
     </div>
     <div class="syn">
       <div class="syn-list">
-        <div class="syn-item reveal" style="--c:var(--black)"><span class="dot"></span><p><b>물리를 알면 AI가 보인다</b> — AI 학습은 결국 '가장 낮은 에너지를 찾아가는' 물리 과정과 같은 구조입니다. 실제로 확산 모델은 열역학에서 나왔습니다.</p></div>
-        <div class="syn-item reveal" style="--c:var(--white)"><span class="dot"></span><p><b>마음을 알면 제품이 보인다</b> — 사람의 주의력에는 한계가 있고, 기억은 쉽게 왜곡됩니다. 이걸 아는 사람이 정말 쓰기 좋은 제품을 만듭니다.</p></div>
-        <div class="syn-item reveal" style="--c:var(--green)"><span class="dot"></span><p><b>세상을 알면 방향이 보인다</b> — 사람은 인센티브로 움직이고, 성과는 복리로 쌓입니다. 무엇을 만들고 언제 움직일지는 판단력이 결정합니다.</p></div>
-        <div class="syn-item reveal" style="--c:var(--blue)"><span class="dot"></span><p><b>구현할 수 있어야 진짜 아는 것이다</b> — 아이디어도 이론도, 실제로 돌아가는 코드로 만들어 봐야 비로소 검증됩니다.</p></div>
-        <div class="syn-item reveal" style="--c:var(--red)"><span class="dot"></span><p><b>수학은 다섯 영역의 공용어다</b> — 확률·선형대수·최적화를 한번 익히면, 물리에서도 AI에서도 돈에서도 같은 구조를 다시 만납니다.</p></div>
+        <div class="syn-item reveal" data-k="black" style="--c:var(--black)"><span class="dot"></span><p><b>물리를 알면 AI가 보인다</b> — AI 학습은 결국 '가장 낮은 에너지를 찾아가는' 물리 과정과 같은 구조입니다. 실제로 확산 모델은 열역학에서 나왔습니다.</p></div>
+        <div class="syn-item reveal" data-k="white" style="--c:var(--white)"><span class="dot"></span><p><b>마음을 알면 제품이 보인다</b> — 사람의 주의력에는 한계가 있고, 기억은 쉽게 왜곡됩니다. 이걸 아는 사람이 정말 쓰기 좋은 제품을 만듭니다.</p></div>
+        <div class="syn-item reveal" data-k="green" style="--c:var(--green)"><span class="dot"></span><p><b>세상을 알면 방향이 보인다</b> — 사람은 인센티브로 움직이고, 성과는 복리로 쌓입니다. 무엇을 만들고 언제 움직일지는 판단력이 결정합니다.</p></div>
+        <div class="syn-item reveal" data-k="blue" style="--c:var(--blue)"><span class="dot"></span><p><b>구현할 수 있어야 진짜 아는 것이다</b> — 아이디어도 이론도, 실제로 돌아가는 코드로 만들어 봐야 비로소 검증됩니다.</p></div>
+        <div class="syn-item reveal" data-k="red" style="--c:var(--red)"><span class="dot"></span><p><b>수학은 다섯 영역의 공용어다</b> — 확률·선형대수·최적화를 한번 익히면, 물리에서도 AI에서도 돈에서도 같은 구조를 다시 만납니다.</p></div>
       </div>
       <div class="constellation reveal">
         <svg viewBox="0 0 400 400" aria-hidden="true">
           <g>
-            <line class="cline" x1="200" y1="200" x2="200" y2="58"/>
-            <line class="cline" x1="200" y1="200" x2="335" y2="150"/>
-            <line class="cline" x1="200" y1="200" x2="285" y2="320"/>
-            <line class="cline" x1="200" y1="200" x2="115" y2="320"/>
-            <line class="cline" x1="200" y1="200" x2="65" y2="150"/>
+            <line class="cline" data-k="red" x1="200" y1="200" x2="200" y2="58"/>
+            <line class="cline" data-k="green" x1="200" y1="200" x2="335" y2="150"/>
+            <line class="cline" data-k="blue" x1="200" y1="200" x2="285" y2="320"/>
+            <line class="cline" data-k="black" x1="200" y1="200" x2="115" y2="320"/>
+            <line class="cline" data-k="white" x1="200" y1="200" x2="65" y2="150"/>
           </g>
           <g>
-            <circle class="cnode" cx="200" cy="58"  r="11" fill="#ef4444" style="color:#ef4444"/>
-            <circle class="cnode" cx="335" cy="150" r="11" fill="#22c55e" style="color:#22c55e"/>
-            <circle class="cnode" cx="285" cy="320" r="11" fill="#3b82f6" style="color:#3b82f6"/>
-            <circle class="cnode" cx="115" cy="320" r="11" fill="#11131f" stroke="#aeb6cf" stroke-width="1.5" style="color:#aeb6cf"/>
-            <circle class="cnode" cx="65"  cy="150" r="11" fill="#f7f9ff" style="color:#f7f9ff"/>
+            <circle class="cnode" data-k="red" cx="200" cy="58"  r="11" fill="#ef4444" style="color:#ef4444"/>
+            <circle class="cnode" data-k="green" cx="335" cy="150" r="11" fill="#22c55e" style="color:#22c55e"/>
+            <circle class="cnode" data-k="blue" cx="285" cy="320" r="11" fill="#3b82f6" style="color:#3b82f6"/>
+            <circle class="cnode" data-k="black" cx="115" cy="320" r="11" fill="#11131f" stroke="#aeb6cf" stroke-width="1.5" style="color:#aeb6cf"/>
+            <circle class="cnode" data-k="white" cx="65"  cy="150" r="11" fill="#f7f9ff" style="color:#f7f9ff"/>
           </g>
           <g class="ccenter">
             <circle cx="200" cy="200" r="30" fill="url(#cg)"/>
@@ -742,6 +769,34 @@ if(showcase&&bstage){
   setBuddy(0,true);updShowcase();
 }
 
+// ---------- constellation ↔ syn-item link ----------
+const cons=document.querySelector('.constellation');
+if(cons){
+  const COLS={red:'#ef4444',green:'#22c55e',blue:'#3b82f6',black:'#aeb6cf',white:'#f7f9ff'};
+  document.querySelectorAll('.syn-item').forEach(it=>{
+    const k=it.dataset.k;if(!k)return;
+    it.addEventListener('pointerenter',()=>{
+      cons.dataset.hl=k;
+      cons.querySelectorAll(`[data-k="${k}"]`).forEach(e=>{e.classList.add('hl');if(e.tagName==='line')e.style.stroke=COLS[k];});
+    });
+    it.addEventListener('pointerleave',()=>{
+      delete cons.dataset.hl;
+      cons.querySelectorAll('.hl').forEach(e=>{e.classList.remove('hl');e.style.stroke='';});
+    });
+  });
+}
+
+// ---------- 지식 결합 섹션: 배경 버디 별 수렴 ----------
+const combineSec=document.getElementById('combine');
+if(combineSec){
+  const sendConverge=()=>{
+    const r=combineSec.getBoundingClientRect();
+    const v=Math.max(0,Math.min(1,Math.min((innerHeight-r.top)/(innerHeight*.75),r.bottom/(innerHeight*.75))));
+    document.dispatchEvent(new CustomEvent('sg:converge',{detail:{v}}));
+  };
+  addEventListener('scroll',sendConverge,{passive:true});sendConverge();
+}
+
 // ---------- 3D tilt cards ----------
 if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
   document.querySelectorAll('.cstep,.s3').forEach(card=>{
@@ -851,11 +906,18 @@ if(renderer){
     {rgba:'rgba(255,255,255,.95)',f:.94,a0:5.4,s:.38}
   ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
 
+  // --- 유성: 드물게, 은은하게 ---
+  const mHead=sprite('rgba(235,242,255,.95)',.7),mTail=sprite('rgba(190,205,255,.5)',1.5);
+  mHead.material.opacity=0;mTail.material.opacity=0;
+  let mT=-1,mNext=9;
+  const mFrom=new THREE.Vector3(),mTo=new THREE.Vector3();
+
   // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0,rotV=0;
+  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0,rotV=0,cv=0,cvT=0;
   if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
   document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
   document.addEventListener('sg:pan',e=>{bxT=e.detail.x;rotV=e.detail.vis;if(reduce){bx=bxT;queueRender();}});
+  document.addEventListener('sg:converge',e=>{cvT=e.detail.v;if(reduce){cv=cvT;queueRender();}});
   function onScroll(){
     scrollP=Math.min(1,scrollY/(innerHeight*.85));
     cv.style.opacity=(1-scrollP*.62).toFixed(3);
@@ -865,9 +927,11 @@ if(renderer){
 
   function place(){
     const t=uTime.value;
+    cv+=(cvT-cv)*.04;                                  // 결합 섹션: 다섯 별이 중심으로 모인다
     for(const b of BUD){
       const a=b.a0+t*.34*b.s;
-      b.sp.position.set(Math.cos(a)*b.r,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*b.r);
+      const rr=b.r*(1-cv*.8);
+      b.sp.position.set(Math.cos(a)*rr,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*rr);
     }
     mx+=(tx-mx)*.045;my+=(ty-my)*.045;
     bx+=(bxT-bx)*.035;                                 // 은하 속 행성 좌표로 느린 카메라 팬
@@ -890,6 +954,24 @@ if(renderer){
     uTime.value=clock.getElapsedTime()+swirl;
     const fov=55+warp*5;
     if(Math.abs(camera.fov-fov)>.05){camera.fov=fov;camera.updateProjectionMatrix();}
+    const t=uTime.value;
+    if(mT<0&&t>mNext){                                           // 유성 발사
+      const a1=Math.random()*6.283,r1=R*(.5+Math.random()*.55);
+      mFrom.set(Math.cos(a1)*r1,3+Math.random()*4,Math.sin(a1)*r1);
+      const a2=a1+(.7+Math.random()*.9)*(Math.random()<.5?-1:1);
+      mTo.set(Math.cos(a2)*r1*.35,mFrom.y-2,Math.sin(a2)*r1*.35);
+      mT=t;mNext=t+16+Math.random()*26;
+    }
+    if(mT>=0){
+      const k=(t-mT)/1.15;
+      if(k>=1){mT=-1;mHead.material.opacity=0;mTail.material.opacity=0;}
+      else{
+        mHead.position.lerpVectors(mFrom,mTo,k);
+        mTail.position.lerpVectors(mFrom,mTo,Math.max(0,k-.06));
+        const o=Math.sin(k*Math.PI);
+        mHead.material.opacity=o*.85;mTail.material.opacity=o*.28;
+      }
+    }
     place();renderer.render(scene,camera);requestAnimationFrame(loop);
   }
   resize();onScroll();
