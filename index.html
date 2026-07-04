@@ -240,6 +240,19 @@ footer a:hover{color:var(--ink)}
 .fmark{width:17px;height:17px;vertical-align:-4px;margin-right:7px}
 .sig{margin-top:18px;font-family:'Bricolage Grotesque',sans-serif;font-size:13px;color:var(--faint);display:flex;align-items:center;gap:9px}
 .iq{font-weight:700;font-size:16px;background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+/* ---------- 용어 툴팁 (나선형 학습) ---------- */
+.term{position:relative;cursor:help;border-bottom:1.5px dashed rgba(56,189,248,.55);padding-bottom:1px;outline:none}
+.term .tip{position:absolute;left:50%;top:calc(100% + 12px);transform:translateX(-50%) translateY(-4px);
+  width:min(320px,82vw);padding:14px 16px;border-radius:14px;z-index:70;
+  background:rgba(14,16,34,.96);border:1px solid rgba(150,160,220,.25);
+  box-shadow:0 18px 50px -18px rgba(0,0,0,.8),0 0 30px -12px rgba(168,85,247,.35);
+  backdrop-filter:blur(10px);
+  font-size:13.5px;font-weight:400;color:var(--muted);line-height:1.65;text-align:left;letter-spacing:0;
+  opacity:0;visibility:hidden;pointer-events:none;transition:.22s ease}
+.term .tip b{display:block;color:var(--ink);font-size:14px;margin-bottom:6px;font-weight:600}
+.term .tip::after{content:'';position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
+  border:7px solid transparent;border-bottom-color:rgba(150,160,220,.25)}
+.term:hover .tip,.term:focus-visible .tip,.term.open .tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 a.iq{transition:opacity .2s}
 a.iq:hover{opacity:.72}
 
@@ -477,7 +490,7 @@ a.iq:hover{opacity:.72}
   <div class="hero-in">
     <div class="eyebrow">AI × 나선형 학습 은하</div>
     <h1>흩어진 지식이 모여<br><span class="glow">하나의 은하</span>가 된다</h1>
-    <p class="lead">AI 버디와 나선형으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
+    <p class="lead">AI 버디와 <span class="term" tabindex="0">나선형<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span>으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
     <p class="sub">다섯 빛깔의 버디 · 232개 딥다이브</p>
     <div class="cta">
       <a class="btn btn-primary" href="#buddies">다섯 버디 만나기</a>
@@ -510,7 +523,7 @@ a.iq:hover{opacity:.72}
       <div class="cstep reveal">
         <div class="n">02 — SPIRAL</div>
         <h3>나선으로 깊게</h3>
-        <p>같은 개념을 다시 만날 때마다<br>한 단계씩 깊이 들어갑니다(depth 1→2→3).<br>지난 학습을 기억하는 버디가<br>매번 더 깊은 질문을 던집니다.</p>
+        <p>같은 개념을 다시 만날 때마다<br>한 단계씩 깊이 들어갑니다.<br>지난 학습을 기억하는 버디가<br>매번 더 깊은 질문을 던집니다.</p>
       </div>
       <div class="cstep reveal">
         <div class="n">03 — COMBINE</div>
@@ -528,7 +541,7 @@ a.iq:hover{opacity:.72}
     <div class="reveal center">
       <div class="kicker">The Five Buddies</div>
       <h2 class="title">다섯 빛깔, 다섯 행성</h2>
-      <p class="lede">각 버디는 하나의 연구소를 나선형 학습 세션으로 바꾸는 데스크톱 앱입니다.<br>스크롤을 내리면 다섯 행성이 차례로 나타납니다.</p>
+      <p class="lede">각 버디는 하나의 연구소를 <span class="term" tabindex="0">나선형 학습<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span> 세션으로 바꾸는 데스크톱 앱입니다.<br>스크롤을 내리면 다섯 행성이 차례로 나타납니다.</p>
     </div>
   </div>
 
@@ -843,6 +856,12 @@ if(combineSec){
   };
   addEventListener('scroll',sendConverge,{passive:true});sendConverge();
 }
+
+// ---------- 용어 툴팁: 터치 토글 ----------
+document.querySelectorAll('.term').forEach(t=>{
+  t.addEventListener('click',e=>{e.stopPropagation();t.classList.toggle('open');});
+});
+document.addEventListener('click',()=>document.querySelectorAll('.term.open').forEach(t=>t.classList.remove('open')));
 
 // ---------- 3D tilt cards ----------
 if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
