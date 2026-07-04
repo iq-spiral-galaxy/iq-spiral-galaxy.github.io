@@ -272,7 +272,14 @@ a.iq:hover{opacity:.72}
 /* constellation — 연결선 드로잉 등장 + 문장 호버 연동 */
 .constellation:not(.in) .cline,.constellation:not(.in) .cnode,.constellation:not(.in) .ccenter{opacity:0}
 .constellation.in .cline{animation:linein .7s ease backwards}
-.constellation.in .cnode{animation:nodein .55s cubic-bezier(.3,1.5,.4,1) backwards;transform-box:fill-box;transform-origin:center}
+.constellation.in .cnode{animation:nodein .55s cubic-bezier(.3,1.5,.4,1) backwards,nbreathe 4.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes nbreathe{50%{transform:scale(1.12);filter:drop-shadow(0 0 9px currentColor) drop-shadow(0 0 20px currentColor)}}
+.constellation:not(.in) .corbit{opacity:0}
+.constellation.in .corbit{animation:linein .8s ease 1.1s backwards}
+.youring{transform-box:view-box;transform-origin:200px 200px;animation:yspin 28s linear infinite}
+.orbdot{transform-box:view-box;transform-origin:200px 200px;animation:yspin 11s linear infinite;filter:drop-shadow(0 0 6px #38bdf8)}
+.orbdot2{transform-box:view-box;transform-origin:200px 200px;animation:yspin 17s linear infinite reverse;filter:drop-shadow(0 0 6px #ec4899)}
+@keyframes yspin{to{transform:rotate(360deg)}}
 .constellation.in .ccenter{animation:linein .8s ease .95s backwards}
 @keyframes linein{from{opacity:0}}
 @keyframes nodein{from{opacity:0;transform:scale(.2)}}
@@ -281,11 +288,11 @@ a.iq:hover{opacity:.72}
 .constellation.in .cline:nth-of-type(3){animation-delay:.38s}
 .constellation.in .cline:nth-of-type(4){animation-delay:.52s}
 .constellation.in .cline:nth-of-type(5){animation-delay:.66s}
-.constellation.in .cnode:nth-of-type(1){animation-delay:.2s}
-.constellation.in .cnode:nth-of-type(2){animation-delay:.34s}
-.constellation.in .cnode:nth-of-type(3){animation-delay:.48s}
-.constellation.in .cnode:nth-of-type(4){animation-delay:.62s}
-.constellation.in .cnode:nth-of-type(5){animation-delay:.76s}
+.constellation.in .cnode:nth-of-type(1){animation-delay:.2s,1.1s}
+.constellation.in .cnode:nth-of-type(2){animation-delay:.34s,1.9s}
+.constellation.in .cnode:nth-of-type(3){animation-delay:.48s,2.7s}
+.constellation.in .cnode:nth-of-type(4){animation-delay:.62s,3.5s}
+.constellation.in .cnode:nth-of-type(5){animation-delay:.76s,4.3s}
 .cline,.cnode{transition:opacity .25s ease,transform .25s ease}
 .constellation[data-hl] .cline:not(.hl){opacity:.12}
 .constellation[data-hl] .cnode:not(.hl){opacity:.22}
@@ -416,7 +423,7 @@ a.iq:hover{opacity:.72}
   .bnav{bottom:16px}
   .bhint{display:none}
 }
-@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.planet{transition:none}.bhint{animation:none}.constellation .cline,.constellation .cnode,.constellation .ccenter{animation:none!important;opacity:1!important}}
+@media (prefers-reduced-motion: reduce){.planet::before,.planet::after,.planet i{animation:none!important}.planet{transition:none}.bhint{animation:none}.constellation .cline,.constellation .cnode,.constellation .ccenter,.constellation .corbit,.constellation .youring,.constellation .orbdot,.constellation .orbdot2{animation:none!important;opacity:1!important}}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -493,17 +500,17 @@ a.iq:hover{opacity:.72}
       <div class="cstep reveal">
         <div class="n">01 — BROAD</div>
         <h3>빠르고 넓게</h3>
-        <p>처음부터 한 우물만 파지 않습니다. 수학·개발·물리·마음·세상 — 다섯 영역의 핵심 개념을 먼저 익혀 지식의 전체 지도를 그립니다. 어디에 무엇이 있는지 알아야, 필요할 때 꺼내 쓸 수 있습니다.</p>
+        <p>처음부터 한 우물만 파지 않습니다.<br>수학·개발·물리·마음·세상의 핵심을 먼저 익혀, 지식의 전체 지도를 그립니다.</p>
       </div>
       <div class="cstep reveal">
         <div class="n">02 — SPIRAL</div>
         <h3>나선으로 깊게</h3>
-        <p>한 번 배우고 끝내지 않습니다. 같은 개념을 시간을 두고 다시 만나되, 만날 때마다 한 단계씩 깊이 들어갑니다(depth 1→2→3). 지난 학습을 기억하는 AI 버디가 매번 더 깊은 질문을 던집니다.</p>
+        <p>같은 개념을 다시 만날 때마다 한 단계씩 깊이 들어갑니다(depth 1→2→3).<br>지난 학습을 기억하는 버디가 매번 더 깊은 질문을 던집니다.</p>
       </div>
       <div class="cstep reveal">
         <div class="n">03 — COMBINE</div>
         <h3>결합해 풀기</h3>
-        <p>따로 배운 지식은 흩어진 점일 뿐입니다. 수학으로 AI를 읽고, 마음의 원리로 제품을 설계하고, 물리의 직관으로 시스템을 보듯 — 영역을 넘나들며 점을 연결할 때, 새로운 문제를 푸는 힘이 생깁니다.</p>
+        <p>따로 배운 지식은 흩어진 점일 뿐입니다.<br>영역을 넘나들며 점을 연결할 때, 새로운 문제를 푸는 힘이 생깁니다.</p>
       </div>
     </div>
     <div class="pull reveal">한 분야의 전문가를 넘어,<br><em>지식과 지식 사이에서 답을 만드는 사람.</em></div>
@@ -609,6 +616,11 @@ a.iq:hover{opacity:.72}
             <circle class="cnode" data-k="black" cx="115" cy="320" r="11" fill="#11131f" stroke="#aeb6cf" stroke-width="1.5" style="color:#aeb6cf"/>
             <circle class="cnode" data-k="white" cx="65"  cy="150" r="11" fill="#f7f9ff" style="color:#f7f9ff"/>
           </g>
+          <g class="corbit">
+            <circle class="youring" cx="200" cy="200" r="44" fill="none" stroke="rgba(168,85,247,.38)" stroke-width="1" stroke-dasharray="3 8"/>
+            <circle class="orbdot" cx="200" cy="144" r="3" fill="#38bdf8"/>
+            <circle class="orbdot2" cx="200" cy="266" r="2.4" fill="#ec4899"/>
+          </g>
           <g class="ccenter">
             <circle cx="200" cy="200" r="30" fill="url(#cg)"/>
             <circle cx="200" cy="200" r="30" fill="none" stroke="#a855f7" stroke-width="1.5" opacity=".7"/>
@@ -649,7 +661,7 @@ a.iq:hover{opacity:.72}
     <div class="fcols">
       <div class="fbrand">
         <b><svg class="fmark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="fg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#a855f7" stop-opacity=".42"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient><linearGradient id="fa" x1="4" y1="5" x2="28" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ec4899"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><radialGradient id="fc" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e9ddff"/><stop offset="1" stop-color="#a855f7"/></radialGradient></defs><circle cx="16" cy="16" r="13" fill="url(#fg)"/><path d="M16 16C19 12 25.5 12 27 17.5 28.4 23 24 29.5 16.5 28.2" stroke="url(#fa)" stroke-width="2.5" stroke-linecap="round"/><path d="M16 16C13 20 6.5 20 5 14.5 3.6 9 8 2.5 15.5 3.8" stroke="url(#fa)" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="3.5" fill="url(#fc)"/></svg>Spiral Galaxy</b>
-        <p>AI 버디와 함께하는 나선형 학습 은하. 빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.</p>
+        <p>AI 버디와 함께하는 나선형 학습 은하.<br>빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.</p>
       </div>
       <div>
         <h5>Buddies</h5>
