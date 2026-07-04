@@ -913,11 +913,11 @@ if(renderer){
   const mFrom=new THREE.Vector3(),mTo=new THREE.Vector3();
 
   // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0,rotV=0,cv=0,cvT=0;
+  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0,rotV=0,cvg=0,cvgT=0;
   if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
   document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
   document.addEventListener('sg:pan',e=>{bxT=e.detail.x;rotV=e.detail.vis;if(reduce){bx=bxT;queueRender();}});
-  document.addEventListener('sg:converge',e=>{cvT=e.detail.v;if(reduce){cv=cvT;queueRender();}});
+  document.addEventListener('sg:converge',e=>{cvgT=e.detail.v;if(reduce){cvg=cvgT;queueRender();}});
   function onScroll(){
     scrollP=Math.min(1,scrollY/(innerHeight*.85));
     cv.style.opacity=(1-scrollP*.62).toFixed(3);
@@ -927,10 +927,10 @@ if(renderer){
 
   function place(){
     const t=uTime.value;
-    cv+=(cvT-cv)*.04;                                  // 결합 섹션: 다섯 별이 중심으로 모인다
+    cvg+=(cvgT-cvg)*.04;                               // 결합 섹션: 다섯 별이 중심으로 모인다
     for(const b of BUD){
       const a=b.a0+t*.34*b.s;
-      const rr=b.r*(1-cv*.8);
+      const rr=b.r*(1-cvg*.8);
       b.sp.position.set(Math.cos(a)*rr,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*rr);
     }
     mx+=(tx-mx)*.045;my+=(ty-my)*.045;
