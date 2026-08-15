@@ -96,8 +96,6 @@ nav.scrolled{background:rgba(7,8,18,.7);backdrop-filter:blur(14px);border-bottom
     radial-gradient(ellipse 46% 38% at 50% 53%,rgba(5,6,14,.54) 0%,rgba(5,6,14,.26) 48%,transparent 76%),
     radial-gradient(ellipse 60% 55% at 50% 48%,transparent 30%,rgba(5,6,14,.55) 78%,var(--bg) 100%)}
 .hero-in{position:relative;z-index:2;padding:120px 24px 80px}
-.eyebrow{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:.42em;font-size:12.5px;color:var(--violet);
-  text-transform:uppercase;margin-bottom:26px;font-weight:600}
 .hero h1{
   font-family:'Bricolage Grotesque','IBM Plex Sans KR',sans-serif;font-weight:700;
   font-size:clamp(34px,6.4vw,72px);line-height:1.08;letter-spacing:-.01em;
@@ -123,7 +121,6 @@ section.block::before{content:'';position:absolute;inset:0;z-index:-1;pointer-ev
 #buddies::before{background:radial-gradient(ellipse 78% 38% at 50% 34%,rgba(99,102,241,.09),transparent 72%)}
 #how::before{background:linear-gradient(180deg,transparent,rgba(10,12,27,.72) 42%,transparent)}
 #combine::before{background:radial-gradient(ellipse 68% 52% at 50% 52%,rgba(168,85,247,.1),transparent 72%)}
-.kicker{font-family:'Bricolage Grotesque',sans-serif;font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--violet);font-weight:600;margin-bottom:16px}
 h2.title{font-family:'Bricolage Grotesque','IBM Plex Sans KR',sans-serif;font-weight:700;font-size:clamp(27px,4vw,42px);line-height:1.18;letter-spacing:-.01em}
 .lede{color:var(--muted);max-width:640px;margin-top:18px;font-size:16px}
 .title,.lede,.pull{text-wrap:balance}
@@ -404,9 +401,6 @@ body.buddy-focus #dots:focus-within{opacity:1}
 .bi-ident{color:#d5d8f1;font-size:clamp(16px,1.6vw,19px);line-height:1.62;max-width:470px;min-height:62px;text-wrap:balance}
 .bi-chips{display:flex;flex-wrap:wrap;gap:7px;margin:19px 0 20px}
 .bi-chips .chip{color:var(--faint);background:rgba(9,11,26,.34)}
-.bi-meta{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:15px;margin-bottom:21px;max-width:470px}
-.bi-motto{color:var(--ac);font-style:italic;font-family:'Bricolage Grotesque',sans-serif;font-size:14px}
-.bi-scale{font-family:'Bricolage Grotesque',sans-serif;color:var(--faint);font-size:12.5px;letter-spacing:.04em}
 .bi-links{display:flex;gap:12px}
 .bi-app,.bi-lab{padding:11px 22px;border-radius:12px;font-size:14px;transition:.25s;border:1px solid}
 .bi-app{border-color:color-mix(in srgb,var(--ac) 55%,transparent);color:#fff;background:color-mix(in srgb,var(--ac) 14%,transparent)}
@@ -457,7 +451,7 @@ body.buddy-focus #dots:focus-within{opacity:1}
   .bstage{grid-template-rows:minmax(145px,27svh) auto;padding-top:46px}
   .planetwrap{min-height:145px}.planet{width:calc(min(21svh,150px)*var(--pszf,1))}
   .bi-sub{margin:5px 0 9px}.bi-ident{font-size:14px;line-height:1.5}
-  .bi-chips{margin:9px 0}.bi-meta{padding-top:9px;margin-bottom:10px}.bi-app,.bi-lab{padding:8px 12px}
+  .bi-chips{margin:9px 0}.bi-app,.bi-lab{padding:8px 12px}
 }
 @media(max-height:560px){
   .showcase{height:auto}
@@ -529,7 +523,7 @@ nav.scrolled{
 .nav-gh:hover{border-color:var(--indigo);background:#fff}
 
 .hero{
-  min-height:100svh;justify-content:flex-start;text-align:left;
+  min-height:100svh;justify-content:flex-start;text-align:left;overflow:visible;z-index:3;
   border-bottom:1px solid var(--line);
 }
 .hero-in{
@@ -548,10 +542,6 @@ nav.scrolled{
   animation:hero-spiral 18s linear infinite;
 }
 @keyframes hero-spiral{to{transform:rotate(360deg)}}
-.eyebrow{
-  margin:0 0 20px;color:var(--indigo);font-size:12px;font-weight:700;
-  letter-spacing:.22em;
-}
 .hero h1{
   max-width:850px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:700;
   font-size:clamp(38px,6.3vw,70px);line-height:1.12;letter-spacing:-.055em;
@@ -576,7 +566,6 @@ nav.scrolled{
 
 section.block{padding:104px 0;border-bottom:1px solid var(--line)}
 section.block::before{display:none}
-.kicker{color:var(--indigo);font-size:12px;letter-spacing:.2em}
 h2.title{
   color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;
   font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-.045em;
@@ -599,26 +588,59 @@ h2.title{
 .pull em{color:var(--violet);background:none;-webkit-text-fill-color:currentColor}
 .loop{gap:26px}
 .loop::before,.loop::after{display:none}
-.lstep{padding:28px 2px}
-.lstep .ico{border-radius:50%;background:rgba(255,255,255,.72)}
+.lstep{
+  padding:28px 18px 30px;border:1px solid transparent;border-top-color:var(--line);
+  border-radius:18px;isolation:isolate;
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),background-color .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+.js .lstep.reveal{
+  transition:opacity .65s ease,transform .3s cubic-bezier(.2,.75,.25,1),background-color .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+.lstep::before{
+  content:'';position:absolute;z-index:2;left:-1px;right:-1px;top:-1px;height:3px;
+  border-radius:18px 18px 0 0;background:var(--ic,#a855f7);
+  transform:scaleX(0);transform-origin:left;opacity:0;
+  transition:transform .35s cubic-bezier(.2,.75,.25,1),opacity .2s ease;
+}
+.lstep .ico{
+  border-radius:50%;background:rgba(255,255,255,.72);
+  transition:transform .3s cubic-bezier(.2,.75,.25,1),background-color .3s ease,box-shadow .3s ease;
+}
+.lstep .ln,.lstep h4{transition:color .25s ease,letter-spacing .3s ease}
+@media(hover:hover){
+  .lstep:hover,.js .lstep.reveal.in:hover{
+    transform:translateY(-8px);border-color:color-mix(in srgb,var(--ic,#a855f7) 35%,var(--line));
+    background:color-mix(in srgb,var(--ic,#a855f7) 7%,#fff);
+    box-shadow:0 20px 42px -26px color-mix(in srgb,var(--ic,#a855f7) 68%,transparent);
+  }
+  .lstep:hover::before{transform:scaleX(1);opacity:1}
+  .lstep:hover .ico{
+    transform:translateY(-3px) rotate(-4deg) scale(1.08);
+    background:#fff;box-shadow:0 12px 25px -14px var(--ic,#a855f7);
+  }
+  .lstep:hover .ln{color:var(--ic,#a855f7);letter-spacing:.16em}
+}
 .depths{gap:10px}
 .depth{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:rgba(255,255,255,.58)}
 .depth b{color:var(--indigo)}
 
 .term{border-bottom-color:rgba(64,88,184,.4);z-index:100}
+.term:hover,.term:focus-visible,.term.open{z-index:1001}
 .term .tip{
-  top:auto;bottom:calc(100% + 14px);box-sizing:border-box;max-width:calc(100vw - 32px);
-  transform:translateX(-50%) translateY(4px);z-index:1000;
+  left:calc(100% + 18px);right:auto;top:-16px;bottom:auto;
+  box-sizing:border-box;width:min(320px,calc(100vw - 32px));max-width:none;
+  transform:translateX(-4px);z-index:1000;
   background:#fff;border-color:var(--line);color:var(--muted);
   box-shadow:0 20px 55px rgba(31,42,74,.16);
 }
 .term .tip b{display:flex;align-items:center;gap:8px;color:var(--ink)}
 .tip-mark{width:20px;height:20px;display:block;flex:none}
 .term .tip::after{
-  top:100%;bottom:auto;border:7px solid transparent;border-top-color:#fff;border-bottom-color:transparent;
-  filter:drop-shadow(0 1px 0 rgba(26,36,64,.16));
+  left:auto;right:100%;top:24px;bottom:auto;transform:none;
+  border:7px solid transparent;border-right-color:#fff;
+  filter:drop-shadow(-1px 0 0 rgba(26,36,64,.16));
 }
-.term:hover .tip,.term:focus-visible .tip,.term.open .tip{transform:translateX(-50%) translateY(0)}
+.term:hover .tip,.term:focus-visible .tip,.term.open .tip{transform:translateX(0)}
 #buddies>.wrap{position:relative;z-index:20}
 #buddies>.showcase{position:relative;z-index:1}
 .chip{
@@ -681,9 +703,6 @@ html:not(.js) .bpanel:first-child{border-top:0}
 .bi-sub{color:var(--ac);font-weight:600}
 .bi-ident{color:var(--ink);font-size:clamp(17px,2vw,21px)}
 .bi-chips .chip{background:#f6f7fb}
-.bi-meta{border-top-color:var(--line)}
-.bi-motto{color:var(--ac)}
-.bi-scale{color:var(--faint)}
 .bi-app,.bi-lab{border-radius:10px}
 .bi-app{border-color:var(--ink);background:var(--ink);color:#fff}
 .bi-app:hover{background:#303b59;transform:translateY(-2px)}
@@ -765,12 +784,13 @@ footer a:hover{color:var(--indigo)}
   .hero h1{font-size:38px}
   .binfo{min-height:560px}
 }
-@media(max-width:520px){
+@media(max-width:900px){
   .hero p.lead,#buddies .lede{position:relative}
   .hero .term,#buddies .term{position:static}
   .term .tip{
-    left:50%;width:min(320px,calc(100vw - 32px));max-width:none;
-    transform:translateX(-50%) translateY(4px);
+    left:50%;right:auto;top:calc(100% + 14px);bottom:auto;
+    width:min(320px,calc(100vw - 32px));max-width:none;
+    transform:translateX(-50%) translateY(-4px);
   }
   .term:hover .tip,.term:focus-visible .tip,.term.open .tip{transform:translateX(-50%) translateY(0)}
   .term .tip::after{display:none}
@@ -785,7 +805,8 @@ footer a:hover{color:var(--indigo)}
 @media (prefers-reduced-motion: reduce){
   .hero-mark img{animation:none!important}
   .bdot,.bpanel,.js .bpanel{transition:none!important}
-  .syn-item,.syn-item .dot,.cline,.cnode{transition:none!important}
+  .syn-item,.syn-item .dot,.cline,.cnode,.lstep,.lstep::before,.lstep .ico,.lstep .ln,.lstep h4{transition:none!important}
+  .lstep:hover,.lstep:hover .ico{transform:none!important}
 }
 .sig em{font-style:italic;color:var(--muted)}
 </style>
@@ -815,7 +836,6 @@ footer a:hover{color:var(--indigo)}
       <span class="hero-mark" aria-hidden="true"><img src="/spiral-mark.svg" alt=""></span>
       <span>Spiral Galaxy</span>
     </div>
-    <div class="eyebrow">AI × 나선형 학습 은하</div>
     <h1>흩어진 지식이 모여<br><span class="glow">하나의 은하</span>가 된다</h1>
     <p class="lead">AI 버디와 <span class="term" role="button" tabindex="0" aria-label="나선형 학습 설명 보기" aria-expanded="false" aria-describedby="spiral-tip-hero">나선형<span class="tip" id="spiral-tip-hero" role="tooltip"><b><img class="tip-mark" src="/spiral-mark.svg" alt="">나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span>으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
     <div class="cta">
@@ -829,7 +849,6 @@ footer a:hover{color:var(--indigo)}
 <section class="block center" id="concept">
   <div class="wrap">
     <div class="reveal">
-      <div class="kicker">Why Spiral</div>
       <h2 class="title">외우는 사람의 시대는 끝났다</h2>
       <p class="lede">검색하면 나오는 답을 외우는 게 아니라,<br><b>흩어진 지식을 결합해 새 문제를 푸는 사람</b>의 시대입니다.<br>그래서 한 우물보다 — 넓게 훑고, 나선으로 되감으며 깊어지는 학습이 필요합니다.</p>
     </div>
@@ -858,8 +877,7 @@ footer a:hover{color:var(--indigo)}
 <section class="block" id="buddies">
   <div class="wrap">
     <div class="reveal center">
-      <div class="kicker">The Five Buddies</div>
-      <h2 class="title">다섯 빛깔, 다섯 버디</h2>
+      <h2 class="title">Five Colors. Five Buddies.</h2>
       <p class="lede">각 버디는 하나의 연구소를 <span class="term" role="button" tabindex="0" aria-label="나선형 학습 설명 보기" aria-expanded="false" aria-describedby="spiral-tip-buddies">나선형 학습<span class="tip" id="spiral-tip-buddies" role="tooltip"><b><img class="tip-mark" src="/spiral-mark.svg" alt="">나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span> 세션으로 바꾸는 데스크톱 앱입니다.<br>버디를 선택해 각 학습 영역을 살펴보세요.</p>
     </div>
   </div>
@@ -879,7 +897,6 @@ footer a:hover{color:var(--indigo)}
           <div class="bi-sub">수학과 AI의 본질</div>
           <p class="bi-ident">AI를 이루는 수학적 구조를 100% 이해한다.</p>
           <div class="bi-chips"><span class="chip">수학</span><span class="chip">ML</span><span class="chip">DL</span><span class="chip">RL</span><span class="chip">LLM</span><span class="chip">CV</span></div>
-          <div class="bi-meta"><span class="bi-motto">Prove, don't memorize</span><span class="bi-scale">7 layers · 48 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-red/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-ai-lab.github.io" target="_blank" rel="noopener">IQ AI Lab</a></div>
         </article>
         <article class="bpanel" id="buddy-panel-1" role="tabpanel" aria-labelledby="buddy-tab-1" aria-hidden="true" inert data-i="1" style="--ac:#177246">
@@ -887,7 +904,6 @@ footer a:hover{color:var(--indigo)}
           <div class="bi-sub">세상을 읽는 판단력</div>
           <p class="bi-ident">돈·사람·세상이 움직이는 원리를 배워 판단력을 기른다.</p>
           <div class="bi-chips"><span class="chip">돈</span><span class="chip">사람</span><span class="chip">제도</span><span class="chip">역사</span><span class="chip">전략</span></div>
-          <div class="bi-meta"><span class="bi-motto">Distill, don't collect</span><span class="bi-scale">6 layers · 31 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-green/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-phronesis-lab.github.io" target="_blank" rel="noopener">IQ Phronesis Lab</a></div>
         </article>
         <article class="bpanel" id="buddy-panel-2" role="tabpanel" aria-labelledby="buddy-tab-2" aria-hidden="true" inert data-i="2" style="--ac:#356fd1">
@@ -895,7 +911,6 @@ footer a:hover{color:var(--indigo)}
           <div class="bi-sub">만드는 힘, 풀스택</div>
           <p class="bi-ident">기술을 쓰는 법을 넘어, 내부 동작 원리까지 이해한다.</p>
           <div class="bi-chips"><span class="chip">Frontend</span><span class="chip">Backend</span><span class="chip">Android</span><span class="chip">iOS</span><span class="chip">DB</span><span class="chip">인프라</span></div>
-          <div class="bi-meta"><span class="bi-motto">Beyond the docs</span><span class="bi-scale">9 domains · 86 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-blue/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-dev-lab.github.io" target="_blank" rel="noopener">IQ Dev Lab</a></div>
         </article>
         <article class="bpanel" id="buddy-panel-3" role="tabpanel" aria-labelledby="buddy-tab-3" aria-hidden="true" inert data-i="3" style="--ac:#252c3f">
@@ -903,7 +918,6 @@ footer a:hover{color:var(--indigo)}
           <div class="bi-sub">우주를 바닥부터</div>
           <p class="bi-ident">가장 근본적인 법칙에서 출발해 우주를 이해한다.</p>
           <div class="bi-chips"><span class="chip">고전</span><span class="chip">양자</span><span class="chip">상대성</span><span class="chip">우주론</span><span class="chip">양자중력</span></div>
-          <div class="bi-meta"><span class="bi-motto">Derive, don't accept</span><span class="bi-scale">7 layers · 36 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-black/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-physis-lab.github.io" target="_blank" rel="noopener">IQ Physis Lab</a></div>
         </article>
         <article class="bpanel" id="buddy-panel-4" role="tabpanel" aria-labelledby="buddy-tab-4" aria-hidden="true" inert data-i="4" style="--ac:#59647c">
@@ -911,7 +925,6 @@ footer a:hover{color:var(--indigo)}
           <div class="bi-sub">마음의 안쪽</div>
           <p class="bi-ident">뉴런에서 의식까지, 마음이 어떻게 생겨나는지 이해한다.</p>
           <div class="bi-chips"><span class="chip">뇌</span><span class="chip">인지</span><span class="chip">의식</span><span class="chip">자아</span><span class="chip">자유의지</span></div>
-          <div class="bi-meta"><span class="bi-motto">Explain it, don't explain it away</span><span class="bi-scale">7 layers · 31 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-white/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-psyche-lab.github.io" target="_blank" rel="noopener">IQ Psyche Lab</a></div>
         </article>
       </div>
@@ -924,15 +937,14 @@ footer a:hover{color:var(--indigo)}
 <section class="block" id="how">
   <div class="wrap">
     <div class="reveal center">
-      <div class="kicker">How the Spiral Works</div>
       <h2 class="title">되감을수록 깊어지는 한 사이클</h2>
       <p class="lede">책은 한 번 읽으면 거기서 끝이지만, 나선형 학습은 끝이 다음의 시작입니다.<br>오늘 남긴 노트를 다음 세션의 버디가 기억한 채 시작하기 때문에, 배울수록 대화가 깊어집니다.</p>
     </div>
     <div class="loop reveal">
-      <div class="lstep reveal"><div class="ico" style="--ic:#a855f7"><img src="https://api.iconify.design/lucide/map.svg?color=%23a855f7" alt="" width="21" height="21"></div><div class="ln">STEP 01</div><h4>로드맵·챕터 선택</h4><p>다섯 영역 232개 딥다이브 로드맵에서,<br>오늘 공부할 챕터 하나를 고릅니다.</p></div>
-      <div class="lstep reveal"><div class="ico" style="--ic:#8b7cf6"><img src="https://api.iconify.design/lucide/message-circle.svg?color=%238b7cf6" alt="" width="21" height="21"></div><div class="ln">STEP 02</div><h4>버디와 Socratic 대화</h4><p>버디는 정답을 바로 알려주지 않습니다.<br>질문을 던져 스스로 답을 찾게 하고,<br>막히면 힌트로 이끕니다.</p></div>
-      <div class="lstep reveal"><div class="ico" style="--ic:#6493f4"><img src="https://api.iconify.design/lucide/notebook-pen.svg?color=%236493f4" alt="" width="21" height="21"></div><div class="ln">STEP 03</div><h4>8섹션 구조 노트</h4><p>세션을 마치면 대화 전체가<br>핵심 개념·예제·헷갈렸던 지점 등<br>8개 섹션 노트로 자동 정리됩니다.</p></div>
-      <div class="lstep reveal"><div class="ico" style="--ic:#38bdf8"><img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2338bdf8" alt="" width="21" height="21"></div><div class="ln">STEP 04</div><h4>노트를 기억한 채 되감기</h4><p>같은 챕터로 돌아오면<br>버디가 지난 노트를 읽고 시작합니다.<br>그래서 복습은 단순 반복이 아니라,<br>한 단계 더 깊은 대화가 됩니다.</p></div>
+      <div class="lstep reveal" style="--ic:#a855f7"><div class="ico"><img src="https://api.iconify.design/lucide/map.svg?color=%23a855f7" alt="" width="21" height="21"></div><div class="ln">STEP 01</div><h4>로드맵·챕터 선택</h4><p>다섯 영역 232개 딥다이브 로드맵에서,<br>오늘 공부할 챕터 하나를 고릅니다.</p></div>
+      <div class="lstep reveal" style="--ic:#8b7cf6"><div class="ico"><img src="https://api.iconify.design/lucide/message-circle.svg?color=%238b7cf6" alt="" width="21" height="21"></div><div class="ln">STEP 02</div><h4>버디와 Socratic 대화</h4><p>버디는 정답을 바로 알려주지 않습니다.<br>질문을 던져 스스로 답을 찾게 하고,<br>막히면 힌트로 이끕니다.</p></div>
+      <div class="lstep reveal" style="--ic:#6493f4"><div class="ico"><img src="https://api.iconify.design/lucide/notebook-pen.svg?color=%236493f4" alt="" width="21" height="21"></div><div class="ln">STEP 03</div><h4>8섹션 구조 노트</h4><p>세션을 마치면 대화 전체가<br>핵심 개념·예제·헷갈렸던 지점 등<br>8개 섹션 노트로 자동 정리됩니다.</p></div>
+      <div class="lstep reveal" style="--ic:#38bdf8"><div class="ico"><img src="https://api.iconify.design/lucide/refresh-cw.svg?color=%2338bdf8" alt="" width="21" height="21"></div><div class="ln">STEP 04</div><h4>노트를 기억한 채 되감기</h4><p>같은 챕터로 돌아오면<br>버디가 지난 노트를 읽고 시작합니다.<br>그래서 복습은 단순 반복이 아니라,<br>한 단계 더 깊은 대화가 됩니다.</p></div>
     </div>
     <div class="depths">
       <div class="depth reveal"><b>d1</b><span>직관·정의 — 큰 그림과 핵심 개념 세우기</span></div>
@@ -946,17 +958,16 @@ footer a:hover{color:var(--indigo)}
 <section class="block" id="combine">
   <div class="wrap">
     <div class="reveal center">
-      <div class="kicker">Knowledge Combination</div>
       <h2 class="title">다섯 분야를 연결하면 더 잘 풀립니다</h2>
       <p class="lede">각 버디에게 한 분야를 깊게 배우고, 배운 내용을 서로 연결합니다.<br>그러면 복잡한 문제도 여러 관점에서 보고 더 나은 답을 찾을 수 있습니다.</p>
     </div>
     <div class="syn">
       <div class="syn-list">
-        <button type="button" class="syn-item is-active" data-k="black" style="--c:#252c3f" aria-pressed="true"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>물리는 AI가 배우는 방식을 보여줍니다</b>AI는 틀림이 줄어드는 방향을 찾아 조금씩 답을 고칩니다. 물체가 더 안정된 상태를 찾아 움직이는 과정과 닮았습니다.</span></button>
-        <button type="button" class="syn-item" data-k="white" style="--c:#65718f" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>마음을 알면 쓰기 쉬운 제품을 만들 수 있습니다</b>사람은 한 번에 많은 것에 집중하기 어렵고, 기억도 자주 틀립니다. 이 한계를 배려하면 더 쉽고 편한 제품이 됩니다.</span></button>
-        <button type="button" class="syn-item" data-k="green" style="--c:var(--green)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>세상을 알면 선택이 쉬워집니다</b>사람은 보상에 반응하고, 작은 성과는 시간이 지나며 커집니다. 이 흐름을 읽으면 무엇을 만들고 언제 시작할지 더 잘 정할 수 있습니다.</span></button>
-        <button type="button" class="syn-item" data-k="blue" style="--c:var(--blue)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>직접 만들어 봐야 제대로 알게 됩니다</b>좋은 아이디어도 실제로 작동하는지는 만들어 보기 전엔 모릅니다. 코드로 시험하고 고치면서 지식이 내 것이 됩니다.</span></button>
-        <button type="button" class="syn-item" data-k="red" style="--c:var(--red)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>수학은 다섯 분야를 연결합니다</b>확률·선형대수·최적화는 물리, AI, 금융에서 반복됩니다. 수학을 알면 서로 다른 문제 안의 같은 구조가 보입니다.</span></button>
+        <button type="button" class="syn-item is-active" data-k="black" style="--c:#252c3f" aria-pressed="true"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>물리는 AI가 배우는 방식을 보여줍니다</b>AI는 틀림이 줄어드는 방향을 찾아 조금씩 답을 고칩니다.<br>물체가 더 안정된 상태를 찾아 움직이는 과정과 닮았습니다.</span></button>
+        <button type="button" class="syn-item" data-k="white" style="--c:#65718f" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>마음을 알면 쓰기 쉬운 제품을 만들 수 있습니다</b>사람은 한 번에 많은 것에 집중하기 어렵고, 기억도 자주 틀립니다.<br>이 한계를 배려하면 더 쉽고 편한 제품이 됩니다.</span></button>
+        <button type="button" class="syn-item" data-k="green" style="--c:var(--green)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>세상을 알면 선택이 쉬워집니다</b>사람은 보상에 반응하고, 작은 성과는 시간이 지나며 커집니다.<br>이 흐름을 읽으면 무엇을 만들고 언제 시작할지 더 잘 정할 수 있습니다.</span></button>
+        <button type="button" class="syn-item" data-k="blue" style="--c:var(--blue)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>직접 만들어 봐야 제대로 알게 됩니다</b>좋은 아이디어도 실제로 작동하는지는 만들어 보기 전엔 모릅니다.<br>코드로 시험하고 고치면서 지식이 내 것이 됩니다.</span></button>
+        <button type="button" class="syn-item" data-k="red" style="--c:var(--red)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>수학은 다섯 분야를 연결합니다</b>확률·선형대수·최적화는 물리, AI, 금융에서 반복됩니다.<br>수학을 알면 서로 다른 문제 안의 같은 구조가 보입니다.</span></button>
       </div>
       <div class="constellation reveal">
         <svg viewBox="0 0 400 400" aria-hidden="true">
@@ -998,7 +1009,6 @@ footer a:hover{color:var(--indigo)}
 <section class="block start" id="start">
   <div class="wrap">
     <div class="reveal">
-      <div class="kicker">Get Started</div>
       <h2 class="title">30초면, 첫 나선을 시작합니다</h2>
       <p class="lede center">버디를 골라 한 줄 명령으로 설치 → API 키와 보관함 폴더 설정 → 바로 학습.<br>macOS · Windows · Linux 모두 지원합니다.</p>
     </div>
