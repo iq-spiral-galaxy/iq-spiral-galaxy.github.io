@@ -182,7 +182,6 @@ h2.title{font-family:'Bricolage Grotesque','IBM Plex Sans KR',sans-serif;font-we
 .syn-item p{font-size:15px;color:#b9bedd;line-height:1.7}
 .syn-item p b{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}
 .syn-item{transition:opacity .25s ease}
-.syn-list:hover .syn-item:not(:hover){opacity:.4}
 .syn-item:hover .dot{box-shadow:0 0 16px var(--c),0 0 34px var(--c)}
 .syn-item b{color:var(--ink);font-weight:600}
 .constellation{position:relative;aspect-ratio:1;max-width:430px;margin:0 auto;width:100%}
@@ -281,10 +280,7 @@ a.iq:hover{opacity:.72}
 @keyframes nbreathe{50%{transform:scale(1.12);filter:drop-shadow(0 0 9px currentColor) drop-shadow(0 0 20px currentColor)}}
 .constellation:not(.in) .corbit{opacity:0}
 .constellation.in .corbit{animation:linein .8s ease 1.1s backwards}
-.youring{transform-box:view-box;transform-origin:200px 200px;animation:yspin 28s linear infinite}
-.orbdot{transform-box:view-box;transform-origin:200px 200px;animation:yspin 11s linear infinite;filter:drop-shadow(0 0 6px #38bdf8)}
-.orbdot2{transform-box:view-box;transform-origin:200px 200px;animation:yspin 17s linear infinite reverse;filter:drop-shadow(0 0 6px #ec4899)}
-@keyframes yspin{to{transform:rotate(360deg)}}
+.youring{transform-box:view-box;transform-origin:200px 200px}
 .constellation.in .ccenter{animation:linein .8s ease .95s backwards}
 @keyframes linein{from{opacity:0}}
 @keyframes nodein{from{opacity:0;transform:scale(.2)}}
@@ -479,7 +475,7 @@ body.buddy-focus #dots:focus-within{opacity:1}
   .planet,.bpanel{transition:none!important}
   .bstage::before,.btrack-fill,.loop::before{transition:none!important}
   .loop.in::after{animation:none!important;opacity:0}
-  .constellation .cline,.constellation .cnode,.constellation .ccenter,.constellation .corbit,.constellation .youring,.constellation .orbdot,.constellation .orbdot2{animation:none!important;opacity:1!important}
+  .constellation .cline,.constellation .cnode,.constellation .ccenter,.constellation .corbit,.constellation .youring{animation:none!important;opacity:1!important}
 }
 html:not(.js) .showcase{height:auto}
 html:not(.js) .bstage{position:relative;height:auto;min-height:0;display:block;overflow:visible;padding:72px 24px}
@@ -520,15 +516,6 @@ nav.scrolled{
 .brand{gap:13px}
 .nav-mark{position:relative;width:34px;height:34px;display:grid;place-items:center}
 .brand .mark{width:34px;height:34px;animation:none}
-.nav-mark::after{
-  content:'';position:absolute;width:5px;height:5px;left:calc(50% - 2.5px);top:calc(50% - 2.5px);border-radius:50%;
-  background:var(--violet);box-shadow:0 0 0 4px rgba(103,88,217,.1);
-  animation:mark-orbit 7s linear infinite;
-}
-@keyframes mark-orbit{
-  from{transform:rotate(0) translateX(20px)}
-  to{transform:rotate(360deg) translateX(20px)}
-}
 .brand b,.fbrand b{
   font-family:'DM Serif Display',Georgia,serif;
   font-size:22px;font-weight:400;letter-spacing:-.02em;
@@ -560,16 +547,7 @@ nav.scrolled{
   width:100%;height:100%;display:block;
   animation:hero-spiral 18s linear infinite;
 }
-.hero-mark::after{
-  content:'';position:absolute;left:calc(50% - 4.5px);top:calc(50% - 4.5px);width:9px;height:9px;border-radius:50%;
-  background:var(--violet);box-shadow:0 0 0 7px rgba(103,88,217,.09);
-  animation:hero-orbit 9s linear infinite reverse;
-}
 @keyframes hero-spiral{to{transform:rotate(360deg)}}
-@keyframes hero-orbit{
-  from{transform:rotate(0) translateX(clamp(44px,6vw,59px))}
-  to{transform:rotate(360deg) translateX(clamp(44px,6vw,59px))}
-}
 .eyebrow{
   margin:0 0 20px;color:var(--indigo);font-size:12px;font-weight:700;
   letter-spacing:.22em;
@@ -608,6 +586,7 @@ h2.title{
   transform:translateY(14px);filter:none;
   transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1);
 }
+.js .reveal.in{filter:none}
 .concept-grid{gap:28px}
 .cstep,.lstep,.s3,.depth{
   border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;
@@ -626,19 +605,29 @@ h2.title{
 .depth{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:rgba(255,255,255,.58)}
 .depth b{color:var(--indigo)}
 
-.term{border-bottom-color:rgba(64,88,184,.4)}
+.term{border-bottom-color:rgba(64,88,184,.4);z-index:100}
 .term .tip{
+  top:auto;bottom:calc(100% + 14px);box-sizing:border-box;max-width:calc(100vw - 32px);
+  transform:translateX(-50%) translateY(4px);z-index:1000;
   background:#fff;border-color:var(--line);color:var(--muted);
   box-shadow:0 20px 55px rgba(31,42,74,.16);
 }
-.term .tip b{color:var(--ink)}
+.term .tip b{display:flex;align-items:center;gap:8px;color:var(--ink)}
+.tip-mark{width:20px;height:20px;display:block;flex:none}
+.term .tip::after{
+  top:100%;bottom:auto;border:7px solid transparent;border-top-color:#fff;border-bottom-color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(26,36,64,.16));
+}
+.term:hover .tip,.term:focus-visible .tip,.term.open .tip{transform:translateX(-50%) translateY(0)}
+#buddies>.wrap{position:relative;z-index:20}
+#buddies>.showcase{position:relative;z-index:1}
 .chip{
   color:var(--muted);border-color:var(--line);background:rgba(247,248,252,.8);
 }
 
 .showcase{height:auto;margin-top:46px}
 .bstage{
-  position:relative;top:auto;height:auto;min-height:520px;overflow:visible;display:grid;
+  position:relative;top:auto;height:auto;min-height:520px;overflow:visible;display:grid;isolation:auto;
   grid-template-columns:250px minmax(0,1fr);grid-template-areas:'nav info';
   align-items:stretch;gap:24px;max-width:1120px;padding:0 24px;
   --ac:#bd3937;
@@ -701,14 +690,36 @@ html:not(.js) .bpanel:first-child{border-top:0}
 .bi-lab{border-color:var(--line);background:#fff;color:var(--muted)}
 .bi-lab:hover{border-color:var(--indigo);color:var(--ink)}
 
-.syn-list{gap:20px}
-.syn-item p{color:var(--muted)}
-.syn-item p b{color:var(--ink)}
-.cline{stroke:rgba(64,88,120,.25)}
+.syn-list{gap:12px}
+.syn-item{
+  width:100%;padding:17px 18px;border:1px solid transparent;border-left:3px solid transparent;border-radius:16px;
+  background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer;appearance:none;
+  transition:opacity .22s ease,transform .22s ease,background .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.syn-item .dot{margin-top:7px;transition:transform .22s ease,box-shadow .22s ease}
+.syn-copy{display:block;color:var(--muted);font-size:15px;line-height:1.75}
+.syn-copy b{display:block;margin-bottom:5px;color:var(--ink);font-size:16px;font-weight:700}
+.syn-item:hover{border-color:color-mix(in srgb,var(--c) 24%,transparent)}
+.syn-list.has-active .syn-item:not(.is-active){opacity:1}
+.syn-item.is-active{
+  opacity:1;border-color:color-mix(in srgb,var(--c) 42%,transparent);border-left-color:var(--c);
+  background:color-mix(in srgb,var(--c) 8%,#fff);box-shadow:0 12px 32px rgba(31,42,74,.08);
+  transform:translateX(6px);
+}
+.syn-item.is-active .dot{transform:scale(1.35);box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 13%,transparent),0 0 18px var(--c)}
+.syn-item[data-k="white"] .dot{background:#fff;border:2px solid #65718f;box-shadow:0 0 0 5px rgba(101,113,143,.13)}
+.syn-item[data-k="white"].is-active .dot{box-shadow:0 0 0 7px rgba(101,113,143,.17),0 0 16px rgba(101,113,143,.5)}
+.cline{stroke:rgba(64,88,120,.25);transition:opacity .22s ease,stroke-width .22s ease,filter .22s ease}
+.cline.hl{opacity:1;stroke-width:2.5;stroke-dasharray:none;filter:drop-shadow(0 0 4px currentColor)}
 .constellation,.constellation.in{transform:none;filter:saturate(.78)}
 .constellation svg{animation:none!important}
 .constellation.in .cnode{animation:nodein .55s cubic-bezier(.3,1.5,.4,1) backwards}
-.constellation[data-hl] .ccenter>circle:nth-of-type(1),.youring,.orbdot,.orbdot2{animation:none}
+.constellation[data-hl] .ccenter>circle:nth-of-type(1){animation:none}
+.constellation[data-hl] .cline:not(.hl),.constellation[data-hl] .cnode:not(.hl){opacity:.18}
+.cnode{transform-box:fill-box;transform-origin:center;transition:opacity .22s ease,transform .22s ease,filter .22s ease}
+.cnode.hl{transform:scale(1.55);stroke:#fff;stroke-width:3;filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 18px currentColor)}
+.cnode[data-k="white"]{fill:#fff;stroke:#65718f;stroke-width:2.5;filter:drop-shadow(0 0 6px rgba(101,113,143,.55))}
+.cnode[data-k="white"].hl{stroke:#65718f;stroke-width:4;filter:drop-shadow(0 0 8px rgba(101,113,143,.8)) drop-shadow(0 0 18px rgba(101,113,143,.6))}
 .cstep::after,.s3::after,.lstep::after{display:none}
 
 .start>.wrap{
@@ -754,6 +765,16 @@ footer a:hover{color:var(--indigo)}
   .hero h1{font-size:38px}
   .binfo{min-height:560px}
 }
+@media(max-width:520px){
+  .hero p.lead,#buddies .lede{position:relative}
+  .hero .term,#buddies .term{position:static}
+  .term .tip{
+    left:50%;width:min(320px,calc(100vw - 32px));max-width:none;
+    transform:translateX(-50%) translateY(4px);
+  }
+  .term:hover .tip,.term:focus-visible .tip,.term.open .tip{transform:translateX(-50%) translateY(0)}
+  .term .tip::after{display:none}
+}
 @media(max-height:560px){
   .js .bpanel{
     margin:0;padding:0;border:0;border-radius:0;background:transparent;
@@ -762,8 +783,9 @@ footer a:hover{color:var(--indigo)}
   .js .bpanel.is-active{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
 }
 @media (prefers-reduced-motion: reduce){
-  .nav-mark::after,.hero-mark img,.hero-mark::after{animation:none!important}
+  .hero-mark img{animation:none!important}
   .bdot,.bpanel,.js .bpanel{transition:none!important}
+  .syn-item,.syn-item .dot,.cline,.cnode{transition:none!important}
 }
 .sig em{font-style:italic;color:var(--muted)}
 </style>
@@ -795,7 +817,7 @@ footer a:hover{color:var(--indigo)}
     </div>
     <div class="eyebrow">AI × 나선형 학습 은하</div>
     <h1>흩어진 지식이 모여<br><span class="glow">하나의 은하</span>가 된다</h1>
-    <p class="lead">AI 버디와 <span class="term" role="button" tabindex="0" aria-expanded="false">나선형<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span>으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
+    <p class="lead">AI 버디와 <span class="term" role="button" tabindex="0" aria-label="나선형 학습 설명 보기" aria-expanded="false" aria-describedby="spiral-tip-hero">나선형<span class="tip" id="spiral-tip-hero" role="tooltip"><b><img class="tip-mark" src="/spiral-mark.svg" alt="">나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span>으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
     <div class="cta">
       <a class="btn btn-primary" href="#buddies">다섯 버디 만나기</a>
       <a class="btn btn-ghost" href="#concept">학습법 보기</a>
@@ -838,7 +860,7 @@ footer a:hover{color:var(--indigo)}
     <div class="reveal center">
       <div class="kicker">The Five Buddies</div>
       <h2 class="title">다섯 빛깔, 다섯 버디</h2>
-      <p class="lede">각 버디는 하나의 연구소를 <span class="term" role="button" tabindex="0" aria-expanded="false">나선형 학습<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span> 세션으로 바꾸는 데스크톱 앱입니다.<br>버디를 선택해 각 학습 영역을 살펴보세요.</p>
+      <p class="lede">각 버디는 하나의 연구소를 <span class="term" role="button" tabindex="0" aria-label="나선형 학습 설명 보기" aria-expanded="false" aria-describedby="spiral-tip-buddies">나선형 학습<span class="tip" id="spiral-tip-buddies" role="tooltip"><b><img class="tip-mark" src="/spiral-mark.svg" alt="">나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span> 세션으로 바꾸는 데스크톱 앱입니다.<br>버디를 선택해 각 학습 영역을 살펴보세요.</p>
     </div>
   </div>
 
@@ -849,7 +871,7 @@ footer a:hover{color:var(--indigo)}
         <button type="button" class="bdot" id="buddy-tab-1" role="tab" aria-selected="false" aria-controls="buddy-panel-1" data-i="1" style="--dot:#22c55e" tabindex="-1"><i aria-hidden="true"></i><span><b>Green</b><small>판단 · 실천지</small></span></button>
         <button type="button" class="bdot" id="buddy-tab-2" role="tab" aria-selected="false" aria-controls="buddy-panel-2" data-i="2" style="--dot:#3b82f6" tabindex="-1"><i aria-hidden="true"></i><span><b>Blue</b><small>개발 · 시스템</small></span></button>
         <button type="button" class="bdot" id="buddy-tab-3" role="tab" aria-selected="false" aria-controls="buddy-panel-3" data-i="3" style="--dot:#252c3f" tabindex="-1"><i aria-hidden="true"></i><span><b>Black</b><small>물리 · 우주</small></span></button>
-        <button type="button" class="bdot" id="buddy-tab-4" role="tab" aria-selected="false" aria-controls="buddy-panel-4" data-i="4" style="--dot:#8b93a8" tabindex="-1"><i aria-hidden="true"></i><span><b>White</b><small>뇌 · 마음</small></span></button>
+        <button type="button" class="bdot" id="buddy-tab-4" role="tab" aria-selected="false" aria-controls="buddy-panel-4" data-i="4" style="--dot:#7a849a" tabindex="-1"><i aria-hidden="true"></i><span><b>White</b><small>뇌 · 마음</small></span></button>
       </div>
       <div class="binfo">
         <article class="bpanel is-active" id="buddy-panel-0" role="tabpanel" aria-labelledby="buddy-tab-0" data-i="0" style="--ac:#bd3937">
@@ -925,16 +947,16 @@ footer a:hover{color:var(--indigo)}
   <div class="wrap">
     <div class="reveal center">
       <div class="kicker">Knowledge Combination</div>
-      <h2 class="title">진짜 힘은 그 사이에서 나온다</h2>
-      <p class="lede">각 버디는 한 영역을 깊게 다룹니다. 하지만 다섯 빛깔이 한 사람 안에서 만날 때,<br>비로소 문제를 푸는 명석함이 됩니다.</p>
+      <h2 class="title">다섯 분야를 연결하면 더 잘 풀립니다</h2>
+      <p class="lede">각 버디에게 한 분야를 깊게 배우고, 배운 내용을 서로 연결합니다.<br>그러면 복잡한 문제도 여러 관점에서 보고 더 나은 답을 찾을 수 있습니다.</p>
     </div>
     <div class="syn">
       <div class="syn-list">
-        <div class="syn-item reveal" data-k="black" style="--c:var(--black)"><span class="dot"></span><p><b>물리를 알면 AI가 보인다</b>AI 학습은 결국 '가장 낮은 에너지를 찾아가는' 물리 과정과 같은 구조입니다.<br>실제로 확산 모델은 열역학에서 나왔습니다.</p></div>
-        <div class="syn-item reveal" data-k="white" style="--c:var(--white)"><span class="dot"></span><p><b>마음을 알면 제품이 보인다</b>사람의 주의력에는 한계가 있고, 기억은 쉽게 왜곡됩니다.<br>이걸 아는 사람이 정말 쓰기 좋은 제품을 만듭니다.</p></div>
-        <div class="syn-item reveal" data-k="green" style="--c:var(--green)"><span class="dot"></span><p><b>세상을 알면 방향이 보인다</b>사람은 인센티브로 움직이고, 성과는 복리로 쌓입니다.<br>무엇을 만들고 언제 움직일지는 판단력이 결정합니다.</p></div>
-        <div class="syn-item reveal" data-k="blue" style="--c:var(--blue)"><span class="dot"></span><p><b>구현할 수 있어야 진짜 아는 것이다</b>아이디어도 이론도, 실제로 돌아가는 코드로 만들어 봐야 비로소 검증됩니다.</p></div>
-        <div class="syn-item reveal" data-k="red" style="--c:var(--red)"><span class="dot"></span><p><b>수학은 다섯 영역의 공용어다</b>확률·선형대수·최적화를 한번 익히면,<br>물리에서도 AI에서도 돈에서도 같은 구조를 다시 만납니다.</p></div>
+        <button type="button" class="syn-item is-active" data-k="black" style="--c:#252c3f" aria-pressed="true"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>물리는 AI가 배우는 방식을 보여줍니다</b>AI는 틀림이 줄어드는 방향을 찾아 조금씩 답을 고칩니다. 물체가 더 안정된 상태를 찾아 움직이는 과정과 닮았습니다.</span></button>
+        <button type="button" class="syn-item" data-k="white" style="--c:#65718f" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>마음을 알면 쓰기 쉬운 제품을 만들 수 있습니다</b>사람은 한 번에 많은 것에 집중하기 어렵고, 기억도 자주 틀립니다. 이 한계를 배려하면 더 쉽고 편한 제품이 됩니다.</span></button>
+        <button type="button" class="syn-item" data-k="green" style="--c:var(--green)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>세상을 알면 선택이 쉬워집니다</b>사람은 보상에 반응하고, 작은 성과는 시간이 지나며 커집니다. 이 흐름을 읽으면 무엇을 만들고 언제 시작할지 더 잘 정할 수 있습니다.</span></button>
+        <button type="button" class="syn-item" data-k="blue" style="--c:var(--blue)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>직접 만들어 봐야 제대로 알게 됩니다</b>좋은 아이디어도 실제로 작동하는지는 만들어 보기 전엔 모릅니다. 코드로 시험하고 고치면서 지식이 내 것이 됩니다.</span></button>
+        <button type="button" class="syn-item" data-k="red" style="--c:var(--red)" aria-pressed="false"><span class="dot" aria-hidden="true"></span><span class="syn-copy"><b>수학은 다섯 분야를 연결합니다</b>확률·선형대수·최적화는 물리, AI, 금융에서 반복됩니다. 수학을 알면 서로 다른 문제 안의 같은 구조가 보입니다.</span></button>
       </div>
       <div class="constellation reveal">
         <svg viewBox="0 0 400 400" aria-hidden="true">
@@ -949,13 +971,11 @@ footer a:hover{color:var(--indigo)}
             <circle class="cnode" data-k="red" cx="200" cy="58"  r="11" fill="#ef4444" style="color:#ef4444"/>
             <circle class="cnode" data-k="green" cx="335" cy="150" r="11" fill="#22c55e" style="color:#22c55e"/>
             <circle class="cnode" data-k="blue" cx="285" cy="320" r="11" fill="#3b82f6" style="color:#3b82f6"/>
-            <circle class="cnode" data-k="black" cx="115" cy="320" r="11" fill="#11131f" stroke="#aeb6cf" stroke-width="1.5" style="color:#aeb6cf"/>
-            <circle class="cnode" data-k="white" cx="65"  cy="150" r="11" fill="#f7f9ff" style="color:#f7f9ff"/>
+            <circle class="cnode" data-k="black" cx="115" cy="320" r="11" fill="#11131f" stroke="#65718f" stroke-width="1.5" style="color:#252c3f"/>
+            <circle class="cnode" data-k="white" cx="65"  cy="150" r="11" fill="#fff" stroke="#65718f" stroke-width="2.5" style="color:#65718f"/>
           </g>
           <g class="corbit">
             <circle class="youring" cx="200" cy="200" r="44" fill="none" stroke="rgba(168,85,247,.38)" stroke-width="1" stroke-dasharray="3 8"/>
-            <circle class="orbdot" cx="200" cy="144" r="3" fill="#38bdf8"/>
-            <circle class="orbdot2" cx="200" cy="266" r="2.4" fill="#ec4899"/>
           </g>
           <g class="ccenter">
             <circle cx="200" cy="200" r="30" fill="url(#cg)"/>
@@ -1088,18 +1108,30 @@ if(bstage){
 // ---------- constellation ↔ syn-item link ----------
 const cons=document.querySelector('.constellation');
 if(cons){
-  const COLS={red:'#ef4444',green:'#22c55e',blue:'#3b82f6',black:'#aeb6cf',white:'#f7f9ff'};
-  document.querySelectorAll('.syn-item').forEach(it=>{
+  const COLS={red:'#ef4444',green:'#22c55e',blue:'#3b82f6',black:'#252c3f',white:'#65718f'};
+  const synList=document.querySelector('.syn-list');
+  const synItems=[...document.querySelectorAll('.syn-item')];
+  const activateConnection=it=>{
     const k=it.dataset.k;if(!k)return;
-    it.addEventListener('pointerenter',()=>{
-      cons.dataset.hl=k;
-      cons.querySelectorAll(`[data-k="${k}"]`).forEach(e=>{e.classList.add('hl');if(e.tagName==='line')e.style.stroke=COLS[k];});
+    synList.classList.add('has-active');
+    synItems.forEach(item=>{
+      const active=item===it;
+      item.classList.toggle('is-active',active);
+      item.setAttribute('aria-pressed',String(active));
     });
-    it.addEventListener('pointerleave',()=>{
-      delete cons.dataset.hl;
-      cons.querySelectorAll('.hl').forEach(e=>{e.classList.remove('hl');e.style.stroke='';});
+    cons.dataset.hl=k;
+    cons.querySelectorAll('.hl').forEach(e=>{e.classList.remove('hl');e.style.stroke='';e.style.color='';});
+    cons.querySelectorAll(`[data-k="${k}"]`).forEach(e=>{
+      e.classList.add('hl');
+      if(e.tagName==='line'){e.style.stroke=COLS[k];e.style.color=COLS[k];}
     });
+  };
+  synItems.forEach(it=>{
+    it.addEventListener('pointerenter',()=>activateConnection(it));
+    it.addEventListener('focus',()=>activateConnection(it));
+    it.addEventListener('click',()=>activateConnection(it));
   });
+  activateConnection(synItems[0]);
 }
 
 // ---------- 용어 툴팁: 터치 토글 ----------
@@ -1117,6 +1149,7 @@ document.querySelectorAll('.term').forEach(t=>{
     if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
     if(e.key==='Escape'){t.classList.remove('open');t.setAttribute('aria-expanded','false');}
   });
+  t.addEventListener('blur',()=>{t.classList.remove('open');t.setAttribute('aria-expanded','false');});
 });
 document.addEventListener('click',()=>document.querySelectorAll('.term.open').forEach(t=>{
   t.classList.remove('open');t.setAttribute('aria-expanded','false');
