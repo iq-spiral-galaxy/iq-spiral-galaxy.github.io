@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="Spiral Galaxy">
+  <style>
+    .spiral { stroke: #202633; }
+  </style>
+  <path
+    class="spiral"
+    d="M50 17C42 8 23 9 14 22C4 37 14 53 31 53C47 53 56 42 54 30C52 19 41 15 31 18C21 21 18 32 24 39C29 45 38 43 42 37C45 32 42 26 37 25C33 24 29 27 29 31"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f6fb">
 <title>Spiral Galaxy — 나선형 학습 은하</title>
 <meta name="description" content="AI 버디와 함께하는 나선형 학습. 다섯 빛깔의 버디로 핵심 지식을 빠르고 넓게 익히고, 결합해 문제를 푸는 사람으로 성장합니다.">
 <meta property="og:title" content="Spiral Galaxy">
@@ -12,17 +13,14 @@
 <meta property="og:image" content="https://iq-spiral-galaxy.github.io/og-v3.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="다섯 버디 행성이 지식의 은하를 이루는 Spiral Galaxy">
+<meta property="og:image:alt" content="다섯 AI 버디와 함께 배우는 Spiral Galaxy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://iq-spiral-galaxy.github.io/og-v3.png">
-<meta name="twitter:image:alt" content="다섯 버디 행성이 지식의 은하를 이루는 Spiral Galaxy">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23ffffff'/%3E%3Cpath d='M16 16C19 12 25.5 12 27 17.5 28.4 23 24 29.5 16.5 28.2' stroke='%23a855f7' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3Cpath d='M16 16C13 20 6.5 20 5 14.5 3.6 9 8 2.5 15.5 3.8' stroke='%23ec4899' stroke-width='2.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="twitter:image:alt" content="다섯 AI 버디와 함께 배우는 Spiral Galaxy">
+<link rel="icon" href="/spiral-mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=IBM+Plex+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=DM+Serif+Display&amp;family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
@@ -487,6 +485,286 @@ html:not(.js) .showcase{height:auto}
 html:not(.js) .bstage{position:relative;height:auto;min-height:0;display:block;overflow:visible;padding:72px 24px}
 html:not(.js) .planetwrap,html:not(.js) .bnav,html:not(.js) .bhint{display:none}
 html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}
+
+/* ---------- minimal editorial refresh ---------- */
+:root{
+  --bg:#f4f6fb;--bg2:#e9edf7;--panel:rgba(255,255,255,.78);
+  --ink:#1a2440;--muted:#5f6b86;--faint:#65708a;
+  --line:rgba(26,36,64,.13);
+  --violet:#6758d9;--indigo:#4058b8;--cyan:#188c9c;
+}
+body{
+  background:#f4f6fb;color:var(--ink);
+  font-family:'IBM Plex Sans KR',sans-serif;
+}
+body::before{
+  background:
+    radial-gradient(circle at 88% 4%,rgba(103,88,217,.12),transparent 27%),
+    radial-gradient(circle at 10% 44%,rgba(24,140,156,.08),transparent 24%),
+    linear-gradient(180deg,#f7f8fc 0%,#f2f4fa 48%,#eef1f8 100%);
+}
+body::after,#progress,#dots,.scroll-hint{display:none}
+::selection{background:rgba(103,88,217,.18);color:var(--ink)}
+:focus-visible{outline-color:var(--indigo)}
+.wrap{max-width:1120px}
+
+nav{
+  padding:18px clamp(20px,4vw,54px);
+  color:var(--ink);
+}
+nav.scrolled{
+  background:rgba(247,248,252,.86);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 10px 32px rgba(31,42,74,.05);
+}
+.brand{gap:13px}
+.nav-mark{position:relative;width:34px;height:34px;display:grid;place-items:center}
+.brand .mark{width:34px;height:34px;animation:none}
+.nav-mark::after{
+  content:'';position:absolute;width:5px;height:5px;left:calc(50% - 2.5px);top:calc(50% - 2.5px);border-radius:50%;
+  background:var(--violet);box-shadow:0 0 0 4px rgba(103,88,217,.1);
+  animation:mark-orbit 7s linear infinite;
+}
+@keyframes mark-orbit{
+  from{transform:rotate(0) translateX(20px)}
+  to{transform:rotate(360deg) translateX(20px)}
+}
+.brand b,.fbrand b{
+  font-family:'DM Serif Display',Georgia,serif;
+  font-size:22px;font-weight:400;letter-spacing:-.02em;
+}
+.navlinks{color:var(--muted);font-size:13px}
+.navlinks a:hover{color:var(--indigo)}
+.nav-gh{
+  border-color:rgba(26,36,64,.18);background:rgba(255,255,255,.64);
+  color:var(--ink)!important;padding:8px 16px;
+}
+.nav-gh:hover{border-color:var(--indigo);background:#fff}
+
+.hero{
+  min-height:100svh;justify-content:flex-start;text-align:left;
+  border-bottom:1px solid var(--line);
+}
+.hero-in{
+  width:min(1120px,100%);margin:0 auto;padding:148px 24px 100px;
+}
+.hero-brand{
+  display:flex;align-items:center;gap:22px;margin-bottom:66px;
+  font-family:'DM Serif Display',Georgia,serif;
+  font-size:clamp(42px,7vw,76px);line-height:1;letter-spacing:-.045em;
+}
+.hero-mark{
+  position:relative;width:clamp(66px,10vw,96px);aspect-ratio:1;display:grid;place-items:center;flex:none;
+}
+.hero-mark img{
+  width:100%;height:100%;display:block;
+  animation:hero-spiral 18s linear infinite;
+}
+.hero-mark::after{
+  content:'';position:absolute;left:calc(50% - 4.5px);top:calc(50% - 4.5px);width:9px;height:9px;border-radius:50%;
+  background:var(--violet);box-shadow:0 0 0 7px rgba(103,88,217,.09);
+  animation:hero-orbit 9s linear infinite reverse;
+}
+@keyframes hero-spiral{to{transform:rotate(360deg)}}
+@keyframes hero-orbit{
+  from{transform:rotate(0) translateX(clamp(44px,6vw,59px))}
+  to{transform:rotate(360deg) translateX(clamp(44px,6vw,59px))}
+}
+.eyebrow{
+  margin:0 0 20px;color:var(--indigo);font-size:12px;font-weight:700;
+  letter-spacing:.22em;
+}
+.hero h1{
+  max-width:850px;font-family:'IBM Plex Sans KR',sans-serif;font-weight:700;
+  font-size:clamp(38px,6.3vw,70px);line-height:1.12;letter-spacing:-.055em;
+  color:var(--ink);background:none;-webkit-text-fill-color:currentColor;
+}
+.hero h1 .glow{
+  color:var(--violet);background:none;-webkit-text-fill-color:currentColor;
+}
+.hero p.lead{
+  max-width:720px;margin:28px 0 0;color:var(--muted);
+  font-size:clamp(15px,1.7vw,18px);line-height:1.85;font-weight:400;
+}
+.hero p.lead b{color:var(--ink)}
+.cta{justify-content:flex-start;margin-top:36px}
+.btn{min-height:46px;padding:11px 23px;border-radius:12px;font-weight:600}
+.btn-primary{
+  background:var(--ink);color:#fff;box-shadow:0 12px 30px rgba(26,36,64,.16);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(26,36,64,.22)}
+.btn-ghost{border-color:rgba(26,36,64,.18);background:rgba(255,255,255,.54);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--indigo);background:#fff}
+
+section.block{padding:104px 0;border-bottom:1px solid var(--line)}
+section.block::before{display:none}
+.kicker{color:var(--indigo);font-size:12px;letter-spacing:.2em}
+h2.title{
+  color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;
+  font-size:clamp(30px,4vw,46px);font-weight:700;letter-spacing:-.045em;
+}
+.lede{color:var(--muted);line-height:1.85}
+.js .reveal{
+  transform:translateY(14px);filter:none;
+  transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.concept-grid{gap:28px}
+.cstep,.lstep,.s3,.depth{
+  border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;
+  box-shadow:none;backdrop-filter:none;
+}
+.cstep{padding:28px 2px}
+.cstep .n,.lstep .ln{color:var(--indigo)}
+.cstep p,.lstep p,.s3 p,.depth span{color:var(--muted)}
+.pull{color:var(--ink)}
+.pull em{color:var(--violet);background:none;-webkit-text-fill-color:currentColor}
+.loop{gap:26px}
+.loop::before,.loop::after{display:none}
+.lstep{padding:28px 2px}
+.lstep .ico{border-radius:50%;background:rgba(255,255,255,.72)}
+.depths{gap:10px}
+.depth{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:rgba(255,255,255,.58)}
+.depth b{color:var(--indigo)}
+
+.term{border-bottom-color:rgba(64,88,184,.4)}
+.term .tip{
+  background:#fff;border-color:var(--line);color:var(--muted);
+  box-shadow:0 20px 55px rgba(31,42,74,.16);
+}
+.term .tip b{color:var(--ink)}
+.chip{
+  color:var(--muted);border-color:var(--line);background:rgba(247,248,252,.8);
+}
+
+.showcase{height:auto;margin-top:46px}
+.bstage{
+  position:relative;top:auto;height:auto;min-height:520px;overflow:visible;display:grid;
+  grid-template-columns:250px minmax(0,1fr);grid-template-areas:'nav info';
+  align-items:stretch;gap:24px;max-width:1120px;padding:0 24px;
+  --ac:#bd3937;
+}
+.bstage::before,.planetwrap,.barrow,.bhint,.btrack-fill{display:none!important}
+body.buddy-focus #dots{opacity:1;pointer-events:auto}
+.bnav{
+  grid-area:nav;position:static;transform:none;display:flex;flex-direction:column;gap:7px;
+  padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;
+}
+.bdot{
+  width:100%;height:auto;min-height:70px;display:grid;grid-template-columns:13px 1fr;
+  align-items:center;gap:14px;padding:12px 15px;border:1px solid transparent;border-radius:16px;
+  background:transparent!important;color:var(--muted);text-align:left;transition:.22s;
+}
+.bdot::before{display:none}
+.bdot i{width:10px;height:10px;border-radius:50%;background:var(--dot);box-shadow:0 0 0 5px color-mix(in srgb,var(--dot) 12%,transparent)}
+.bdot span,.bdot b,.bdot small{display:block}
+.bdot b{color:var(--ink);font-size:15px;font-weight:700}
+.bdot small{margin-top:2px;color:var(--faint);font-size:11px}
+.bdot:hover{border-color:var(--line);background:rgba(255,255,255,.48)!important;transform:translateX(3px)}
+.bdot.on{
+  border-color:var(--line);background:#fff!important;
+  box-shadow:0 12px 34px rgba(31,42,74,.08);transform:none;
+}
+.binfo{
+  grid-area:info;position:relative;display:grid;min-width:0;min-height:520px;
+  padding:clamp(34px,6vw,68px);border:1px solid var(--line);border-radius:30px;
+  background:rgba(255,255,255,.82);box-shadow:0 28px 80px rgba(31,42,74,.09);
+}
+.js .binfo{display:grid}
+.bpanel{max-width:620px}
+.js .bpanel{
+  grid-area:1/1;align-self:center;max-width:620px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:translateY(12px);transition:opacity .32s ease,transform .32s ease,visibility 0s linear .32s;
+}
+.js .bpanel.is-active{
+  opacity:1;visibility:visible;pointer-events:auto;transform:none;
+  transition-delay:0s;
+}
+html:not(.js) .binfo{display:block}
+html:not(.js) .bpanel{
+  margin:0;padding:30px 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;
+}
+html:not(.js) .bpanel:first-child{border-top:0}
+.bi-name{
+  color:var(--ink);font-family:'DM Serif Display',Georgia,serif;
+  font-size:clamp(34px,5vw,56px);font-weight:400;letter-spacing:-.035em;
+}
+.bi-sub{color:var(--ac);font-weight:600}
+.bi-ident{color:var(--ink);font-size:clamp(17px,2vw,21px)}
+.bi-chips .chip{background:#f6f7fb}
+.bi-meta{border-top-color:var(--line)}
+.bi-motto{color:var(--ac)}
+.bi-scale{color:var(--faint)}
+.bi-app,.bi-lab{border-radius:10px}
+.bi-app{border-color:var(--ink);background:var(--ink);color:#fff}
+.bi-app:hover{background:#303b59;transform:translateY(-2px)}
+.bi-lab{border-color:var(--line);background:#fff;color:var(--muted)}
+.bi-lab:hover{border-color:var(--indigo);color:var(--ink)}
+
+.syn-list{gap:20px}
+.syn-item p{color:var(--muted)}
+.syn-item p b{color:var(--ink)}
+.cline{stroke:rgba(64,88,120,.25)}
+.constellation,.constellation.in{transform:none;filter:saturate(.78)}
+.constellation svg{animation:none!important}
+.constellation.in .cnode{animation:nodein .55s cubic-bezier(.3,1.5,.4,1) backwards}
+.constellation[data-hl] .ccenter>circle:nth-of-type(1),.youring,.orbdot,.orbdot2{animation:none}
+.cstep::after,.s3::after,.lstep::after{display:none}
+
+.start>.wrap{
+  padding:70px 42px;border:1px solid rgba(103,88,217,.16);border-radius:30px;
+  background:#eceafb;box-shadow:none;backdrop-filter:none;
+}
+.s3{padding:26px 12px}
+.s3 .num{color:var(--indigo)}
+.codepill{color:var(--ink);background:rgba(255,255,255,.72);border-color:var(--line)}
+.codepill .c{color:var(--indigo)}
+footer{margin-top:0;border-top:0;background:#e9edf6}
+footer h5{color:var(--faint)}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--indigo)}
+.fbrand p,.fcopy,.fcap{color:var(--faint)}
+.fbrand b{display:flex;align-items:center;gap:8px}
+.fmark{margin:0;filter:none}
+.iq{color:var(--indigo);background:none;-webkit-text-fill-color:currentColor}
+
+@media(max-width:760px){
+  .navlinks{gap:10px}
+  .hero-in{padding-top:126px}
+  .hero-brand{gap:15px;margin-bottom:46px}
+  .bstage{display:block;min-height:0;padding:0 15px}
+  .bnav{
+    margin-bottom:14px;flex-direction:row;overflow-x:auto;scrollbar-width:none;
+    scroll-snap-type:x proximity;padding:2px 0 10px;
+  }
+  .bnav::-webkit-scrollbar{display:none}
+  .bdot{min-width:142px;min-height:64px;scroll-snap-align:start}
+  .bdot:hover{transform:none}
+  .binfo{min-height:520px;padding:34px 25px;border-radius:22px}
+  .bi-links{flex-direction:column}
+  section.block{padding:82px 0}
+}
+@media(max-width:420px){
+  nav{padding:15px 17px}
+  .brand b{font-size:19px}
+  .nav-mark,.brand .mark{width:30px;height:30px}
+  .hero-in{padding-left:20px;padding-right:20px}
+  .hero-brand{gap:clamp(9px,3vw,14px);font-size:clamp(31px,9.2vw,38px)}
+  .hero-mark{width:clamp(48px,14vw,60px)}
+  .hero h1{font-size:38px}
+  .binfo{min-height:560px}
+}
+@media(max-height:560px){
+  .js .bpanel{
+    margin:0;padding:0;border:0;border-radius:0;background:transparent;
+    opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(12px)!important
+  }
+  .js .bpanel.is-active{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
+}
+@media (prefers-reduced-motion: reduce){
+  .nav-mark::after,.hero-mark img,.hero-mark::after{animation:none!important}
+  .bdot,.bpanel,.js .bpanel{transition:none!important}
+}
 .sig em{font-style:italic;color:var(--muted)}
 </style>
 </head>
@@ -495,19 +773,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
 <a class="skip-link" href="#main">본문으로 바로가기</a>
 <nav id="nav">
   <a class="brand" href="#top">
-    <svg class="mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="gg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#a855f7" stop-opacity=".42"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient>
-        <linearGradient id="ga" x1="4" y1="5" x2="28" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ec4899"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
-        <radialGradient id="gc" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e9ddff"/><stop offset="1" stop-color="#a855f7"/></radialGradient>
-      </defs>
-      <circle cx="16" cy="16" r="13" fill="url(#gg)"/>
-      <path d="M16 16C19 12 25.5 12 27 17.5 28.4 23 24 29.5 16.5 28.2" stroke="url(#ga)" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M16 16C13 20 6.5 20 5 14.5 3.6 9 8 2.5 15.5 3.8" stroke="url(#ga)" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="16" cy="16" r="3.5" fill="url(#gc)"/>
-      <circle cx="27" cy="9.5" r="1" fill="#fff"/>
-      <circle cx="5.5" cy="22.5" r=".9" fill="#cdeaff"/>
-    </svg>
+    <span class="nav-mark" aria-hidden="true"><img class="mark" src="/spiral-mark.svg" alt=""></span>
     <b>Spiral Galaxy</b>
   </a>
   <div class="navlinks">
@@ -519,31 +785,22 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
   </div>
 </nav>
 
-<div id="progress"></div>
-<div id="dots" role="navigation" aria-label="섹션 이동">
-  <a href="#top" data-label="홈" aria-label="홈"></a>
-  <a href="#concept" data-label="학습법" aria-label="학습법"></a>
-  <a href="#buddies" data-label="다섯 버디" aria-label="다섯 버디"></a>
-  <a href="#how" data-label="나선 사이클" aria-label="나선 사이클"></a>
-  <a href="#combine" data-label="지식 결합" aria-label="지식 결합"></a>
-  <a href="#start" data-label="시작하기" aria-label="시작하기"></a>
-</div>
-
 <!-- ================= HERO ================= -->
 <main id="main" tabindex="-1">
 <header class="hero" id="top">
-  <canvas id="galaxy" aria-hidden="true"></canvas>
-  <div class="hero-veil"></div>
   <div class="hero-in">
+    <div class="hero-brand" aria-label="Spiral Galaxy">
+      <span class="hero-mark" aria-hidden="true"><img src="/spiral-mark.svg" alt=""></span>
+      <span>Spiral Galaxy</span>
+    </div>
     <div class="eyebrow">AI × 나선형 학습 은하</div>
     <h1>흩어진 지식이 모여<br><span class="glow">하나의 은하</span>가 된다</h1>
-    <p class="lead">AI 버디와 <span class="term" tabindex="0">나선형<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span>으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
+    <p class="lead">AI 버디와 <span class="term" role="button" tabindex="0" aria-expanded="false">나선형<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span>으로 학습하며, 핵심을 <b>빠르고 넓게</b> 익히고<br>레이어를 가로질러 <b>결합</b>해 문제를 푸는 사람으로 성장합니다.</p>
     <div class="cta">
       <a class="btn btn-primary" href="#buddies">다섯 버디 만나기</a>
       <a class="btn btn-ghost" href="#concept">학습법 보기</a>
     </div>
   </div>
-  <div class="scroll-hint">SCROLL</div>
 </header>
 
 <!-- ================= CONCEPT ================= -->
@@ -575,27 +832,27 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
   </div>
 </section>
 
-<!-- ================= PLANETS · SHOWCASE ================= -->
+<!-- ================= BUDDY SELECTOR ================= -->
 <section class="block" id="buddies">
   <div class="wrap">
     <div class="reveal center">
       <div class="kicker">The Five Buddies</div>
-      <h2 class="title">다섯 빛깔, 다섯 행성</h2>
-      <p class="lede">각 버디는 하나의 연구소를 <span class="term" tabindex="0">나선형 학습<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span> 세션으로 바꾸는 데스크톱 앱입니다.<br>스크롤을 내리면 다섯 행성이 차례로 나타납니다.</p>
+      <h2 class="title">다섯 빛깔, 다섯 버디</h2>
+      <p class="lede">각 버디는 하나의 연구소를 <span class="term" role="button" tabindex="0" aria-expanded="false">나선형 학습<span class="tip"><b>🌀 나선형 학습이란?</b>한 번에 전부 이해하려 하지 않습니다.<br>같은 개념으로 여러 번 돌아오며,<br>그때마다 한 단계 더 깊이 파고듭니다.<br><br>처음엔 직관, 다음엔 원리, 그다음엔 응용 —<br>같은 자리를 도는 듯해도<br>매번 한 층 위에서 돌아서 '나선'입니다.</span></span> 세션으로 바꾸는 데스크톱 앱입니다.<br>버디를 선택해 각 학습 영역을 살펴보세요.</p>
     </div>
   </div>
 
   <div class="showcase" id="showcase">
-    <div class="bstage" id="bstage" role="region" aria-roledescription="carousel" aria-label="다섯 버디 행성 탐색" tabindex="0">
-      <div class="planetwrap" aria-hidden="true">
-        <div class="planet o0" data-t="rgiant"><i class="pl1"></i><i class="pl2"></i></div>
-        <div class="planet o1" data-t="aurora"><i class="pl1"></i><i class="pl2"></i></div>
-        <div class="planet o2" data-t="ice"><i class="pl1"></i><i class="pl2"></i></div>
-        <div class="planet o2" data-t="bhole"><i class="pl1"></i><i class="pl2"></i></div>
-        <div class="planet o2" data-t="wdwarf"><i class="pl1"></i><i class="pl2"></i></div>
+    <div class="bstage" id="bstage" role="region" aria-label="다섯 버디 탐색">
+      <div class="bnav" role="tablist" aria-label="버디 선택" aria-orientation="vertical">
+        <button type="button" class="bdot on" id="buddy-tab-0" role="tab" aria-selected="true" aria-controls="buddy-panel-0" data-i="0" style="--dot:#ef4444"><i aria-hidden="true"></i><span><b>Red</b><small>수학 · AI</small></span></button>
+        <button type="button" class="bdot" id="buddy-tab-1" role="tab" aria-selected="false" aria-controls="buddy-panel-1" data-i="1" style="--dot:#22c55e" tabindex="-1"><i aria-hidden="true"></i><span><b>Green</b><small>판단 · 실천지</small></span></button>
+        <button type="button" class="bdot" id="buddy-tab-2" role="tab" aria-selected="false" aria-controls="buddy-panel-2" data-i="2" style="--dot:#3b82f6" tabindex="-1"><i aria-hidden="true"></i><span><b>Blue</b><small>개발 · 시스템</small></span></button>
+        <button type="button" class="bdot" id="buddy-tab-3" role="tab" aria-selected="false" aria-controls="buddy-panel-3" data-i="3" style="--dot:#252c3f" tabindex="-1"><i aria-hidden="true"></i><span><b>Black</b><small>물리 · 우주</small></span></button>
+        <button type="button" class="bdot" id="buddy-tab-4" role="tab" aria-selected="false" aria-controls="buddy-panel-4" data-i="4" style="--dot:#8b93a8" tabindex="-1"><i aria-hidden="true"></i><span><b>White</b><small>뇌 · 마음</small></span></button>
       </div>
       <div class="binfo">
-        <article class="bpanel is-active" data-i="0" style="--bio:1;--biy:0px;--bis:1;--ac:#ff6b5e">
+        <article class="bpanel is-active" id="buddy-panel-0" role="tabpanel" aria-labelledby="buddy-tab-0" data-i="0" style="--ac:#bd3937">
           <h3 class="bi-name">Spiral Buddy Red</h3>
           <div class="bi-sub">수학과 AI의 본질</div>
           <p class="bi-ident">AI를 이루는 수학적 구조를 100% 이해한다.</p>
@@ -603,7 +860,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
           <div class="bi-meta"><span class="bi-motto">Prove, don't memorize</span><span class="bi-scale">7 layers · 48 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-red/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-ai-lab.github.io" target="_blank" rel="noopener">IQ AI Lab</a></div>
         </article>
-        <article class="bpanel" data-i="1" style="--bio:0;--biy:22px;--ac:#34d97b">
+        <article class="bpanel" id="buddy-panel-1" role="tabpanel" aria-labelledby="buddy-tab-1" aria-hidden="true" inert data-i="1" style="--ac:#177246">
           <h3 class="bi-name">Spiral Buddy Green</h3>
           <div class="bi-sub">세상을 읽는 판단력</div>
           <p class="bi-ident">돈·사람·세상이 움직이는 원리를 배워 판단력을 기른다.</p>
@@ -611,7 +868,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
           <div class="bi-meta"><span class="bi-motto">Distill, don't collect</span><span class="bi-scale">6 layers · 31 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-green/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-phronesis-lab.github.io" target="_blank" rel="noopener">IQ Phronesis Lab</a></div>
         </article>
-        <article class="bpanel" data-i="2" style="--bio:0;--biy:44px;--ac:#60a5fa">
+        <article class="bpanel" id="buddy-panel-2" role="tabpanel" aria-labelledby="buddy-tab-2" aria-hidden="true" inert data-i="2" style="--ac:#356fd1">
           <h3 class="bi-name">Spiral Buddy Blue</h3>
           <div class="bi-sub">만드는 힘, 풀스택</div>
           <p class="bi-ident">기술을 쓰는 법을 넘어, 내부 동작 원리까지 이해한다.</p>
@@ -619,7 +876,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
           <div class="bi-meta"><span class="bi-motto">Beyond the docs</span><span class="bi-scale">9 domains · 86 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-blue/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-dev-lab.github.io" target="_blank" rel="noopener">IQ Dev Lab</a></div>
         </article>
-        <article class="bpanel" data-i="3" style="--bio:0;--biy:66px;--ac:#aeb6cf">
+        <article class="bpanel" id="buddy-panel-3" role="tabpanel" aria-labelledby="buddy-tab-3" aria-hidden="true" inert data-i="3" style="--ac:#252c3f">
           <h3 class="bi-name">Spiral Buddy Black</h3>
           <div class="bi-sub">우주를 바닥부터</div>
           <p class="bi-ident">가장 근본적인 법칙에서 출발해 우주를 이해한다.</p>
@@ -627,7 +884,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
           <div class="bi-meta"><span class="bi-motto">Derive, don't accept</span><span class="bi-scale">7 layers · 36 repos</span></div>
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-black/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-physis-lab.github.io" target="_blank" rel="noopener">IQ Physis Lab</a></div>
         </article>
-        <article class="bpanel" data-i="4" style="--bio:0;--biy:88px;--ac:#eef2ff">
+        <article class="bpanel" id="buddy-panel-4" role="tabpanel" aria-labelledby="buddy-tab-4" aria-hidden="true" inert data-i="4" style="--ac:#59647c">
           <h3 class="bi-name">Spiral Buddy White</h3>
           <div class="bi-sub">마음의 안쪽</div>
           <p class="bi-ident">뉴런에서 의식까지, 마음이 어떻게 생겨나는지 이해한다.</p>
@@ -636,19 +893,6 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
           <div class="bi-links"><a class="bi-app" href="https://github.com/iq-spiral-galaxy/spiral-buddy-white/releases" target="_blank" rel="noopener">앱 다운로드 ↗</a><a class="bi-lab" href="https://iq-psyche-lab.github.io" target="_blank" rel="noopener">IQ Psyche Lab</a></div>
         </article>
       </div>
-      <div class="bnav" role="group" aria-label="버디 행성 바로 가기">
-        <button type="button" class="barrow" data-dir="-1" aria-label="이전 버디" disabled>←</button>
-        <div class="btrack">
-          <span class="btrack-fill" aria-hidden="true"></span>
-          <button type="button" class="bdot on" aria-label="Spiral Buddy Red" aria-current="step" data-i="0" style="--dot:#ef4444"></button>
-          <button type="button" class="bdot" aria-label="Spiral Buddy Green" data-i="1" style="--dot:#22c55e"></button>
-          <button type="button" class="bdot" aria-label="Spiral Buddy Blue" data-i="2" style="--dot:#3b82f6"></button>
-          <button type="button" class="bdot" aria-label="Spiral Buddy Black" data-i="3" style="--dot:#aeb6cf"></button>
-          <button type="button" class="bdot" aria-label="Spiral Buddy White" data-i="4" style="--dot:#f7f9ff"></button>
-        </div>
-        <button type="button" class="barrow" data-dir="1" aria-label="다음 버디">→</button>
-      </div>
-      <div class="bhint"><span>SCROLL TO NEXT ORBIT</span><i aria-hidden="true"></i></div>
       <div class="sr-only" id="biAnnounce" aria-live="polite" aria-atomic="true"></div>
     </div>
   </div>
@@ -746,7 +990,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
     <div class="reveal"><span class="codepill"><span class="c">$</span> 각 버디 레포 → <b>30초 설치</b> 섹션의 명령을 복사 → 붙여넣기</span></div>
     <div class="launch-cta reveal">
       <a class="btn btn-primary" href="https://github.com/iq-spiral-galaxy" target="_blank" rel="noopener">GitHub에서 버디 고르기 ↗</a>
-      <a class="btn btn-ghost" href="#buddies">다섯 행성 다시 보기</a>
+      <a class="btn btn-ghost" href="#buddies">다섯 버디 다시 보기</a>
     </div>
   </div>
 </section>
@@ -757,7 +1001,7 @@ html:not(.js) .bpanel{margin:0 auto 22px;padding:26px;border:1px solid var(--lin
   <div class="wrap">
     <div class="fcols">
       <div class="fbrand">
-        <b><svg class="fmark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="fg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#a855f7" stop-opacity=".42"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient><linearGradient id="fa" x1="4" y1="5" x2="28" y2="27" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ec4899"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><radialGradient id="fc" cx="42%" cy="38%" r="65%"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#e9ddff"/><stop offset="1" stop-color="#a855f7"/></radialGradient></defs><circle cx="16" cy="16" r="13" fill="url(#fg)"/><path d="M16 16C19 12 25.5 12 27 17.5 28.4 23 24 29.5 16.5 28.2" stroke="url(#fa)" stroke-width="2.5" stroke-linecap="round"/><path d="M16 16C13 20 6.5 20 5 14.5 3.6 9 8 2.5 15.5 3.8" stroke="url(#fa)" stroke-width="2.5" stroke-linecap="round"/><circle cx="16" cy="16" r="3.5" fill="url(#fc)"/></svg>Spiral Galaxy</b>
+        <b><img class="fmark" src="/spiral-mark.svg" alt="">Spiral Galaxy</b>
         <p>AI 버디와 함께하는 나선형 학습 은하.<br>빠르고 넓게 배우고, 결합해 문제를 푸는 사람으로.</p>
       </div>
       <div>
@@ -791,66 +1035,30 @@ addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passi
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(Math.min(i%4,3)*60)+'ms';io.observe(el);});
 
-// ---------- scroll progress bar ----------
-const prog=document.getElementById('progress');
-function updProg(){const h=document.documentElement;prog.style.width=Math.min(100,scrollY/(h.scrollHeight-innerHeight)*100)+'%';}
-addEventListener('scroll',updProg,{passive:true});updProg();
-
-// ---------- nav dots ----------
-const dotLinks=[...document.querySelectorAll('#dots a')];
-const dotIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){dotLinks.forEach(d=>d.classList.toggle('on',d.getAttribute('href')==='#'+e.target.id));document.dispatchEvent(new Event('sg:warp'));}});},{rootMargin:'-45% 0px -45% 0px'});
-dotLinks.forEach(d=>{const t=document.querySelector(d.getAttribute('href'));if(t)dotIO.observe(t);});
-
-const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// ---------- buddy planet showcase ----------
+// ---------- buddy selector ----------
 const BUDDY=[
-  {name:'Spiral Buddy Red',sub:'수학과 AI의 본질',pg:'rgba(239,68,68,.45)',ac:'#ff6b5e'},
-  {name:'Spiral Buddy Green',sub:'세상을 읽는 판단력',pg:'rgba(34,197,94,.42)',ac:'#34d97b'},
-  {name:'Spiral Buddy Blue',sub:'만드는 힘, 풀스택',pg:'rgba(59,130,246,.45)',ac:'#60a5fa'},
-  {name:'Spiral Buddy Black',sub:'우주를 바닥부터',pg:'rgba(174,182,207,.32)',ac:'#aeb6cf'},
-  {name:'Spiral Buddy White',sub:'마음의 안쪽',pg:'rgba(235,240,255,.5)',ac:'#eef2ff'}
+  {name:'Spiral Buddy Red',sub:'수학과 AI의 본질'},
+  {name:'Spiral Buddy Green',sub:'세상을 읽는 판단력'},
+  {name:'Spiral Buddy Blue',sub:'만드는 힘, 풀스택'},
+  {name:'Spiral Buddy Black',sub:'우주를 바닥부터'},
+  {name:'Spiral Buddy White',sub:'마음의 안쪽'}
 ];
-const showcase=document.getElementById('showcase'),bstage=document.getElementById('bstage');
-if(showcase&&bstage){
-  const bdots=[...bstage.querySelectorAll('.bdot')];
-  const planets=[...bstage.querySelectorAll('.planet')];
+const bstage=document.getElementById('bstage');
+if(bstage){
+  const tabs=[...bstage.querySelectorAll('.bdot')];
   const panels=[...bstage.querySelectorAll('.bpanel')];
-  const arrows=[...bstage.querySelectorAll('.barrow')];
-  const planetwrap=bstage.querySelector('.planetwrap');
   const announce=document.getElementById('biAnnounce');
-  let bIdx=-1,showTop=0,showHeight=0,showRange=1,orbitRX=240,orbitRY=120,showRAF=0,staticBuddy=false;
-  const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
-  const smoothstep=(a,b,x)=>{x=clamp((x-a)/(b-a));return x*x*(3-2*x);};
-  function sceneFromProgress(p){
-    const q=clamp(p*BUDDY.length-.5,0,BUDDY.length-1);
-    if(q>=BUDDY.length-1)return BUDDY.length-1;
-    const i=Math.floor(q);
-    return i+smoothstep(.16,.84,q-i);
-  }
-  function measureShowcase(){
-    const wasStatic=staticBuddy;
-    staticBuddy=matchMedia('(max-height:560px)').matches;
-    if(wasStatic!==staticBuddy)bIdx=-1;
-    if(staticBuddy){bstage.removeAttribute('aria-roledescription');bstage.removeAttribute('tabindex');}
-    else{bstage.setAttribute('aria-roledescription','carousel');bstage.tabIndex=0;}
-    showTop=showcase.getBoundingClientRect().top+scrollY;
-    showHeight=showcase.offsetHeight;
-    showRange=Math.max(1,showHeight-bstage.offsetHeight);
-    const r=planetwrap.getBoundingClientRect();
-    const mobile=innerWidth<=880;
-    orbitRX=Math.min(r.width*(mobile?.38:.43),mobile?155:270);
-    orbitRY=Math.min(r.height*(mobile?.42:.3),mobile?92:145);
-  }
-  function applyBuddy(i){
-    if(i===bIdx)return;
-    bIdx=i;
-    const b=BUDDY[i];
-    for(const[k,v]of Object.entries({'--pg':b.pg,'--ac':b.ac}))bstage.style.setProperty(k,v);
-    bdots.forEach((d,j)=>{
+  const tablist=bstage.querySelector('[role="tablist"]');
+  const compactTabs=matchMedia('(max-width:760px)');
+  const syncTabOrientation=()=>tablist.setAttribute('aria-orientation',compactTabs.matches?'horizontal':'vertical');
+  syncTabOrientation();
+  compactTabs.addEventListener?.('change',syncTabOrientation);
+  function selectBuddy(i,moveFocus=false,shouldAnnounce=false){
+    tabs.forEach((d,j)=>{
       const on=j===i;
       d.classList.toggle('on',on);
-      if(on)d.setAttribute('aria-current','step');else d.removeAttribute('aria-current');
+      d.setAttribute('aria-selected',String(on));
+      d.tabIndex=on?0:-1;
     });
     panels.forEach((panel,j)=>{
       const on=j===i;
@@ -858,89 +1066,23 @@ if(showcase&&bstage){
       panel.inert=!on;
       panel.setAttribute('aria-hidden',String(!on));
     });
-    arrows[0].disabled=i===0;
-    arrows[1].disabled=i===BUDDY.length-1;
-    bstage.classList.toggle('last',i===4);
-    globalThis.sgBuddyIndex=i;
-    document.dispatchEvent(new CustomEvent('sg:buddy',{detail:{index:i}}));
-    document.dispatchEvent(new Event('sg:warp'));
-  }
-  function updateOrbit(scene,active){
-    const orbitScene=reduceMotion?active:scene;
-    planets.forEach((planet,j)=>{
-      const d=j-orbitScene,ad=Math.abs(d),arc=clamp(d,-2.45,2.45)*.78;
-      const x=Math.sin(arc)*orbitRX;
-      const y=(1-Math.cos(arc))*orbitRY;
-      const scale=1.04-.30*Math.min(ad,1)-.16*Math.min(Math.max(ad-1,0),1);
-      const opacity=reduceMotion?(j===active?1:0):Math.pow(Math.max(0,1-ad/2.45),1.25);
-      planet.style.setProperty('--px',`${x.toFixed(2)}px`);
-      planet.style.setProperty('--py',`${y.toFixed(2)}px`);
-      planet.style.setProperty('--ps',scale.toFixed(3));
-      planet.style.setProperty('--po',opacity.toFixed(3));
-      planet.style.setProperty('--pbr',(1-Math.min(ad/2.8,.52)).toFixed(3));
-      planet.style.setProperty('--psat',(1-Math.min(ad/3.5,.3)).toFixed(3));
-      planet.style.setProperty('--pt',`${(-d*11).toFixed(2)}deg`);
-      planet.style.setProperty('--pz',String(100-Math.round(ad*12)));
-    });
-    panels.forEach((panel,j)=>{
-      const d=j-(reduceMotion?active:scene),ad=Math.abs(d);
-      const opacity=reduceMotion?(j===active?1:0):Math.max(0,1-ad*1.15);
-      panel.style.setProperty('--bio',opacity.toFixed(3));
-      panel.style.setProperty('--biy',`${(d*24).toFixed(2)}px`);
-      panel.style.setProperty('--bis',(0.985+opacity*.015).toFixed(3));
-    });
-  }
-  function renderShowcase(){
-    showRAF=0;
-    if(staticBuddy){
-      bIdx=0;
-      panels.forEach(panel=>{
-        panel.classList.add('is-active');panel.inert=false;panel.removeAttribute('aria-hidden');
-        panel.style.setProperty('--bio','1');panel.style.setProperty('--biy','0px');panel.style.setProperty('--bis','1');
-      });
-      document.body.classList.remove('buddy-focus');
-      globalThis.sgPanState={x:0,vis:0,scene:0};
-      document.dispatchEvent(new CustomEvent('sg:pan',{detail:globalThis.sgPanState}));
-      return;
-    }
-    const p=clamp((scrollY-showTop)/showRange);
-    const scene=sceneFromProgress(p);
-    const active=Math.round(scene);
-    applyBuddy(active);
-    updateOrbit(scene,active);
-    bstage.style.setProperty('--navp',(scene/(BUDDY.length-1)).toFixed(4));
-    const enter=(scrollY+innerHeight-showTop)/(innerHeight*.72);
-    const leave=(showTop+showHeight-scrollY)/(innerHeight*.72);
-    const vis=clamp(Math.min(enter,leave));
-    document.body.classList.toggle('buddy-focus',vis>.48);
-    globalThis.sgPanState={x:(scene-2)*2.4*vis,vis,scene};
-    document.dispatchEvent(new CustomEvent('sg:pan',{detail:globalThis.sgPanState}));
-  }
-  function queueShowcase(){
-    if(showRAF)return;
-    showRAF=requestAnimationFrame(renderShowcase);
-  }
-  function goBuddy(i,shouldAnnounce=false){
-    i=clamp(i,0,BUDDY.length-1);
+    if(moveFocus)tabs[i].focus();
     if(shouldAnnounce)announce.textContent=`${BUDDY[i].name}, ${BUDDY[i].sub}`;
-    window.scrollTo({top:Math.round(showTop+showRange*((i+.5)/BUDDY.length)),behavior:reduceMotion?'auto':'smooth'});
   }
-  arrows.forEach(b=>b.addEventListener('click',()=>goBuddy(bIdx+ +b.dataset.dir,true)));
-  bdots.forEach(d=>d.addEventListener('click',()=>goBuddy(+d.dataset.i,true)));
-  bstage.addEventListener('keydown',e=>{
-    if(staticBuddy||e.target!==bstage)return;
-    let target=null;
-    if(e.key==='ArrowLeft'||e.key==='ArrowUp')target=bIdx-1;
-    if(e.key==='ArrowRight'||e.key==='ArrowDown')target=bIdx+1;
-    if(e.key==='Home')target=0;
-    if(e.key==='End')target=BUDDY.length-1;
-    if(target===null)return;
-    e.preventDefault();goBuddy(target,true);
+  tabs.forEach((tab,i)=>{
+    tab.addEventListener('click',()=>selectBuddy(i,false,true));
+    tab.addEventListener('keydown',e=>{
+      let next=null;
+      const horizontal=tablist.getAttribute('aria-orientation')==='horizontal';
+      if((horizontal&&e.key==='ArrowLeft')||(!horizontal&&e.key==='ArrowUp'))next=(i-1+tabs.length)%tabs.length;
+      if((horizontal&&e.key==='ArrowRight')||(!horizontal&&e.key==='ArrowDown'))next=(i+1)%tabs.length;
+      if(e.key==='Home')next=0;
+      if(e.key==='End')next=tabs.length-1;
+      if(next===null)return;
+      e.preventDefault();selectBuddy(next,true,true);
+    });
   });
-  addEventListener('scroll',queueShowcase,{passive:true});
-  addEventListener('resize',()=>{measureShowcase();queueShowcase();},{passive:true});
-  if(document.fonts?.ready)document.fonts.ready.then(()=>{measureShowcase();queueShowcase();});
-  measureShowcase();renderShowcase();
+  selectBuddy(0);
 }
 
 // ---------- constellation ↔ syn-item link ----------
@@ -958,243 +1100,28 @@ if(cons){
       cons.querySelectorAll('.hl').forEach(e=>{e.classList.remove('hl');e.style.stroke='';});
     });
   });
-  if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    cons.addEventListener('pointermove',e=>{
-      const r=cons.getBoundingClientRect();
-      const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
-      cons.style.transform=`perspective(950px) rotateX(${(13-py*11).toFixed(2)}deg) rotateY(${(px*13).toFixed(2)}deg)`;
-    });
-    cons.addEventListener('pointerleave',()=>{cons.style.transform='';});
-  }
-}
-
-// ---------- 지식 결합 섹션: 배경 버디 별 수렴 ----------
-const combineSec=document.getElementById('combine');
-if(combineSec){
-  const sendConverge=()=>{
-    const r=combineSec.getBoundingClientRect();
-    const v=Math.max(0,Math.min(1,Math.min((innerHeight-r.top)/(innerHeight*.75),r.bottom/(innerHeight*.75))));
-    globalThis.sgConvergeState=v;
-    document.dispatchEvent(new CustomEvent('sg:converge',{detail:{v}}));
-  };
-  addEventListener('scroll',sendConverge,{passive:true});sendConverge();
 }
 
 // ---------- 용어 툴팁: 터치 토글 ----------
 document.querySelectorAll('.term').forEach(t=>{
-  t.addEventListener('click',e=>{e.stopPropagation();t.classList.toggle('open');});
-});
-document.addEventListener('click',()=>document.querySelectorAll('.term.open').forEach(t=>t.classList.remove('open')));
-
-// ---------- 3D tilt cards ----------
-if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-  document.querySelectorAll('.cstep').forEach(card=>{
-    card.addEventListener('pointermove',e=>{
-      const r=card.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
-      card.style.setProperty('--gx',px*100+'%');card.style.setProperty('--gy',py*100+'%');
-      card.style.transform=`perspective(900px) translateY(-5px) rotateX(${((py-.5)*-7).toFixed(2)}deg) rotateY(${((px-.5)*9).toFixed(2)}deg)`;
+  const toggle=()=>{
+    const open=!t.classList.contains('open');
+    document.querySelectorAll('.term.open').forEach(other=>{
+      if(other!==t){other.classList.remove('open');other.setAttribute('aria-expanded','false');}
     });
-    card.addEventListener('pointerleave',()=>{card.style.transform='';});
+    t.classList.toggle('open',open);
+    t.setAttribute('aria-expanded',String(open));
+  };
+  t.addEventListener('click',e=>{e.stopPropagation();toggle();});
+  t.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
+    if(e.key==='Escape'){t.classList.remove('open');t.setAttribute('aria-expanded','false');}
   });
-}
+});
+document.addEventListener('click',()=>document.querySelectorAll('.term.open').forEach(t=>{
+  t.classList.remove('open');t.setAttribute('aria-expanded','false');
+}));
 </script>
 
-<script type="module">
-// ---------- 3D spiral galaxy (Three.js) ----------
-import * as THREE from 'three';
-
-const cv=document.getElementById('galaxy');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const coarse=matchMedia('(pointer:coarse)').matches;
-let renderer=null;
-try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true,powerPreference:'high-performance'});}
-catch(e){cv.remove();}
-
-if(renderer){
-  const renderRatio=()=>Math.min(coarse?1.15:1.6,devicePixelRatio||1);
-  renderer.setPixelRatio(renderRatio());
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,200);
-  const galaxy=new THREE.Group();
-  galaxy.rotation.x=-.08;
-  scene.add(galaxy);
-
-  // --- star dust: 3 spiral arms, differential rotation in the shader ---
-  const ARMS=3,R=16,WIND=4.2;
-  const COUNT=coarse||innerWidth<760?4500:11000;
-  const pos=new Float32Array(COUNT*3),col=new Float32Array(COUNT*3);
-  const aSize=new Float32Array(COUNT),aSpeed=new Float32Array(COUNT),
-        aPhase=new Float32Array(COUNT),aAlpha=new Float32Array(COUNT);
-  const inner=new THREE.Color('#fff3e8'),mid=new THREE.Color('#c4b5fd'),
-        edge=new THREE.Color('#38bdf8'),pink=new THREE.Color('#f0abfc');
-  for(let i=0;i<COUNT;i++){
-    const t=Math.pow(Math.random(),.55),r=t*R,arm=i%ARMS;
-    const spread=(Math.random()-.5)*(1.35-t)*.85;
-    const ang=arm*(Math.PI*2/ARMS)+t*WIND+spread;
-    pos[i*3]=Math.cos(ang)*r;
-    pos[i*3+1]=(Math.random()-.5)*(1.7*Math.exp(-r*.3)+.14);   // central bulge
-    pos[i*3+2]=Math.sin(ang)*r;
-    const c=inner.clone().lerp(mid,Math.min(1,t*1.7)).lerp(edge,Math.max(0,t-.45)*1.5);
-    if(Math.random()<.08)c.lerp(pink,.8);
-    col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;
-    aSize[i]=(Math.random()*1.1+.35)*(t<.12?1.7:1);
-    aSpeed[i]=.32/(r*.34+.55);                                  // inner spins faster
-    aPhase[i]=Math.random()*Math.PI*2;
-    aAlpha[i]=.22+.5*(1-t);
-  }
-  const geo=new THREE.BufferGeometry();
-  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  geo.setAttribute('aColor',new THREE.BufferAttribute(col,3));
-  geo.setAttribute('aSize',new THREE.BufferAttribute(aSize,1));
-  geo.setAttribute('aSpeed',new THREE.BufferAttribute(aSpeed,1));
-  geo.setAttribute('aPhase',new THREE.BufferAttribute(aPhase,1));
-  geo.setAttribute('aAlpha',new THREE.BufferAttribute(aAlpha,1));
-  const uTime={value:reduce?25:0};
-  const uScale={value:renderRatio()*(innerHeight/860)};
-  const mat=new THREE.ShaderMaterial({
-    transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
-    uniforms:{uTime,uScale},
-    vertexShader:`
-      attribute vec3 aColor;attribute float aSize,aSpeed,aPhase,aAlpha;
-      uniform float uTime,uScale;varying vec3 vC;varying float vA;
-      void main(){
-        float a=uTime*aSpeed,c=cos(a),s=sin(a);
-        vec3 p=vec3(position.x*c-position.z*s,position.y,position.x*s+position.z*c);
-        vec4 mv=modelViewMatrix*vec4(p,1.);
-        gl_PointSize=aSize*uScale*(46./-mv.z);
-        vC=aColor;vA=aAlpha*(.72+.28*sin(uTime*1.6+aPhase));
-        gl_Position=projectionMatrix*mv;
-      }`,
-    fragmentShader:`
-      varying vec3 vC;varying float vA;
-      void main(){
-        float d=length(gl_PointCoord-.5);
-        if(d>.5)discard;
-        gl_FragColor=vec4(vC,pow(1.-d*2.,2.2)*vA);
-      }`
-  });
-  galaxy.add(new THREE.Points(geo,mat));
-
-  // --- glow sprites: galactic core + the five buddies ---
-  function glowTex(rgba){
-    const c=document.createElement('canvas');c.width=c.height=128;
-    const g=c.getContext('2d'),gr=g.createRadialGradient(64,64,0,64,64,64);
-    gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.28,rgba);gr.addColorStop(1,'rgba(0,0,0,0)');
-    g.fillStyle=gr;g.fillRect(0,0,128,128);
-    return new THREE.CanvasTexture(c);
-  }
-  function sprite(rgba,scale){
-    const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(rgba),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));
-    s.scale.setScalar(scale);galaxy.add(s);return s;
-  }
-  sprite('rgba(190,165,255,.42)',4.2);                          // core
-  const BUD=[
-    {rgba:'rgba(239,68,68,.92)', f:.30,a0:0.0,s:1.00},
-    {rgba:'rgba(34,197,94,.92)', f:.46,a0:1.3,s:.78},
-    {rgba:'rgba(59,130,246,.92)',f:.62,a0:2.7,s:.60},
-    {rgba:'rgba(174,182,207,.9)',f:.80,a0:4.1,s:.46},
-    {rgba:'rgba(255,255,255,.95)',f:.94,a0:5.4,s:.38}
-  ].map((b,i)=>({...b,sp:sprite(b.rgba,1.15),r:b.f*R,i}));
-
-  // --- 유성: 드물게, 은은하게 ---
-  const mHead=sprite('rgba(235,242,255,.95)',.7),mTail=sprite('rgba(190,205,255,.5)',1.5);
-  mHead.material.opacity=0;mTail.material.opacity=0;
-  let mT=-1,mNext=9;
-  const mFrom=new THREE.Vector3(),mTo=new THREE.Vector3();
-
-  // --- interaction state: mouse parallax + scroll-driven camera ---
-  let tx=0,ty=0,mx=0,my=0,scrollP=0,warp=0,swirl=0,bx=0,bxT=0,rotV=0,cvg=0,cvgT=0;
-  let focusI=0,buddyPulse=0,showVis=0;
-  if(!coarse&&!reduce)addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2;},{passive:true});
-  document.addEventListener('sg:warp',()=>{if(!reduce)warp=Math.min(1.4,warp+1);});
-  document.addEventListener('sg:buddy',e=>{focusI=e.detail.index;buddyPulse=1;if(reduce)queueRender();});
-  document.addEventListener('sg:pan',e=>{
-    showVis=e.detail.vis;
-    if(!reduce){bxT=e.detail.x;rotV=e.detail.vis;}else queueRender();
-    updateCanvasOpacity();
-  });
-  document.addEventListener('sg:converge',e=>{
-    cvgT=e.detail.v;
-    if(reduce){cvg=cvgT;queueRender();}
-  });
-  if(Number.isInteger(globalThis.sgBuddyIndex))focusI=globalThis.sgBuddyIndex;
-  if(globalThis.sgPanState){
-    showVis=globalThis.sgPanState.vis;
-    if(!reduce){bxT=globalThis.sgPanState.x;rotV=globalThis.sgPanState.vis;}
-  }
-  if(typeof globalThis.sgConvergeState==='number'){cvgT=globalThis.sgConvergeState;if(reduce)cvg=cvgT;}
-  function updateCanvasOpacity(){cv.style.opacity=Math.min(1,1-scrollP*.62+showVis*.16).toFixed(3);}
-  function onScroll(){
-    scrollP=Math.min(1,scrollY/(innerHeight*.85));
-    updateCanvasOpacity();
-    if(reduce)queueRender();
-  }
-  addEventListener('scroll',onScroll,{passive:true});
-
-  function place(dt=1/60){
-    const t=uTime.value;
-    cvg+=(cvgT-cvg)*(1-Math.exp(-2.45*dt));             // 결합 섹션: 다섯 별이 중심으로 모인다
-    for(const b of BUD){
-      const a=b.a0+t*.34*b.s;
-      const rr=b.r*(1-cvg*.8);
-      b.sp.position.set(Math.cos(a)*rr,.12*Math.sin(t*.7+b.i*1.4),Math.sin(a)*rr);
-      const active=b.i===focusI;
-      b.sp.scale.setScalar(1.15*(1+showVis*(active?.38+buddyPulse*.22:-.22)));
-      b.sp.material.opacity=.64+showVis*(active?.28:-.26);
-    }
-    mx+=(tx-mx)*(1-Math.exp(-2.76*dt));my+=(ty-my)*(1-Math.exp(-2.76*dt));
-    bx+=(bxT-bx)*(1-Math.exp(-2.13*dt));                // 은하 속 행성 좌표로 느린 카메라 팬
-    if(reduce){camera.position.set(0,7.2,15.5);camera.lookAt(0,2.5,0);}
-    else{camera.position.set(mx*1.6+bx,7.2+scrollP*5-my*.9,15.5+scrollP*2);camera.lookAt(bx*.55,2.5,0);}
-  }
-  function resize(){
-    renderer.setPixelRatio(renderRatio());
-    renderer.setSize(innerWidth,innerHeight,false);
-    camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
-    uScale.value=renderRatio()*(innerHeight/860);
-    if(reduce)queueRender();
-  }
-  addEventListener('resize',resize,{passive:true});
-
-  const clock=new THREE.Clock();
-  let simTime=0;
-  let queued=false,running=!document.hidden,rafId=0;
-  function queueRender(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;place();renderer.render(scene,camera);});}
-  function loop(){
-    if(!running)return;
-    const dt=Math.min(.05,clock.getDelta());
-    swirl+=warp*2.7*dt+rotV*.24*dt;warp*=Math.exp(-3.7*dt);       // 프레임률과 무관한 워프 + 은하 회전
-    buddyPulse*=Math.exp(-4.2*dt);
-    simTime+=dt;uTime.value=simTime+swirl;
-    const fov=55+warp*5;
-    if(Math.abs(camera.fov-fov)>.05){camera.fov=fov;camera.updateProjectionMatrix();}
-    const t=uTime.value;
-    if(mT<0&&t>mNext){                                           // 유성 발사
-      const a1=Math.random()*6.283,r1=R*(.5+Math.random()*.55);
-      mFrom.set(Math.cos(a1)*r1,3+Math.random()*4,Math.sin(a1)*r1);
-      const a2=a1+(.7+Math.random()*.9)*(Math.random()<.5?-1:1);
-      mTo.set(Math.cos(a2)*r1*.35,mFrom.y-2,Math.sin(a2)*r1*.35);
-      mT=t;mNext=t+16+Math.random()*26;
-    }
-    if(mT>=0){
-      const k=(t-mT)/1.15;
-      if(k>=1){mT=-1;mHead.material.opacity=0;mTail.material.opacity=0;}
-      else{
-        mHead.position.lerpVectors(mFrom,mTo,k);
-        mTail.position.lerpVectors(mFrom,mTo,Math.max(0,k-.06));
-        const o=Math.sin(k*Math.PI);
-        mHead.material.opacity=o*.85;mTail.material.opacity=o*.28;
-      }
-    }
-    place(dt);renderer.render(scene,camera);rafId=requestAnimationFrame(loop);
-  }
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){running=false;cancelAnimationFrame(rafId);return;}
-    if(!reduce&&!running){running=true;clock.getDelta();rafId=requestAnimationFrame(loop);}
-  });
-  resize();onScroll();
-  if(reduce)queueRender();else if(running)rafId=requestAnimationFrame(loop);
-}
-</script>
 </body>
 </html>
