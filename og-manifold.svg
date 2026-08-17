@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f8f9fc"/>
+      <stop offset="1" stop-color="#edf1f8"/>
+    </linearGradient>
+    <radialGradient id="inkGlow" cx="80%" cy="18%" r="55%">
+      <stop stop-color="#111318" stop-opacity=".055"/>
+      <stop offset="1" stop-color="#111318" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#inkGlow)"/>
+
+  <g transform="translate(70 58)" fill="none" stroke="#202633" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 17C42 8 23 9 14 22C4 37 14 53 31 53C47 53 56 42 54 30C52 19 41 15 31 18C21 21 18 32 24 39C29 45 38 43 42 37C45 32 42 26 37 25C33 24 29 27 29 31"/>
+  </g>
+  <text x="150" y="103" fill="#1a2440" font-family="Georgia, 'Times New Roman', serif" font-size="48" letter-spacing="-1.2">Spiral Manifold</text>
+
+  <text x="76" y="298" fill="#1a2440" font-family="Georgia, 'Times New Roman', serif" font-size="84" letter-spacing="-3">Learn in loops.</text>
+  <text x="76" y="382" fill="#4058b8" font-family="Georgia, 'Times New Roman', serif" font-size="66" letter-spacing="-2.2">Think across dimensions.</text>
+  <text x="80" y="494" fill="#5f6b86" font-family="Arial, sans-serif" font-size="25" letter-spacing=".4">AI buddies × spiral learning × connected knowledge</text>
+
+  <image href="spacetime-warp.svg" x="610" y="18" width="680" height="555" opacity=".82"/>
+  <path d="M76 557H1124" stroke="#1a2440" stroke-opacity=".12"/>
+  <text x="80" y="594" fill="#65708a" font-family="Arial, sans-serif" font-size="17" letter-spacing="3">SPIRAL MANIFOLD</text>
+</svg>
